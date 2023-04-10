@@ -220,5 +220,5 @@ class INews:
 
 if __name__ == "__main__":
     url = "https://tv.inews.id/live"
-    inews = INews(environment="dev", url=url, upload_location="storage/inews")
+    inews = INews(environment="prod", url=url, upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING")
     inews.StartEngine()   

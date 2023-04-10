@@ -15,10 +15,10 @@ class Ops:
         self.start_proses = True
         self.delay_proses = 60 * 60
         self.storage_path_mp4 = {
-            "INEWSSTREAMING": "storage/metrotv/mp4",
-            "CNNSTREAMING": "storage/cnnindonesia/mp4",
-            "METROSTREAMING": "storage/metrotv/mp4",
-            "KOMPASSTREAMING": "storage/kompastv/mp4",
+            "INEWSSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
+            "CNNSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
+            "METROSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
+            "KOMPASSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING",
         }
         Loggers()
         super().__init__()

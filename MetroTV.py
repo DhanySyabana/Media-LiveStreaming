@@ -106,6 +106,6 @@ class MetroTV:
             return None
 
 if __name__ == "__main__":
-    metro_tv = MetroTV(environment="dev", upload_location="storage/metrotv")
+    metro_tv = MetroTV(environment="prod", upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING")
     metro_tv.StartEngine()
     

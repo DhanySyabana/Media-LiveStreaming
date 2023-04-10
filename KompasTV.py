@@ -106,6 +106,6 @@ class KompasTV:
             return None
 
 if __name__ == "__main__":
-    kompas_tv = KompasTV(environment="dev", upload_location="storage/kompastv")
+    kompas_tv = KompasTV(environment="prod", upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING")
     kompas_tv.StartEngine()
     

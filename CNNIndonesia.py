@@ -117,5 +117,5 @@ class CNNIndonesia:
 
 
 if __name__ == "__main__":
-    cnnindonesia = CNNIndonesia(environment="dev", upload_location="storage/cnnindonesia")
+    cnnindonesia = CNNIndonesia(environment="prod", upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING")
     cnnindonesia.StartEngine()
