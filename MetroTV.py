@@ -5,7 +5,6 @@ import struct
 import logging
 import datetime
 import streamlink
-import urllib.parse
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
@@ -71,7 +70,7 @@ class MetroTV:
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": urllib.parse.quote(stream_segment.uri),
+                "url": stream_segment.uri,
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
