@@ -9,6 +9,7 @@ import urllib.parse
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
+from libs.Socket import Socket
 
 class MetroTV:
 
@@ -61,8 +62,10 @@ class MetroTV:
     
     def RecordStream(self, stream_segment):
         logging.info("Request to Server Converter - Download Segment")
+
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
+            
 
             to_server = {
                 "event": "download",
@@ -75,7 +78,7 @@ class MetroTV:
             }
 
             to_server = json.dumps(to_server)
-            s.sendall(bytes(to_server, "utf-8"))
+            Socket(s).send_msg(bytes(to_server, "utf-8"))
 
             response = s.recv(self.buffer_size)
             response = eval(response)

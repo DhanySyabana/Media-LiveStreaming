@@ -1,6 +1,7 @@
 import json
 import socket
 import logging
+from libs.Socket import Socket
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -39,6 +40,8 @@ class ServerConverter:
                             break
                         logging.info(F"Received request convert video from {addr}")
                         
+
+                        data = Socket(s).recv_msg()
                         data = json.loads(data)
 
                         response = None
