@@ -12,7 +12,7 @@ class Ops:
     def __init__(self, TOKEN:str, CHAT_ID:str, delay_proses:int, storage_path_mp4:dict) -> None:
         self.TOKEN:str= TOKEN,
         self.CHAT_ID:str = CHAT_ID,
-        self.start_time = 0
+        self.start_time = time.time()
         self.start_proses = True
         self.delay_proses:int = delay_proses
         self.storage_path_mp4:dict = storage_path_mp4
@@ -116,16 +116,27 @@ class Ops:
         """
 
 
+    def execute(self) -> None:
+        self.start_time = time.time()
+        data = self.get_file_data()
+        message = self.parse_message(data)
+        self.send_message(message)
+        logging.info("Success execute task")
+        return None
+
+
     def StartEngine(self):
         progress_bar = tqdm.tqdm(total=self.delay_proses, desc="Waiting for next task")
         while self.start_proses:
             try:
-                if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
-                    self.start_time = time.time()
-                    data = self.get_file_data()
-                    message = self.parse_message(data)
-                    self.send_message(message)  
-                    logging.info("Success execute task")
+                
+                if self.start_time == 0:
+                    self.execute()
+                    progress_bar.reset()
+                    # os.system('cls' if os.name == 'nt' else 'clear')
+
+                if time.time() - self.start_time >= self.delay_proses:
+                    self.execute()
                     progress_bar.reset()
                     # os.system('cls' if os.name == 'nt' else 'clear')
                        
