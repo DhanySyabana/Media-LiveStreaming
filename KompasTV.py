@@ -1,6 +1,7 @@
 import time
 import m3u8
 import socket
+import struct
 import logging
 import datetime
 import streamlink
@@ -72,8 +73,16 @@ class KompasTV:
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
-            to_server = bytes(str(to_server), "utf-8")
-            s.sendall(to_server)
+
+            to_server = str(to_server).encode("utf-8")
+            data_format = struct.Struct('I')
+            data_length = len(to_server)
+            s.sendall(data_format.pack(data_length))
+
+            offset = 0
+            while offset < data_length:
+                sent_bytes = s.send(to_server[offset:])
+                offset += sent_bytes
 
             response = s.recv(self.buffer_size)
             response = eval(response)
@@ -126,8 +135,15 @@ class KompasTV:
                             "mode": "w",
                             "filename": now_filename,
                         }
-                        to_server = bytes(str(to_server), "utf-8")
-                        s.sendall(to_server)
+                        to_server = str(to_server).encode("utf-8")
+                        data_format = struct.Struct('I')
+                        data_length = len(to_server)
+                        s.sendall(data_format.pack(data_length))
+
+                        offset = 0
+                        while offset < data_length:
+                            sent_bytes = s.send(to_server[offset:])
+                            offset += sent_bytes
 
                         response = s.recv(self.buffer_size)
                         response = eval(response)
