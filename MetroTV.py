@@ -87,6 +87,9 @@ class MetroTV:
             response = s.recv(self.buffer_size)
             response = eval(response)
             logging.info(F"Message from Server Converter: {response['message']}")
+    
+            s.close()
+            logging.info("Close Connection - Download Segment")
         return None
     
     def CheckTSFiles(self) -> dict:
@@ -148,6 +151,9 @@ class MetroTV:
                         response = s.recv(self.buffer_size)
                         response = eval(response)
                         logging.info(F"Message from Server Converter: {response['message']}")
+
+                        s.close()
+                        logging.info("Close Connection - Concat TS")
 
                     logging.info("Cleanup TS")
                     self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
