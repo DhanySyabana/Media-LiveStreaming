@@ -38,7 +38,7 @@ class Ops:
                 "total_video": total_video,
                 "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
                 "total_video_last_hour": total_video_last_hour,
-                "last_video_filename": sorted(os.listdir(value), key=lambda x: os.path.getmtime(F"{value}/{x}"))[-1],
+                "last_video": sorted(os.listdir(value), key=lambda x: os.path.getmtime(F"{value}/mp4/{x}"))[-1]
             }
 
         return data
