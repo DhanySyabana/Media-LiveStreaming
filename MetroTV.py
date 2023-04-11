@@ -6,8 +6,8 @@ import datetime
 import streamlink
 from libs.Loggers import Loggers
 from settings.Config import Config
-from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
+from settings.TypeDataConverter import TypeDataConverter
 
 class MetroTV:
 
@@ -72,7 +72,8 @@ class MetroTV:
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
-            to_server = bytes(str(to_server), "utf-8")
+            # dict to json
+            to_server = TypeDataConverter(to_server).dict_to_binary()
             s.sendall(to_server)
 
             response = s.recv(self.buffer_size)
