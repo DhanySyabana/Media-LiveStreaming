@@ -39,7 +39,7 @@ class ServerConverter:
                             break
                         logging.info(F"Received request convert video from {addr}")
                         
-                        data = TypeDataConverter(data.decode("utf-8")).binary_to_dict()
+                        data = TypeDataConverter(data).binary_to_dict()
 
                         response = None
 

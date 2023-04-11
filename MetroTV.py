@@ -72,8 +72,9 @@ class MetroTV:
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
-            # dict to json
+            
             to_server = TypeDataConverter(to_server).dict_to_binary()
+            to_server = bytes(to_server, "utf-8")
             s.sendall(to_server)
 
             response = s.recv(self.buffer_size)

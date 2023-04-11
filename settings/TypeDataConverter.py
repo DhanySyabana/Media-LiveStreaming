@@ -7,11 +7,10 @@ class TypeDataConverter:
         super().__init__()
 
     def dict_to_binary(self):
-        str = json.dumps(self.data)
-        binary = ' '.join(format(ord(letter), 'b') for letter in str)
-        return binary
+        jsn = json.dumps(self.data)
+        bin = ' '.join(format(ord(x), 'b') for x in jsn)
+        return bin.encode("utf-8")
     
     def binary_to_dict(self):
-        jsn = ''.join(chr(int(x, 2)) for x in self.data.split())
-        d = json.loads(jsn)  
-        return d
+        jsn = ''.join(chr(int(x, 2)) for x in self.data.split(' '))
+        return json.loads(jsn)
