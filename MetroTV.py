@@ -69,7 +69,7 @@ class MetroTV:
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": urllib.parse.quote(to_server["url"]),
+                "url": urllib.parse.quote(stream_segment.uri),
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
