@@ -5,6 +5,7 @@ import socket
 import logging
 import datetime
 import streamlink
+import urllib.parse
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
@@ -68,16 +69,10 @@ class MetroTV:
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": stream_segment.uri,
+                "url": urllib.parse.quote(to_server["url"]),
                 "headers": self.custom_headers,
                 "sequence": self.sequence
             }
-
-            print(stream_segment.uri)
-
-            # encode url 
-
-            to_server["url"] = to_server["url"].replace("https://", "https%3A%2F%2F")
 
             to_server = json.dumps(to_server)
             s.sendall(bytes(to_server, "utf-8"))
