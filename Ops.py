@@ -20,9 +20,13 @@ class Ops:
         super().__init__()
 
     def send_message(self, message:str) -> int:
-        url = F"https://api.telegram.org/bot{self.TOKEN}/sendMessage?chat_id={self.CHAT_ID}&text={message}&parse_mode=html"
-        response = HTTPRequest("get", url, headers=None).Hit()
-        return response.ok
+        try:
+            url = F"https://api.telegram.org/bot{self.TOKEN}/sendMessage?chat_id={self.CHAT_ID}&text={message}&parse_mode=html"
+            response = HTTPRequest("get", url, headers=None).Hit()
+            return response.ok
+        except Exception as e:
+            logging.error(F"Error send message: {e}")
+            return 0
     
     def get_file_data(self) -> dict:
         data = {}
