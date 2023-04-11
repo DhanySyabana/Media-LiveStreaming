@@ -142,6 +142,11 @@ class Ops:
                        
                 progress_bar.update(1)
                 time.sleep(1)       
+            except Exception as e:
+                logging.error(f"Error: {e}")
+                progress_bar.reset()
+                self.start_proses = False
+                break
             except KeyboardInterrupt:
                 progress_bar.reset()
                 logging.info("Close Ops")
@@ -151,12 +156,11 @@ class Ops:
 
 
 if __name__ == "__main__":
-    CONFIG = Config()
-    OPS_CONFIG = CONFIG.OPS
+    CONFIG = Config().OPS
     ops = Ops(
-        TOKEN=OPS_CONFIG["TELE_TOKEN"],
-        CHAT_ID=OPS_CONFIG["TELE_CHAT_ID"],
-        delay_proses=OPS_CONFIG["SEND_TIME"],
-        storage_path_mp4=OPS_CONFIG["STORAGE_PATH"],
+        TOKEN=CONFIG["TELE_TOKEN"],
+        CHAT_ID=CONFIG["TELE_CHAT_ID"],
+        delay_proses=CONFIG["SEND_TIME"],
+        storage_path_mp4=CONFIG["STORAGE_PATH"],
     )
     ops.StartEngine()
