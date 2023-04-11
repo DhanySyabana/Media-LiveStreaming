@@ -19,6 +19,7 @@ class Ops:
             "CNNSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
             "METROTVSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
             "KOMPASSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING",
+            "SERVERCONVERTER": None
         }
         Loggers()
         super().__init__()
@@ -66,6 +67,11 @@ class Ops:
         if cpu_usage_3 == "" : cpu_usage_3 = 0
         if memory_usage_3 == "" : memory_usage_3 = 0
 
+        cpu_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $3}'").read()
+        memory_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $4}'").read()
+        if cpu_usage_4 == "" : cpu_usage_4 = 0
+        if memory_usage_4 == "" : memory_usage_4 = 0
+
         return F"""
             <b>Ops - Live Streaming Status</b>
 
@@ -101,6 +107,11 @@ class Ops:
             Memory Usage: {float(memory_usage_3) * 1024:.2f} MB
             Storage Usage: {data[key_data[3]]["total_size"]:.2f} MB
 
+            ---------------------------------------------
+
+            <b>Server Converter</b>
+            CPU Usage: {float(cpu_usage_4):.2f}%
+            Memory Usage: {float(memory_usage_4) * 1024:.2f} MB
         """
 
 
