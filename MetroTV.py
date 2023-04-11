@@ -1,9 +1,11 @@
 import time
 import m3u8
+import socket
 import logging
 import datetime
 import streamlink
 from libs.Loggers import Loggers
+from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
 
@@ -12,24 +14,27 @@ class MetroTV:
     def __init__(
             self,
             environment:str,
-            url:str = "https://www.youtube.com/watch?v=IsXMe-W04os",
-            quality:str = "360p",
+            url:str = None,
+            quality:str = None,
             upload_location:str = None,
-            headers: dict = {
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-            },
+            headers: dict = None,
+            converter_host: str = None,
+            converter_port: int = None,
+            buffer_size: int = None
         ) -> None:
         self.environment = environment
         self.url:str = url
         self.quality:str = quality
         self.start_process:bool = True
-        self.start_time = time.time(),
         self.upload_location:str = upload_location
         self.custom_headers:dict = headers
-        self.filename = None
-        self.mp4_duration:int = 660
-        self.delay_duration:int = 5
+        self.video_duration = 5
+        self.duration_output = 60 * 60
+        self.sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
+        self.converter_host = converter_host
+        self.converter_port = converter_port
+        self.buffer_size = buffer_size
         Loggers()
         super().__init__()
 
@@ -41,19 +46,24 @@ class MetroTV:
             stream_url = streams[self.quality]
 
             m3u8_obj = m3u8.load(stream_url.args['url'])
-            stream_segment = m3u8_obj.segments[0]
+            stream_segment = m3u8_obj.segments[-1]
+
+            if self.sequence is None:
+                self.sequence = int(stream_segment.uri.split("sq/")[1].split("/goap")[0])
+            else:
+                self.sequence = self.sequence + 1
         except streamlink.exceptions.PluginError as e:
             stream_segment = None
             logging.error(F"Error Get Stream Segment: {e}")
 
         return stream_segment
     
-    def RecordStream(self, stream_segment) -> None:
-        self.filename = F"{stream_segment.program_date_time.astimezone().strftime('%Y%m%d%H%M%S')}.ts"
+    def RecordStream(self, stream_segment):
+        filename = F"{self.sequence}.ts"
         response = HTTPRequest("get", stream_segment.uri, self.custom_headers).Hit()
         if response.status_code == 200:
             self.video_prosessor.WriteFile(
-                file_name=self.filename,
+                file_name=filename,
                 content=response.content,
                 mode="wb",
                 folder="ts"
@@ -62,6 +72,16 @@ class MetroTV:
             logging.error(F"Error Download Segment: {response.status_code}")
         logging.info(F"Succes Download Segment")
         return None
+    
+    def CheckTSFiles(self) -> dict:
+        last_ts = F"{self.sequence}.ts"
+        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
+        
+        if get_total_files * self.video_duration == self.duration_output:
+            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
+            return dict(status=True, data_ts=list_files)
+        
+        return dict(status=False, data_ts=[])
 
     def StartEngine(self):
         logging.info("Start Engine")
@@ -69,7 +89,6 @@ class MetroTV:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        self.start_time = time.time()
         try: 
             while self.start_process:
 
@@ -79,23 +98,38 @@ class MetroTV:
                 while stream_segment is None:
                     logging.info("Retrying Stream Segment")
                     stream_segment = self.GetStreamSegment()
-                    time.sleep(self.delay_duration - 2)
+                    time.sleep(self.video_duration - 3)
 
                 logging.info("Record Stream")
                 self.RecordStream(stream_segment)
 
-                if time.time() - self.start_time > self.mp4_duration:
+                check_ts = self.CheckTSFiles()
+                status_ts = check_ts["status"]
+                data_ts = check_ts["data_ts"]
+
+                if status_ts:
                     now_filename = F"METROTVSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                    self.video_prosessor.ConcatTS(
-                        filename=now_filename,
-                        mode="w",
-                    )
-                    self.start_time = time.time()
+                    logging.info("Request to Server Converter")
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                        s.connect((self.converter_host, self.converter_port))
+
+                        to_server = {
+                            "environment": self.environment,
+                            "storage_path": self.upload_location,
+                            "mode": "w",
+                            "filename": now_filename,
+                        }
+                        to_server = bytes(str(to_server), "utf-8")
+                        s.sendall(to_server)
+
+                        response = s.recv(self.buffer_size)
+                        response = eval(response)
+                        logging.info(F"Message from Server Converter: {response['message']}")
 
                     logging.info("Cleanup TS")
-                    self.video_prosessor.CleanUPTSFolder()
+                    self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
-                time.sleep(self.delay_duration)
+                time.sleep(self.video_duration)
                 
         except KeyboardInterrupt:
             self.start_process = False
@@ -106,6 +140,18 @@ class MetroTV:
             return None
 
 if __name__ == "__main__":
-    metro_tv = MetroTV(environment="prod", upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING")
+    ENGINE_NAME = "METROTVSTREAMING"
+    CONFIG = Config()
+    ENGINE = CONFIG.ENGINE[ENGINE_NAME]
+    metro_tv = MetroTV(
+        environment=ENGINE["ENVIRONMENT"],
+        url=ENGINE["URL"],
+        quality=ENGINE["QUALITY"],
+        upload_location=ENGINE["UPLOAD_LOCATION"],
+        headers=ENGINE["HEADERS"],
+        converter_host=CONFIG.SOCKET_SERVER["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+    )
     metro_tv.StartEngine()
     

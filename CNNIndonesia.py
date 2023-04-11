@@ -1,8 +1,10 @@
 import m3u8
 import time
+import socket
 import logging
 import datetime
 from libs.Loggers import Loggers
+from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
 
@@ -11,15 +13,13 @@ class CNNIndonesia:
     def __init__(
             self,
             environment:str,
-            host_directory:str = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
-            url_segment:str = "chunklist_w1002049210_b192000_sleng.m3u8",
+            host_directory:str = None,
+            url_segment:str = None,
             upload_location:str = None,
-            headers: dict = {
-                'referer': 'https://www.cnnindonesia.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-            },
-            delay_duration:int = 4,
-            mp4_duration:int = 660,
+            headers: dict = None,
+            converter_host: str = None,
+            converter_port: int = None,
+            buffer_size: int = None
         ) -> None:
         self.environment = environment
         self.host_directory = host_directory
@@ -27,10 +27,12 @@ class CNNIndonesia:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.start_time = time.time()
-        self.delay_duration = delay_duration
-        self.mp4_duration = mp4_duration
+        self.video_duration = 4
+        self.duration_output = 60 * 60
         self.media_sequence = None
+        self.converter_host = converter_host
+        self.converter_port = converter_port
+        self.buffer_size = buffer_size
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         Loggers()
         super().__init__()
@@ -45,12 +47,12 @@ class CNNIndonesia:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-            segment_uri = segments[0]["uri"]
+            segment_uri = segments[-1]["uri"]
 
             if self.media_sequence is None:
                 self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
             else:
-                self.media_sequence = self.media_sequence + 1
+                self.media_sequence += 1
             
             url_segment = F"{self.host_directory}/{segments[0]['uri']}"
         else:
@@ -73,14 +75,23 @@ class CNNIndonesia:
             logging.error(F"Error Download Segment: {response.status_code}")
         logging.info(F"Succes Download Segment")
         return None
-
+    
+    def CheckTSFiles(self) -> dict:
+        last_ts = F"{self.media_sequence}.ts"
+        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
+        
+        if get_total_files * self.video_duration == self.duration_output:
+            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
+            return dict(status=True, data_ts=list_files)
+        
+        return dict(status=False, data_ts=[])
+    
     def StartEngine(self) -> None:
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        self.start_time = time.time()
         try:
             while self.start_process:
                 logging.info("Get Segment URI")
@@ -89,23 +100,39 @@ class CNNIndonesia:
                 while segment_uri is None:
                     logging.info("Retry Get Segment URI")
                     segment_uri = self.GetSegment()
-                    time.sleep(2)
+                    time.sleep(self.video_duration - 2)
 
                 logging.info("Download segment")
                 self.DownloadSegment(segment_uri)
                 
-                if time.time() - self.start_time > self.mp4_duration:
+                check_ts = self.CheckTSFiles()
+                status_ts = check_ts["status"]
+                data_ts = check_ts["data_ts"]
+
+                if status_ts:
                     now_filename = F"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                    self.video_prosessor.ConcatTS(
-                        filename=now_filename,
-                        mode="w",
-                    )
-                    self.start_time = time.time()
+
+                    logging.info("Request to Server Converter")
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                        s.connect((self.converter_host, self.converter_port))
+
+                        to_server = {
+                            "environment": self.environment,
+                            "storage_path": self.upload_location,
+                            "mode": "w",
+                            "filename": now_filename,
+                        }
+                        to_server = bytes(str(to_server), "utf-8")
+                        s.sendall(to_server)
+
+                        response = s.recv(self.buffer_size)
+                        response = eval(response)
+                        logging.info(F"Message from Server Converter: {response['message']}")
 
                     logging.info("Cleanup TS")
-                    self.video_prosessor.CleanUPTSFolder()
-
-                time.sleep(self.delay_duration)
+                    self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                
+                time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
             self.start_process = False
@@ -117,5 +144,17 @@ class CNNIndonesia:
 
 
 if __name__ == "__main__":
-    cnnindonesia = CNNIndonesia(environment="prod", upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING")
+    ENGINE_NAME = "CNNSTREAMING"
+    CONFIG = Config()
+    ENGINE = CONFIG.ENGINE[ENGINE_NAME]
+    cnnindonesia = CNNIndonesia(
+        environment=ENGINE["ENVIRONMENT"],
+        host_directory=ENGINE["HOST_DIRECTORY"],
+        url_segment=ENGINE["URL_SEGMENT"],
+        upload_location=ENGINE["UPLOAD_LOCATION"],
+        headers=ENGINE["HEADERS"],
+        converter_host=CONFIG.SOCKET_SERVER["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+    )
     cnnindonesia.StartEngine()
