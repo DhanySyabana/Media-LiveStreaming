@@ -2,6 +2,7 @@ import os
 import glob
 import time
 import tqdm
+import psutil
 import logging
 from libs.Loggers import Loggers
 from settings.Config import Config
@@ -47,40 +48,46 @@ class Ops:
     def parse_message(self, data:dict) -> str:
         key_data = list(data.keys())
         
-        cpu_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $3}'").read()
-        memory_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $4}'").read()
-        network_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $6}'").read()
-        if cpu_usage_0 == "" : cpu_usage_0 = 0
-        if memory_usage_0 == "" : memory_usage_0 = 0
-        if network_usage_0 == "" : network_usage_0 = 0
+        for proc in psutil.process_iter():
+            if "INews.py" in proc.name():
+                cpu_usage_0 = proc.cpu_percent()
+                memory_usage_0 = proc.memory_percent()
+                network_usage_0 = proc.io_counters().write_bytes / 1024 / 1024
+                if cpu_usage_0 == "" : cpu_usage_0 = 0
+                if memory_usage_0 == "" : memory_usage_0 = 0
+                if network_usage_0 == "" : network_usage_0 = 0
+            
+            if "CNNIndonesia.py" in proc.name():
+                cpu_usage_1 = proc.cpu_percent()
+                memory_usage_1 = proc.memory_percent()
+                network_usage_1 = proc.io_counters().write_bytes / 1024 / 1024
+                if cpu_usage_1 == "" : cpu_usage_1 = 0
+                if memory_usage_1 == "" : memory_usage_1 = 0
+                if network_usage_1 == "" : network_usage_1 = 0
 
-        cpu_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $3}'").read()
-        memory_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $4}'").read()
-        network_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $6}'").read()
-        if cpu_usage_1 == "" : cpu_usage_1 = 0
-        if memory_usage_1 == "" : memory_usage_1 = 0
-        if network_usage_1 == "" : network_usage_1 = 0
+            if "MetroTV.py" in proc.name():
+                cpu_usage_2 = proc.cpu_percent()
+                memory_usage_2 = proc.memory_percent()
+                network_usage_2 = proc.io_counters().write_bytes / 1024 / 1024
+                if cpu_usage_2 == "" : cpu_usage_2 = 0
+                if memory_usage_2 == "" : memory_usage_2 = 0
+                if network_usage_2 == "" : network_usage_2 = 0
 
-        cpu_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $3}'").read() 
-        memory_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $4}'").read()
-        network_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $6}'").read()
-        if cpu_usage_2 == "" : cpu_usage_2 = 0
-        if memory_usage_2 == "" : memory_usage_2 = 0
-        if network_usage_2 == "" : network_usage_2 = 0
+            if "KompasTV.py" in proc.name():
+                cpu_usage_3 = proc.cpu_percent()
+                memory_usage_3 = proc.memory_percent()
+                network_usage_3 = proc.io_counters().write_bytes / 1024 / 1024
+                if cpu_usage_3 == "" : cpu_usage_3 = 0
+                if memory_usage_3 == "" : memory_usage_3 = 0
+                if network_usage_3 == "" : network_usage_3 = 0
 
-        cpu_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $3}'").read()
-        memory_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $4}'").read()
-        network_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $6}'").read()
-        if cpu_usage_3 == "" : cpu_usage_3 = 0
-        if memory_usage_3 == "" : memory_usage_3 = 0
-        if network_usage_3 == "" : network_usage_3 = 0
-
-        cpu_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $3}'").read()
-        memory_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $4}'").read()
-        network_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $6}'").read()
-        if cpu_usage_4 == "" : cpu_usage_4 = 0
-        if memory_usage_4 == "" : memory_usage_4 = 0
-        if network_usage_4 == "" : network_usage_4 = 0
+            if "ServerConverter.py" in proc.name():
+                cpu_usage_4 = proc.cpu_percent()
+                memory_usage_4 = proc.memory_percent()
+                network_usage_4 = proc.io_counters().write_bytes / 1024 / 1024
+                if cpu_usage_4 == "" : cpu_usage_4 = 0
+                if memory_usage_4 == "" : memory_usage_4 = 0
+                if network_usage_4 == "" : network_usage_4 = 0
 
         return F"""
         
