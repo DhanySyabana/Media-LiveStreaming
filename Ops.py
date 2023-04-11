@@ -2,7 +2,6 @@ import os
 import time
 import tqdm
 import logging
-import datetime
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -10,8 +9,8 @@ from libs.HTTPRequest import HTTPRequest
 class Ops:
 
     def __init__(self, TOKEN:str, CHAT_ID:str, delay_proses:int, storage_path_mp4:dict) -> None:
-        self.TOKEN:str= TOKEN,
-        self.CHAT_ID:str = CHAT_ID,
+        self.TOKEN:str= TOKEN
+        self.CHAT_ID:str = CHAT_ID
         self.start_time = time.time()
         self.start_proses = True
         self.delay_proses:int = delay_proses
@@ -137,12 +136,12 @@ class Ops:
                 if self.start_time == 0:
                     self.execute()
                     progress_bar.reset()
-                    # os.system('cls' if os.name == 'nt' else 'clear')
+                    os.system('cls' if os.name == 'nt' else 'clear')
 
                 if time.time() - self.start_time >= self.delay_proses:
                     self.execute()
                     progress_bar.reset()
-                    # os.system('cls' if os.name == 'nt' else 'clear')
+                    os.system('cls' if os.name == 'nt' else 'clear')
                        
                 progress_bar.update(1)
                 time.sleep(1)       
