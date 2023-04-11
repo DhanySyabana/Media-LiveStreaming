@@ -87,7 +87,9 @@ class CNNIndonesia:
 
             response = s.recv(self.buffer_size)
             response = eval(response)
-            logging.info(F"Message from Server Converter: {response['message']}")
+            
+            if response:
+                logging.info(F"Message from Server Converter: {response['message']}")
 
             s.close()
             logging.info("Close Connection - Download Segment")
