@@ -97,7 +97,7 @@ class Ops:
             <b>{key_data[2]}</b>
             Total Video: {data[key_data[2]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[2]]["total_video_last_hour"]}
-            Last Video: {data[key_data[1]]["last_video_filename"]}
+            Last Video: {data[key_data[2]]["last_video_filename"]}
 
             CPU Usage: {float(cpu_usage_2):.2f}%
             Memory Usage: {float(memory_usage_2):.2f} MB
