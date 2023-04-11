@@ -13,7 +13,7 @@ class Ops:
         self.CHAT_ID = "-912205350"
         self.start_time = time.time()
         self.start_proses = True
-        self.delay_proses = 60 * 60
+        self.delay_proses = 30 * 60
         self.storage_path_mp4 = {
             "INEWSSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
             "CNNSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",

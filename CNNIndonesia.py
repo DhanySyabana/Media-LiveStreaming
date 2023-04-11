@@ -28,7 +28,7 @@ class CNNIndonesia:
         self.custom_headers = headers
         self.start_process = True
         self.video_duration = 4
-        self.duration_output = 60 * 60
+        self.duration_output = 60 * 10
         self.media_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port

@@ -36,7 +36,7 @@ class INews:
         self.resolution = resolution
         self.upload_location = upload_location
         self.video_duration = 8
-        self.duration_output = 60 * 60
+        self.duration_output = 60 * 10
         self.custom_headers = custom_headers
         self.start_process = True
         self.sequence = None

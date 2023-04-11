@@ -3,8 +3,9 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "prod",
-            URL = "https://www.inews.id/streaming",
-            SDI = "inews-sdi.m3u8",
+            #URL = "https://www.inews.id/streaming",
+            URL = "https://tv.inews.id/live",
+	    SDI = "inews-sdi.m3u8",
             AUTH_KEY = "auth_key",
             RESOLUTION = "640x360",
             HOST_DIRECTORY = "https://d-inews.rctiplus.id",

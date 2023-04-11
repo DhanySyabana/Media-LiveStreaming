@@ -29,7 +29,7 @@ class MetroTV:
         self.upload_location:str = upload_location
         self.custom_headers:dict = headers
         self.video_duration = 5
-        self.duration_output = 60 * 60
+        self.duration_output = 60 * 10
         self.sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
