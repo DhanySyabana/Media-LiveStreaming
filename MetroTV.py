@@ -79,8 +79,8 @@ class MetroTV:
 
             to_server = json.dumps(to_server).encode("utf-8")
             data_format = struct.Struct('I')
-            data_length = data_format.pack(len(to_server))
-            s.sendall(data_length)
+            data_length = len(to_server)
+            s.sendall(data_format.pack(data_length))
 
             offset = 0
             while offset < data_length:
