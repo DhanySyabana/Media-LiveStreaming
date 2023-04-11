@@ -54,7 +54,7 @@ class CNNIndonesia:
             else:
                 self.media_sequence += 1
             
-            url_segment = F"{self.host_directory}/{segments[0]['uri']}"
+            url_segment = F"{self.host_directory}/{segment_uri}"
         else:
             logging.error(F"Error Get Segments: {response.status_code}")
             
