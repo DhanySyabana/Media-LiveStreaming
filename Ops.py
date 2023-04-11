@@ -117,11 +117,15 @@ class Ops:
 
 
     def execute(self) -> None:
-        self.start_time = time.time()
-        data = self.get_file_data()
-        message = self.parse_message(data)
-        self.send_message(message)
-        logging.info("Success execute task")
+        try:
+            self.start_time = time.time()
+            data = self.get_file_data()
+            message = self.parse_message(data)
+            self.send_message(message)
+            logging.info("Success execute task")
+        except Exception as e:
+            logging.error(f"Error: {e}")
+            self.start_proses = False
         return None
 
 
