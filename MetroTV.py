@@ -78,7 +78,7 @@ class MetroTV:
             }
 
             to_server = json.dumps(to_server)
-            Socket(s).send_msg(bytes(to_server, "utf-8"))
+            Socket(s).send_msg(bytes(to_server))
 
             response = s.recv(self.buffer_size)
             response = eval(response)
