@@ -123,7 +123,7 @@ class Ops:
                     self.send_message(message)  
                     logging.info("Success execute task")
                     progress_bar.reset()
-                    os.system('cls' if os.name == 'nt' else 'clear')
+                    # os.system('cls' if os.name == 'nt' else 'clear')
                        
                 progress_bar.update(1)
                 time.sleep(1)       
