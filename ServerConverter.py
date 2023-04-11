@@ -4,6 +4,7 @@ from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
+from settings.TypeDataConverter import TypeDataConverter
 
 class ServerConverter:
 
@@ -38,7 +39,7 @@ class ServerConverter:
                             break
                         logging.info(F"Received request convert video from {addr}")
                         
-                        data = eval(data)
+                        data = TypeDataConverter(data.decode("utf-8")).binary_to_dict()
 
                         response = None
 
