@@ -1,7 +1,7 @@
 import json
 import socket
+import struct
 import logging
-from libs.Socket import Socket
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -34,15 +34,24 @@ class ServerConverter:
                 with conn:
                     logging.info(F"Connected by {addr}")
                     while True:
-                        data = conn.recv(self.buffer_size)
+                        data_format = struct.Struct('I')
+                        data_length = conn.recv(data_format.size)
 
-                        if not data:
+                        if not data_length:
                             break
                         logging.info(F"Received request convert video from {addr}")
-                        
 
-                        data = Socket(s).recv_msg()
-                        data = json.loads(data)
+                        
+                        data_length = data_format.unpack(data_length)[0]
+
+                        data = bytearray()
+                        while len(data) < data_length:
+                            chunk = conn.recv(self.buffer_size)
+                            if not chunk:
+                                break
+                            data += chunk
+
+                        data = json.loads(data.decode("utf-8"))
 
                         response = None
 

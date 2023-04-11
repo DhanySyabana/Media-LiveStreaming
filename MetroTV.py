@@ -2,6 +2,7 @@ import time
 import m3u8
 import json
 import socket
+import struct
 import logging
 import datetime
 import streamlink
@@ -9,7 +10,6 @@ import urllib.parse
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
-from libs.Socket import Socket
 
 class MetroTV:
 
@@ -77,8 +77,15 @@ class MetroTV:
                 "sequence": self.sequence
             }
 
-            to_server = json.dumps(to_server)
-            Socket(s).send_msg(bytes(to_server))
+            to_server = json.dumps(to_server).encode("utf-8")
+            data_format = struct.Struct('I')
+            data_length = data_format.pack(len(to_server))
+            s.sendall(data_length)
+
+            offset = 0
+            while offset < data_length:
+                sent_bytes = s.send(to_server[offset:])
+                offset += sent_bytes
 
             response = s.recv(self.buffer_size)
             response = eval(response)
