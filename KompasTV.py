@@ -133,6 +133,7 @@ class KompasTV:
                         s.connect((self.converter_host, self.converter_port))
 
                         to_server = {
+                            "event": "concat",
                             "environment": self.environment,
                             "storage_path": self.upload_location,
                             "mode": "w",
