@@ -1,5 +1,6 @@
 import time
 import m3u8
+import json
 import socket
 import logging
 import datetime
@@ -7,7 +8,6 @@ import streamlink
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
-from settings.TypeDataConverter import TypeDataConverter
 
 class MetroTV:
 
@@ -73,9 +73,8 @@ class MetroTV:
                 "sequence": self.sequence
             }
 
-            to_server = TypeDataConverter(to_server).dict_to_binary()
-            to_server = bytes(to_server)
-            s.sendall(to_server)
+            to_server = json.dumps(to_server)
+            s.sendall(bytes(to_server, "utf-8"))
 
             response = s.recv(self.buffer_size)
             response = eval(response)

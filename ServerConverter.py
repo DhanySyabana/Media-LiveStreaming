@@ -1,10 +1,10 @@
+import json
 import socket
 import logging
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
-from settings.TypeDataConverter import TypeDataConverter
 
 class ServerConverter:
 
@@ -39,7 +39,7 @@ class ServerConverter:
                             break
                         logging.info(F"Received request convert video from {addr}")
                         
-                        data = TypeDataConverter(data).binary_to_dict()
+                        data = json.loads(data)
 
                         response = None
 
