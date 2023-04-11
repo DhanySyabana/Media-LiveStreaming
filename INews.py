@@ -1,10 +1,12 @@
 import time
 import m3u8
+import socket
 import logging
 import datetime
 from urllib import parse
 from libs.Loggers import Loggers
 from libs.Selenium import Selenium
+from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
 
@@ -14,19 +16,17 @@ class INews:
                 self,
                 environment:str,
                 url:str,
-                sdi:str = "inews-sdi.m3u8",
-                host_directory:str = "https://d-inews.rctiplus.id",
+                sdi:str = None,
+                host_directory:str = None,
                 search_ext:str = ".m3u8",
-                auth_key:str = "auth_key",
-                resolution:str = "640x360",
+                auth_key:str = None,
+                resolution:str = None,
                 upload_location = None,
-                delay_duration:int = 8,
-                mp4_duration:int = 660,
-                custom_headers:dict = {
-                    'origin': 'https://embed.rctiplus.com',
-                    'referer': 'https://embed.rctiplus.com',
-                    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-                }) -> None:
+                custom_headers:dict = None,
+                converter_host: str = None,
+                converter_port: int = None,
+                buffer_size: int = None
+            ) -> None:
         self.environment = environment
         self.url = url
         self.sdi = sdi
@@ -35,14 +35,16 @@ class INews:
         self.auth_key = auth_key
         self.resolution = resolution
         self.upload_location = upload_location
-        self.delay_duration = delay_duration
-        self.mp4_duration = mp4_duration
+        self.video_duration = 8
+        self.duration_output = 60 * 60
         self.custom_headers = custom_headers
         self.start_process = True
-        self.start_time = time.time()
         self.sequence = None
         self.segment_status = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
+        self.converter_host = converter_host
+        self.converter_port = converter_port
+        self.buffer_size = buffer_size
         Loggers()
         super().__init__()
 
@@ -105,7 +107,7 @@ class INews:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-            segment_uri = segments[0]["uri"]
+            segment_uri = segments[-1]["uri"]
             
             url_segment = F"{self.host_directory}/{segment_uri}"
             
@@ -156,6 +158,17 @@ class INews:
         logging.info("Close Selenium Driver")
         
         return token
+    
+
+    def CheckTSFiles(self) -> dict:
+        last_ts = F"{self.sequence}.ts"
+        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
+        
+        if get_total_files * self.video_duration == self.duration_output:
+            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
+            return dict(status=True, data_ts=list_files)
+        
+        return dict(status=False, data_ts=[])
         
 
     def StartEngine(self) -> None:
@@ -170,8 +183,6 @@ class INews:
         logging.info("Get Playlist URI")
         playlist_uri = self.GetPlaylist(token)
         
-
-        self.start_time = time.time()
         try:
             while self.start_process:
                 if playlist_uri is not None:
@@ -188,28 +199,43 @@ class INews:
 
                         logging.info("Retry Get Segment URI")
                         segments_uri = self.GetSegments(playlist_uri)
-                        time.sleep(2)
+                        time.sleep(self.video_duration - 6)
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)
 
-                    if time.time() - self.start_time > self.mp4_duration:
-                        now_filename = F"INEWSSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                        self.video_prosessor.ConcatTS(
-                            filename=now_filename,
-                            mode="w",
-                        )
+                    check_ts = self.CheckTSFiles()
+                    status_ts = check_ts["status"]
+                    data_ts = check_ts["data_ts"]
 
-                        self.start_time = time.time()
+                    if status_ts:
+                        now_filename = F"INEWSSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                        logging.info("Request to Server Converter")
+                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                            s.connect((self.converter_host, self.converter_port))
+
+                            to_server = {
+                                "environment": self.environment,
+                                "storage_path": self.upload_location,
+                                "mode": "w",
+                                "filename": now_filename,
+                            }
+                            to_server = bytes(str(to_server), "utf-8")
+                            s.sendall(to_server)
+
+                            response = s.recv(self.buffer_size)
+                            response = eval(response)
+                            logging.info(F"Message from Server Converter: {response['message']}")
 
                         logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder()
+                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
-                    time.sleep(self.delay_duration)
                 else:
                     logging.info("Retry Get Playlist URI")
                     playlist_uri = self.GetPlaylist(token)
-                    time.sleep(2)
+                    time.sleep(self.video_duration - 6)
+
+                time.sleep(self.video_duration)
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
@@ -219,6 +245,20 @@ class INews:
             return None
 
 if __name__ == "__main__":
-    url = "https://tv.inews.id/live"
-    inews = INews(environment="prod", url=url, upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING")
+    ENGINE_NAME = "INEWSSTREAMING"
+    CONFIG = Config()
+    ENGINE = CONFIG.ENGINE[ENGINE_NAME]
+    inews = INews(
+        environment=ENGINE["ENVIRONMENT"],
+        url=ENGINE["URL"],
+        sdi=ENGINE["SDI"],
+        host_directory=ENGINE["HOST_DIRECTORY"],
+        auth_key=ENGINE["AUTH_KEY"],
+        resolution=ENGINE["RESOLUTION"],
+        upload_location=ENGINE["UPLOAD_LOCATION"],
+        custom_headers=ENGINE["HEADERS"],
+        converter_host=CONFIG.SOCKET_SERVER["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+    )
     inews.StartEngine()   

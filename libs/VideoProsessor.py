@@ -14,7 +14,11 @@ class VideoProsessor:
 
     def WriteFile(self, file_name:str, content, mode:str, folder:str) -> None:
         try:
-            path = F"{self.storage_path}/{folder}"
+            if self.environment == "dev":
+                path = F"{os.getcwd()}/{self.storage_path}/{folder}"
+            else:
+                path = F"{self.storage_path}/{folder}"
+
             if not os.path.exists(path):
                 os.makedirs(path)
             
@@ -24,7 +28,7 @@ class VideoProsessor:
         except Exception as e:
             logging.error(F"Error Write File: {e}")
 
-    def ConcatTS(self, filename:str, mode:str) -> None:
+    def ConcatTS(self, filename:str, mode:str) -> dict:
         try:
             ts_files = list()
             if self.environment == "dev":
@@ -43,30 +47,85 @@ class VideoProsessor:
                     ts_files.append(F"{path_ts}/{file}")
 
             ts_files.sort()
-            with open(F"{path_ts}/merged.txt", mode) as file:
+            with open(F"{path_ts}/{filename}.txt", mode) as file:
                 for ts in ts_files:
                     file.write(F"file '{ts}'\n")
 
-            os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/merged.txt -c copy {path_mp4}/{filename}.mp4")
-            logging.info("Success Concate TS to MP4")
+            os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
+            logging.info("Success Concat TS to MP4")
+            return {
+                "status": True,
+                "message": "Success Concat TS to MP4",
+                "path": F"{path_mp4}/{filename}.mp4"
+            }
+        
         except Exception as e:
-            logging.error(F"Error Concate TS to MP4: {e}")
+            logging.error(F"Error Concat TS to MP4: {e}")
+            return {
+                "status": False,
+                "message": F"Error Concat TS to MP4: {e}",
+                "path": None
+            }
 
 
-    def CleanUPTSFolder(self) -> None:
+    def CleanUPTSFolder(self, list_ts:list = [], metadata:str = None) -> None:
         try:
             if self.environment == "dev":
-                cwd = os.getcwd()
-                path_ts = F"{cwd}/{self.storage_path}/ts"
+                path_ts = F"{os.getcwd()}/{self.storage_path}/ts"
             else:
                 path_ts = F"{self.storage_path}/ts"
             
             for file in os.listdir(path_ts):
-                if file.endswith(".ts") or file.endswith(".txt"):
-                    os.remove(F"{path_ts}/{file}")
+                if len(list_ts) > 0:
+                    if file in list_ts or file == F"{metadata}.txt":
+                        os.remove(F"{path_ts}/{file}")
+                else:
+                    if file.endswith(".txt") or file.endswith(".ts") : os.remove(F"{path_ts}/{file}")
+                
             logging.info("Success Cleanup TS")
         except Exception as e:
             logging.error(F"Error Cleanup TS: {e}")
+
+    
+    def GetTotalFiles(self, folder:str, last_ts:str) -> int:
+        try:
+            if self.environment == "dev":
+                path = F"{os.getcwd()}/{self.storage_path}/{folder}"
+            else:
+                path = F"{self.storage_path}/{folder}"
+            
+            #calculate total files in folder with last file ts
+            files = sorted(os.listdir(path))
+            total_files = 0
+            for file in files:
+                if file.endswith(".ts"):
+                    total_files += 1
+                    if file == last_ts:
+                        break
+            logging.info(F"Total Files: {total_files}")
+            return total_files
+        except Exception as e:
+            logging.error(F"Error Get Total Files: {e}")
+            return 0
+        
+    def ListFiles(self, folder:str, last_ts:str) -> list:
+        try:
+            if self.environment == "dev":
+                path = F"{os.getcwd()}/{self.storage_path}/{folder}"
+            else:
+                path = F"{self.storage_path}/{folder}"
+            
+            files = sorted(os.listdir(path))
+            files_list = list()
+            for file in files:
+                if file.endswith(".ts"):
+                    files_list.append(file)
+                    if file == last_ts:
+                        break
+            return files
+        except Exception as e:
+            logging.error(F"Error List Files: {e}")
+            return []
 
 
     

@@ -17,7 +17,7 @@ class Ops:
         self.storage_path_mp4 = {
             "INEWSSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
             "CNNSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
-            "METROSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
+            "METROTVSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
             "KOMPASSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING",
         }
         Loggers()
@@ -32,12 +32,15 @@ class Ops:
         data = {}
         for key, value in self.storage_path_mp4.items():
             total_video = len([name for name in os.listdir(value) if name.endswith(".mp4")])
+
             total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and datetime.datetime.fromtimestamp(os.path.getmtime(F"{value}/{name}")).hour == datetime.datetime.now().hour])
             data[key] = {
                 "total_video": total_video,
+                "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
                 "total_video_last_hour": total_video_last_hour,
-                "last_video_filename": sorted(os.listdir(value), key=lambda x: os.path.getmtime(F"{value}/{x}"))[-1],
+                "last_video_filename": os.listdir(value)[-1]
             }
+
         return data
     
     def parse_message(self, data:dict) -> str:
@@ -71,28 +74,32 @@ class Ops:
             Total Video Last 1 Hour: {data[key_data[0]]["total_video_last_hour"]}
             Last Video: {data[key_data[0]]["last_video_filename"]}
             CPU Usage: {float(cpu_usage_0):.2f}%
-            Memory Usage: {float(memory_usage_0)/1024:.2f} MB
+            Memory Usage: {float(memory_usage_0) * 1024:.2f} MB
+            Storage Usage: {data[key_data[0]]["total_size"]:.2f} MB
 
             {key_data[1]}
             Total Video: {data[key_data[1]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[1]]["total_video_last_hour"]}
             Last Video: {data[key_data[1]]["last_video_filename"]}
             CPU Usage: {float(cpu_usage_1):.2f}%
-            Memory Usage: {float(memory_usage_1)/1024:.2f} MB
+            Memory Usage: {float(memory_usage_1) * 1024:.2f} MB
+            Storage Usage: {data[key_data[1]]["total_size"]:.2f} MB
 
             {key_data[2]}
             Total Video: {data[key_data[2]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[2]]["total_video_last_hour"]}
             Last Video: {data[key_data[1]]["last_video_filename"]}
             CPU Usage: {float(cpu_usage_2):.2f}%
-            Memory Usage: {float(memory_usage_2)/1024:.2f} MB
+            Memory Usage: {float(memory_usage_2) * 1024:.2f} MB
+            Storage Usage: {data[key_data[2]]["total_size"]:.2f} MB
 
             {key_data[3]}
             Total Video: {data[key_data[3]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[3]]["total_video_last_hour"]}
             Last Video: {data[key_data[3]]["last_video_filename"]}
             CPU Usage: {float(cpu_usage_3):.2f}%
-            Memory Usage: {float(memory_usage_3)/1024:.2f} MB
+            Memory Usage: {float(memory_usage_3) * 1024:.2f} MB
+            Storage Usage: {data[key_data[3]]["total_size"]:.2f} MB
 
         """
 
