@@ -9,9 +9,9 @@ from libs.HTTPRequest import HTTPRequest
 
 class Ops:
 
-    def __init__(self, token:str, chat_id:str, delay_proses:int, storage_path_mp4:dict) -> None:
-        self.TOKEN:str= token,
-        self.CHAT_ID:str = chat_id,
+    def __init__(self, TOKEN:str, CHAT_ID:str, delay_proses:int, storage_path_mp4:dict) -> None:
+        self.TOKEN:str= TOKEN,
+        self.CHAT_ID:str = CHAT_ID,
         self.start_time = 0
         self.start_proses = True
         self.delay_proses:int = delay_proses
@@ -123,7 +123,7 @@ class Ops:
                     self.send_message(message)  
                     logging.info("Success execute task")
                     progress_bar.reset()
-                    os.system("clear")
+                    os.system('cls' if os.name == 'nt' else 'clear')
                        
                 progress_bar.update(1)
                 time.sleep(1)       
@@ -139,8 +139,8 @@ if __name__ == "__main__":
     CONFIG = Config()
     OPS_CONFIG = CONFIG.OPS
     ops = Ops(
-        token=OPS_CONFIG["TELE_TOKEN"],
-        chat_id=OPS_CONFIG["TELE_CHAT_UD"],
+        TOKEN=OPS_CONFIG["TELE_TOKEN"],
+        CHAT_ID=OPS_CONFIG["TELE_CHAT_ID"],
         delay_proses=OPS_CONFIG["SEND_TIME"],
         storage_path_mp4=OPS_CONFIG["STORAGE_PATH"],
     )

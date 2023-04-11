@@ -49,7 +49,7 @@ class Config(object):
 
     OPS = dict(
         TELE_TOKEN = "5932299476:AAG4YmekrMEVMHaljj01xOqZX1LuBpjEyBw",
-        TELE_CHAT_UD = "-912205350",
+        TELE_CHAT_ID = "-912205350",
         SEND_TIME = 60 * 30,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
