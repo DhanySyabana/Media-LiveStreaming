@@ -73,6 +73,12 @@ class MetroTV:
                 "sequence": self.sequence
             }
 
+            print(stream_segment.uri)
+
+            # encode url 
+
+            to_server["url"] = to_server["url"].replace("https://", "https%3A%2F%2F")
+
             to_server = json.dumps(to_server)
             s.sendall(bytes(to_server, "utf-8"))
 
