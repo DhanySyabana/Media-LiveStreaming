@@ -3,9 +3,8 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "prod",
-            #URL = "https://www.inews.id/streaming",
             URL = "https://tv.inews.id/live",
-	    SDI = "inews-sdi.m3u8",
+	        SDI = "inews-sdi.m3u8",
             AUTH_KEY = "auth_key",
             RESOLUTION = "640x360",
             HOST_DIRECTORY = "https://d-inews.rctiplus.id",
@@ -51,7 +50,7 @@ class Config(object):
     OPS = dict(
         TELE_TOKEN = "5932299476:AAG4YmekrMEVMHaljj01xOqZX1LuBpjEyBw",
         TELE_CHAT_UD = "-912205350",
-        SEND_TIME = 60 * 60,
+        SEND_TIME = 60 * 30,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],

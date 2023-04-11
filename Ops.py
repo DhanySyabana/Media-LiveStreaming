@@ -4,23 +4,18 @@ import tqdm
 import logging
 import datetime
 from libs.Loggers import Loggers
+from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 
 class Ops:
 
     def __init__(self) -> None:
-        self.TOKEN = "5932299476:AAG4YmekrMEVMHaljj01xOqZX1LuBpjEyBw"
-        self.CHAT_ID = "-912205350"
-        self.start_time = time.time()
+        self.TOKEN:str= None,
+        self.CHAT_ID:str = None,
+        self.start_time = 0
         self.start_proses = True
-        self.delay_proses = 30 * 60
-        self.storage_path_mp4 = {
-            "INEWSSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
-            "CNNSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
-            "METROTVSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
-            "KOMPASSTREAMING": "/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING",
-            "SERVERCONVERTER": None
-        }
+        self.delay_proses:int = None
+        self.storage_path_mp4:dict = None
         Loggers()
         super().__init__()
 
@@ -34,7 +29,8 @@ class Ops:
         for key, value in self.storage_path_mp4.items():
             total_video = len([name for name in os.listdir(value) if name.endswith(".mp4")])
 
-            total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and datetime.datetime.fromtimestamp(os.path.getmtime(F"{value}/{name}")).hour == datetime.datetime.now().hour])
+            # total video last 60 minutes
+            total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 3600])
             data[key] = {
                 "total_video": total_video,
                 "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
@@ -112,6 +108,7 @@ class Ops:
             <b>Server Converter</b>
             CPU Usage: {float(cpu_usage_4):.2f}%
             Memory Usage: {float(memory_usage_4) * 1024:.2f} MB
+
         """
 
 
@@ -119,7 +116,7 @@ class Ops:
         progress_bar = tqdm.tqdm(total=self.delay_proses, desc="Waiting for next task")
         while self.start_proses:
             try:
-                if time.time() - self.start_time >= self.delay_proses:
+                if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
                     self.start_time = time.time()
                     data = self.get_file_data()
                     message = self.parse_message(data)
@@ -139,5 +136,12 @@ class Ops:
 
 
 if __name__ == "__main__":
-    ops = Ops()
+    CONFIG = Config()
+    OPS_CONFIG = CONFIG.OPS
+    ops = Ops(
+        token=OPS_CONFIG["TELE_TOKEN"],
+        chat_id=OPS_CONFIG["TELE_CHAT_UD"],
+        delay_proses=OPS_CONFIG["SEND_TIME"],
+        storage_path_mp4=OPS_CONFIG["STORAGE_PATH"],
+    )
     ops.StartEngine()
