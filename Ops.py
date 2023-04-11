@@ -47,6 +47,26 @@ class Ops:
     
     def parse_message(self, data:dict) -> str:
         key_data = list(data.keys())
+
+        cpu_usage_0 = 0
+        memory_usage_0 = 0
+        network_usage_0 = 0
+
+        cpu_usage_1 = 0
+        memory_usage_1 = 0
+        network_usage_1 = 0
+
+        cpu_usage_2 = 0
+        memory_usage_2 = 0
+        network_usage_2 = 0
+
+        cpu_usage_3 = 0
+        memory_usage_3 = 0
+        network_usage_3 = 0
+
+        cpu_usage_4 = 0
+        memory_usage_4 = 0
+        network_usage_4 = 0
         
         for proc in psutil.process_iter():
             if "INews.py" in proc.name():
