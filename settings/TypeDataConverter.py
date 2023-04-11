@@ -12,5 +12,8 @@ class TypeDataConverter:
         return bin.encode("utf-8")
     
     def binary_to_dict(self):
+        if type(self.data) == bytes:
+            self.data = self.data.decode()
+
         jsn = ''.join(chr(int(x, 2)) for x in self.data.split(' '))
         return json.loads(jsn)
