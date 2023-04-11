@@ -39,7 +39,7 @@ class Ops:
                 "total_video": total_video,
                 "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
                 "total_video_last_hour": total_video_last_hour,
-                "last_video_filename": max(glob.iglob(F"{value}/*.mp4"), key=os.path.getctime)
+                "last_video_filename": max(glob.iglob(F"{value}/*.mp4"), key=os.path.getctime).split("/")[-1],
             }
 
         return data
@@ -49,69 +49,90 @@ class Ops:
         
         cpu_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $3}'").read()
         memory_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $4}'").read()
+        network_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $6}'").read()
         if cpu_usage_0 == "" : cpu_usage_0 = 0
         if memory_usage_0 == "" : memory_usage_0 = 0
+        if network_usage_0 == "" : network_usage_0 = 0
 
         cpu_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $3}'").read()
         memory_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $4}'").read()
+        network_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $6}'").read()
         if cpu_usage_1 == "" : cpu_usage_1 = 0
         if memory_usage_1 == "" : memory_usage_1 = 0
+        if network_usage_1 == "" : network_usage_1 = 0
 
         cpu_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $3}'").read() 
         memory_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $4}'").read()
+        network_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $6}'").read()
         if cpu_usage_2 == "" : cpu_usage_2 = 0
         if memory_usage_2 == "" : memory_usage_2 = 0
+        if network_usage_2 == "" : network_usage_2 = 0
 
         cpu_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $3}'").read()
         memory_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $4}'").read()
+        network_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $6}'").read()
         if cpu_usage_3 == "" : cpu_usage_3 = 0
         if memory_usage_3 == "" : memory_usage_3 = 0
+        if network_usage_3 == "" : network_usage_3 = 0
 
         cpu_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $3}'").read()
         memory_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $4}'").read()
+        network_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $6}'").read()
         if cpu_usage_4 == "" : cpu_usage_4 = 0
         if memory_usage_4 == "" : memory_usage_4 = 0
+        if network_usage_4 == "" : network_usage_4 = 0
 
         return F"""
+        
             <b>Ops - Live Streaming Status</b>
 
-            {key_data[0]}
+            <b>{key_data[0]}</b>
             Total Video: {data[key_data[0]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[0]]["total_video_last_hour"]}
             Last Video: {data[key_data[0]]["last_video_filename"]}
+
             CPU Usage: {float(cpu_usage_0):.2f}%
             Memory Usage: {float(memory_usage_0) * 1024:.2f} MB
             Storage Usage: {data[key_data[0]]["total_size"]:.2f} MB
+            Network Usage: {float(network_usage_0) / 1024:.2f} MB
 
-            {key_data[1]}
+            <b>{key_data[1]}</b>
             Total Video: {data[key_data[1]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[1]]["total_video_last_hour"]}
             Last Video: {data[key_data[1]]["last_video_filename"]}
+
             CPU Usage: {float(cpu_usage_1):.2f}%
             Memory Usage: {float(memory_usage_1) * 1024:.2f} MB
             Storage Usage: {data[key_data[1]]["total_size"]:.2f} MB
+            Network Usage: {float(network_usage_1) / 1024:.2f} MB
 
-            {key_data[2]}
+            <b>{key_data[2]}</b>
             Total Video: {data[key_data[2]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[2]]["total_video_last_hour"]}
             Last Video: {data[key_data[1]]["last_video_filename"]}
+
             CPU Usage: {float(cpu_usage_2):.2f}%
             Memory Usage: {float(memory_usage_2) * 1024:.2f} MB
             Storage Usage: {data[key_data[2]]["total_size"]:.2f} MB
+            Network Usage: {float(network_usage_2) / 1024:.2f} MB
 
-            {key_data[3]}
+            <b>{key_data[3]}</b>
             Total Video: {data[key_data[3]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[3]]["total_video_last_hour"]}
             Last Video: {data[key_data[3]]["last_video_filename"]}
+
             CPU Usage: {float(cpu_usage_3):.2f}%
             Memory Usage: {float(memory_usage_3) * 1024:.2f} MB
             Storage Usage: {data[key_data[3]]["total_size"]:.2f} MB
+            Network Usage: {float(network_usage_3) / 1024:.2f} MB
 
-            ---------------------------------------------
+            --------------------------------------------------------------
 
             <b>Server Converter</b>
             CPU Usage: {float(cpu_usage_4):.2f}%
             Memory Usage: {float(memory_usage_4) * 1024:.2f} MB
+            Network Usage: {float(network_usage_4) / 1024:.2f} MB
+
 
         """
 
