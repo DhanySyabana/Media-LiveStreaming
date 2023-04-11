@@ -123,20 +123,25 @@ class INews:
         return url_segment
     
     def DownloadSegment(self, segment_uri:str) -> None:
-        response = HTTPRequest("get", segment_uri, self.custom_headers).Hit()
-        if response.status_code == 200:
-            file_name = F"{self.sequence}.ts"
-            
-            self.video_prosessor.WriteFile(
-                file_name=file_name,
-                content=response.content,
-                mode="wb",
-                folder="ts"
-            )
-            logging.info(F"Success Download Segment: {file_name}")
-        else:
-            logging.error(F"Error Download Segment: {response.status_code}")
-        logging.info(F"Succes Download Segment")
+        logging.info("Request to Server Converter - Download Segment")
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self.converter_host, self.converter_port))
+
+            to_server = {
+                "event": "download",
+                "environment": self.environment,
+                "storage_path": self.upload_location,
+                "method": "get",
+                "url": segment_uri,
+                "headers": self.custom_headers,
+                "sequence": self.sequence
+            }
+            to_server = bytes(str(to_server), "utf-8")
+            s.sendall(to_server)
+
+            response = s.recv(self.buffer_size)
+            response = eval(response)
+            logging.info(F"Message from Server Converter: {response['message']}")
         return None
     
     def GetToken(self) -> str:
@@ -203,18 +208,19 @@ class INews:
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)
-
+                    
                     check_ts = self.CheckTSFiles()
                     status_ts = check_ts["status"]
                     data_ts = check_ts["data_ts"]
 
                     if status_ts:
                         now_filename = F"INEWSSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                        logging.info("Request to Server Converter")
+                        logging.info("Request to Server Converter - Concat TS")
                         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             s.connect((self.converter_host, self.converter_port))
 
                             to_server = {
+                                "event": "concat",
                                 "environment": self.environment,
                                 "storage_path": self.upload_location,
                                 "mode": "w",

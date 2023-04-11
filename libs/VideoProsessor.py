@@ -12,7 +12,7 @@ class VideoProsessor:
         self.storage_path:str = storage_path
         super().__init__()
 
-    def WriteFile(self, file_name:str, content, mode:str, folder:str) -> None:
+    def WriteFile(self, file_name:str, content, mode:str, folder:str) -> dict:
         try:
             if self.environment == "dev":
                 path = F"{os.getcwd()}/{self.storage_path}/{folder}"
@@ -25,8 +25,18 @@ class VideoProsessor:
             with open(F"{path}/{file_name}", mode) as file:
                 file.write(content)
             logging.info(F"Success Write File: {file_name}")
+            return {
+                "status": True,
+                "message": F"Success Write File: {file_name}",
+                "path": F"{path}/{file_name}"
+            }
         except Exception as e:
             logging.error(F"Error Write File: {e}")
+            return {
+                "status": False,
+                "message": F"Error Write File: {e}",
+                "path": None
+            }
 
     def ConcatTS(self, filename:str, mode:str) -> dict:
         try:

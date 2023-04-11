@@ -2,6 +2,7 @@ import socket
 import logging
 from libs.Loggers import Loggers
 from settings.Config import Config
+from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
 
 class ServerConverter:
@@ -38,18 +39,39 @@ class ServerConverter:
                         logging.info(F"Received request convert video from {addr}")
                         
                         data = eval(data)
+
+                        response = None
+
                         video_prosessor = VideoProsessor(
                             environment=data["environment"],
                             storage_path=data["storage_path"]
                         )
 
-                        concatTS = video_prosessor.ConcatTS(
-                            filename=data["filename"],
-                            mode=data["mode"],
-                        )
-                    
-                        concatTS = bytes(str(concatTS), "utf-8")
-                        conn.sendall(concatTS)
+                        if data["event"] == "concat":
+                            response = video_prosessor.ConcatTS(
+                                filename=data["filename"],
+                                mode=data["mode"],
+                            )
+                        elif data["event"] == "download":
+                            response_http = HTTPRequest(data["method"], data["url"], data["headers"]).Hit()
+                            if response_http.status_code == 200:
+                                file_name = F"{data['sequence']}.ts"
+                                
+                                response = video_prosessor.WriteFile(
+                                    file_name=file_name,
+                                    content=response_http.content,
+                                    mode="wb",
+                                    folder="ts"
+                                )
+                                logging.info(F"Success Download Segment: {file_name}")
+                            else:
+                                logging.error(F"Error Download Segment: {response_http.status_code}")
+                            logging.info(F"Succes Download Segment")
+                        else:
+                            logging.error(F"Error Event: {data['event']}")
+                        
+                        response = bytes(str(response), "utf-8")
+                        conn.sendall(response)
 
         except KeyboardInterrupt:
             logging.info("Closing Server Connection...")
