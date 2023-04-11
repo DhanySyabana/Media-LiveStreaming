@@ -139,8 +139,8 @@ if __name__ == "__main__":
     CONFIG = Config()
     OPS_CONFIG = CONFIG.OPS
     ops = Ops(
-        token=OPS_CONFIG["TELE_TOKEN"],
-        chat_id=OPS_CONFIG["TELE_CHAT_UD"],
+        TOKEN=OPS_CONFIG["TELE_TOKEN"],
+        CHAT_ID=OPS_CONFIG["TELE_CHAT_UD"],
         delay_proses=OPS_CONFIG["SEND_TIME"],
         storage_path_mp4=OPS_CONFIG["STORAGE_PATH"],
     )
