@@ -1,4 +1,3 @@
-import json
 import socket
 import struct
 import logging
@@ -51,7 +50,8 @@ class ServerConverter:
                                 break
                             data += chunk
 
-                        data = json.loads(data.decode("utf-8"))
+                        data = data.decode("utf-8")
+                        data = eval(data)
 
                         response = None
 

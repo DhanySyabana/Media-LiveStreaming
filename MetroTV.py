@@ -1,6 +1,5 @@
 import time
 import m3u8
-import json
 import socket
 import struct
 import logging
@@ -77,7 +76,7 @@ class MetroTV:
                 "sequence": self.sequence
             }
 
-            to_server = json.dumps(to_server).encode("utf-8")
+            to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
             data_length = len(to_server)
             s.sendall(data_format.pack(data_length))
