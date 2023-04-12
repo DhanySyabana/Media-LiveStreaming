@@ -217,6 +217,8 @@ class INews:
                         logging.info("Retry Get Segment URI")
                         segments_uri = self.GetSegments(playlist_uri)
                         time.sleep(self.video_duration - 6)
+
+                    time.sleep(self.video_duration)
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)
@@ -263,7 +265,6 @@ class INews:
                     playlist_uri = self.GetPlaylist(token)
                     time.sleep(self.video_duration - 6)
 
-                time.sleep(self.video_duration)
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")

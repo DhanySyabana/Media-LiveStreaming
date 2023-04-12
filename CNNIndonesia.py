@@ -121,6 +121,8 @@ class CNNIndonesia:
                     segment_uri = self.GetSegment()
                     time.sleep(self.video_duration - 2)
 
+                time.sleep(self.video_duration)
+
                 logging.info("Download segment")
                 self.DownloadSegment(segment_uri)
                 
@@ -162,8 +164,6 @@ class CNNIndonesia:
 
                     logging.info("Cleanup TS")
                     self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-                
-                time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
             self.start_process = False

@@ -119,6 +119,8 @@ class KompasTV:
                     stream_segment = self.GetStreamSegment()
                     time.sleep(self.video_duration - 3)
 
+                time.sleep(self.video_duration)
+
                 logging.info("Record Stream")
                 self.RecordStream(stream_segment)
 
@@ -158,8 +160,6 @@ class KompasTV:
 
                     logging.info("Cleanup TS")
                     self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
-                time.sleep(self.video_duration)
                 
         except KeyboardInterrupt:
             self.start_process = False
