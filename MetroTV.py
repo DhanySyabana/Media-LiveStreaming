@@ -48,10 +48,7 @@ class MetroTV:
             m3u8_obj = m3u8.load(stream_url.args['url'])
             stream_segment = m3u8_obj.segments[-1]
 
-            if self.sequence is None:
-                self.sequence = int(stream_segment.uri.split("sq/")[1].split("/goap")[0])
-            else:
-                self.sequence = self.sequence + 1
+            self.sequence = int(stream_segment.uri.split("sq/")[1].split("/goap")[0])
         except streamlink.exceptions.PluginError as e:
             stream_segment = None
             logging.error(F"Error Get Stream Segment: {e}")
@@ -119,7 +116,7 @@ class MetroTV:
                     stream_segment = self.GetStreamSegment()
                     time.sleep(self.video_duration - 3)
 
-                time.sleep(self.video_duration)
+                time.sleep(self.video_duration - 4)
 
                 logging.info("Record Stream")
                 self.RecordStream(stream_segment)

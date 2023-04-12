@@ -111,11 +111,7 @@ class INews:
             segment_uri = segments[-1]["uri"]
             
             url_segment = F"{self.host_directory}/{segment_uri}"
-            
-            if self.sequence is None:
-                self.sequence = int(url_segment.split("seq=")[1].split(".ts")[0])
-            else:
-                self.sequence = self.sequence + 1
+            self.sequence = int(url_segment.split("seq=")[1].split(".ts")[0])
         else:
             url_segment = None
             self.segment_status = response.status_code
@@ -218,7 +214,7 @@ class INews:
                         segments_uri = self.GetSegments(playlist_uri)
                         time.sleep(self.video_duration - 6)
 
-                    time.sleep(self.video_duration)
+                    time.sleep(self.video_duration - 7)
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)

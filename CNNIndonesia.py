@@ -50,11 +50,7 @@ class CNNIndonesia:
             segments = m3u8_data["segments"]
             segment_uri = segments[-1]["uri"]
 
-            if self.media_sequence is None:
-                self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
-            else:
-                self.media_sequence += 1
-            
+            self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
             url_segment = F"{self.host_directory}/{segment_uri}"
         else:
             logging.error(F"Error Get Segments: {response.status_code}")
@@ -121,7 +117,7 @@ class CNNIndonesia:
                     segment_uri = self.GetSegment()
                     time.sleep(self.video_duration - 2)
 
-                time.sleep(self.video_duration)
+                time.sleep(self.video_duration - 3)
 
                 logging.info("Download segment")
                 self.DownloadSegment(segment_uri)
