@@ -214,7 +214,7 @@ class INews:
                         segments_uri = self.GetSegments(playlist_uri)
                         time.sleep(self.video_duration - 6)
 
-                    time.sleep(self.video_duration / 2)
+                    # time.sleep(self.video_duration / 2)
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)

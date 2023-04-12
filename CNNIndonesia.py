@@ -117,7 +117,7 @@ class CNNIndonesia:
                     segment_uri = self.GetSegment()
                     time.sleep(self.video_duration - 2)
 
-                time.sleep(self.video_duration / 2)
+                # time.sleep(self.video_duration / 2)
 
                 logging.info("Download segment")
                 self.DownloadSegment(segment_uri)
