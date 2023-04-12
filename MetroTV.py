@@ -116,7 +116,7 @@ class MetroTV:
                     stream_segment = self.GetStreamSegment()
                     time.sleep(self.video_duration - 3)
 
-                time.sleep(self.video_duration - 4)
+                time.sleep(self.video_duration / 2)
 
                 logging.info("Record Stream")
                 self.RecordStream(stream_segment)
