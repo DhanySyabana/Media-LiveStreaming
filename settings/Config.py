@@ -16,6 +16,8 @@ class Config(object):
         CNNSTREAMING = dict(
             ENVIRONMENT = "prod",
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = "640x360",
             URL_SEGMENT = "chunklist_w1002049210_b192000_sleng.m3u8",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
             HEADERS = {

@@ -15,25 +15,28 @@ class CNNIndonesia:
             self,
             environment:str,
             host_directory:str = None,
-            url_segment:str = None,
             upload_location:str = None,
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
-            buffer_size: int = None
+            buffer_size: int = None,
+            playlist: str = None,
+            resolution: str = None
         ) -> None:
         self.environment = environment
         self.host_directory = host_directory
-        self.url_segment = F"{host_directory}/{url_segment}"
+        self.url_segment = None
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
         self.video_duration = 4
-        self.duration_output = 60 * 10
+        self.duration_output = 10
         self.last_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
+        self.playlist = playlist
+        self.resolution = resolution
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         Loggers()
         super().__init__()
@@ -96,19 +99,42 @@ class CNNIndonesia:
     
     def CheckTSFiles(self) -> dict:
         last_ts = F"{self.last_sequence}.ts"
+        logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files * self.video_duration == self.duration_output:
+        if get_total_files >= 150:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
-            return dict(status=True, data_ts=list_files)
+            return dict(status=True, data_ts=list_files)    
         
         return dict(status=False, data_ts=[])
+    
+    def GetPlaylist(self) -> str:
+        playlist_uri = None
+        url = F"{self.host_directory}/{self.playlist}"
+        logging.info(F"URL: {url}")
+
+        response = HTTPRequest("get", url, self.custom_headers).Hit()
+        if response.status_code == 200:
+            m3u8_master = m3u8.loads(response.text)
+            playlists = m3u8_master.data["playlists"]
+            for playlist in playlists:
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    break
+            logging.info("Get Playlist Success")
+        else:
+            logging.error(F"Error Get Playlist: {response.status_code}")
+        
+        return playlist_uri
     
     def StartEngine(self) -> None:
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
+
+        logging.info("Get Playlist URI")
+        self.url_segment = self.GetPlaylist()
 
         try:
             while self.start_process:
@@ -180,11 +206,12 @@ if __name__ == "__main__":
     cnnindonesia = CNNIndonesia(
         environment=ENGINE["ENVIRONMENT"],
         host_directory=ENGINE["HOST_DIRECTORY"],
-        url_segment=ENGINE["URL_SEGMENT"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         converter_host=CONFIG.SOCKET_SERVER["HOST"],
         converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        playlist=ENGINE["PLAYLIST"],
+        resolution=ENGINE["RESOLUTION"],
     )
     cnnindonesia.StartEngine()
