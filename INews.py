@@ -108,10 +108,18 @@ class INews:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-            segment_uri = segments[-1]["uri"]
-            
+
+            if self.sequence is None:
+                segment_uri = segments[-1]["uri"]
+                self.sequence = int(segment_uri.split("seq=")[1].split(".ts")[0])
+            else:
+                for segment in segments:
+                    if int(segment["uri"].split("seq=")[1].split(".ts")[0]) == self.sequence + 1:
+                        segment_uri = segment["uri"]
+                        self.sequence = int(segment["uri"].split("seq=")[1].split(".ts")[0])
+                        break
+
             url_segment = F"{self.host_directory}/{segment_uri}"
-            self.sequence = int(url_segment.split("seq=")[1].split(".ts")[0])
         else:
             url_segment = None
             self.segment_status = response.status_code
@@ -214,7 +222,7 @@ class INews:
                         segments_uri = self.GetSegments(playlist_uri)
                         time.sleep(self.video_duration - 6)
 
-                    # time.sleep(self.video_duration / 2)
+                    time.sleep(self.video_duration)
                     
                     logging.info("Download segment")
                     self.DownloadSegment(segments_uri)
