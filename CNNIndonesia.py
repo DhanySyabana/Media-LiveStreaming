@@ -56,6 +56,7 @@ class CNNIndonesia:
                     "url": F"{self.host_directory}/{segment['uri']}",
                     "sequence": int(segment["uri"].split("_")[4].split(".")[0])
                 })
+            file_segments = file_segments[-5:]
         else:
             file_segments = []
             logging.error(F"Error Get Segments: {response.status_code}")

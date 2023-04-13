@@ -112,6 +112,7 @@ class INews:
                     "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
+            file_segments = file_segments[-5:]
         else:
             file_segments = []
             self.segment_status = response.status_code
