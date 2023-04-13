@@ -30,7 +30,7 @@ class CNNIndonesia:
         self.start_process = True
         self.video_duration = 4
         self.duration_output = 60 * 10
-        self.media_sequence = None
+        self.last_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
@@ -38,8 +38,8 @@ class CNNIndonesia:
         Loggers()
         super().__init__()
 
-    def GetSegment(self) -> str:
-        url_segment = None
+    def GetSegment(self) -> list:
+        file_segments = []
 
         response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
         
@@ -48,23 +48,18 @@ class CNNIndonesia:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-            segment_uri = None
-            if self.media_sequence is None:
-                segment_uri = segments[-1]["uri"]
-                self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
-            else:
-                for segment in segments:
-                    if int(segment["uri"].split("_")[4].split(".")[0]) == self.media_sequence + 1:
-                        segment_uri = segment["uri"]
-                        self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
-                        break
-            url_segment = F"{self.host_directory}/{segment_uri}"
+            for segment in segments:
+                file_segments.append({
+                    "url": F"{self.host_directory}/{segment['uri']}",
+                    "sequence": int(segment["uri"].split("_")[4].split(".")[0])
+                })
         else:
+            file_segments = []
             logging.error(F"Error Get Segments: {response.status_code}")
             
-        return url_segment
+        return file_segments
 
-    def DownloadSegment(self, segment_uri: str) -> None:
+    def DownloadSegment(self, segments: list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -74,9 +69,8 @@ class CNNIndonesia:
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": segment_uri,
-                "headers": self.custom_headers,
-                "sequence": self.media_sequence
+                "segments": segments,
+                "headers": self.custom_headers
             }
             to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
@@ -93,13 +87,15 @@ class CNNIndonesia:
             
             if response:
                 logging.info(F"Message from Server Converter: {response['message']}")
+                self.last_sequence = response["sequence"]
+                logging.info(F"Last Sequence: {self.last_sequence}")
 
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
     
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.media_sequence}.ts"
+        last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
         if get_total_files * self.video_duration == self.duration_output:
@@ -117,17 +113,17 @@ class CNNIndonesia:
         try:
             while self.start_process:
                 logging.info("Get Segment URI")
-                segment_uri = self.GetSegment()
+                segments = self.GetSegment()
 
-                while segment_uri is None:
+                while len(segments) == 0:
                     logging.info("Retry Get Segment URI")
-                    segment_uri = self.GetSegment()
-                    time.sleep(self.video_duration - 2)
+                    segments = self.GetSegment()
+                    time.sleep(self.video_duration)
 
                 time.sleep(self.video_duration)
 
                 logging.info("Download segment")
-                self.DownloadSegment(segment_uri)
+                self.DownloadSegment(segments)
                 
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]

@@ -36,8 +36,8 @@ class INews:
         self.video_duration = 8
         self.duration_output = 60 * 10
         self.custom_headers = custom_headers
+        self.last_sequence = None
         self.start_process = True
-        self.sequence = None
         self.segment_status = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
@@ -76,7 +76,7 @@ class INews:
         logging.info(F"Path SDI: {path_uri}")
         return path_uri
     
-    def GetPlaylist(self, query_sdi) -> str:
+    def GetPlaylist(self, query_sdi:str) -> str:
         playlist_uri = None
         url = F"{self.host_directory}/{query_sdi}"
         logging.info(F"URL: {url}")
@@ -96,8 +96,8 @@ class INews:
         
         return playlist_uri
     
-    def GetSegments(self, playlist_uri) -> str:
-        url_segment = None
+    def GetSegments(self, playlist_uri:str) -> list:
+        file_segments = []
 
         response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
         
@@ -107,26 +107,19 @@ class INews:
 
             segments = m3u8_data["segments"]
 
-            segment_uri = None
-            if self.sequence is None:
-                segment_uri = segments[-1]["uri"]
-                self.sequence = int(segment_uri.split("seq=")[1].split(".ts")[0])
-            else:
-                for segment in segments:
-                    if int(segment["uri"].split("seq=")[1].split(".ts")[0]) == self.sequence + 1:
-                        segment_uri = segment["uri"]
-                        self.sequence = int(segment["uri"].split("seq=")[1].split(".ts")[0])
-                        break
-
-            url_segment = F"{self.host_directory}/{self.query}/{segment_uri}"
+            for segment in segments:
+                file_segments.append({
+                    "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+                    "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
+                })
         else:
-            url_segment = None
+            file_segments = []
             self.segment_status = response.status_code
             logging.error(F"Error Get Segments: {response.status_code}")
         
-        return url_segment
+        return file_segments
     
-    def DownloadSegment(self, segment_uri:str) -> None:
+    def DownloadSegment(self, segments:list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -136,9 +129,8 @@ class INews:
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": segment_uri,
-                "headers": self.custom_headers,
-                "sequence": self.sequence
+                "segments": segments,
+                "headers": self.custom_headers
             }
             to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
@@ -154,6 +146,8 @@ class INews:
             response = eval(response)
             if response:
                 logging.info(F"Message from Server Converter: {response['message']}")
+                self.last_sequence = response["sequence"]
+                logging.info(F"Last Sequence: {self.last_sequence}")
             
             s.close()
             logging.info("Close Connection - Download Segment")
@@ -181,7 +175,7 @@ class INews:
     
 
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.sequence}.ts"
+        last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
         if get_total_files * self.video_duration == self.duration_output:
@@ -207,9 +201,9 @@ class INews:
             while self.start_process:
                 if playlist_uri is not None:
                     logging.info("Get Segment URI")
-                    segments_uri = self.GetSegments(playlist_uri)
+                    segments = self.GetSegments(playlist_uri)
 
-                    while segments_uri is None:
+                    while len(segments) == 0:
                         if self.segment_status == 403:
                             logging.info("Retry Get Token SDI")
                             token = self.GetToken()
@@ -218,14 +212,14 @@ class INews:
                             playlist_uri = self.GetPlaylist(token)
 
                         logging.info("Retry Get Segment URI")
-                        segments_uri = self.GetSegments(playlist_uri)
-                        time.sleep(self.video_duration - 6)
+                        segments = self.GetSegments(playlist_uri)
+                        time.sleep(self.video_duration)
 
                     time.sleep(self.video_duration)
                     
                     logging.info("Download segment")
                     
-                    self.DownloadSegment(segments_uri)
+                    self.DownloadSegment(segments)
                     
                     check_ts = self.CheckTSFiles()
                     status_ts = check_ts["status"]
@@ -257,7 +251,7 @@ class INews:
                             response = s.recv(self.buffer_size)
                             response = eval(response)
                             logging.info(F"Message from Server Converter: {response['message']}")
-
+                            
                             s.close()
                             logging.info("Close Connection - Concat TS")
 
@@ -267,7 +261,7 @@ class INews:
                 else:
                     logging.info("Retry Get Playlist URI")
                     playlist_uri = self.GetPlaylist(token)
-                    time.sleep(self.video_duration - 6)
+                    time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
             self.start_process = False

@@ -28,14 +28,14 @@ class VideoProsessor:
             return {
                 "status": True,
                 "message": F"Success Write File: {file_name}",
-                "path": F"{path}/{file_name}"
+                "sequence": file_name.split(".")[0]
             }
         except Exception as e:
             logging.error(F"Error Write File: {e}")
             return {
                 "status": False,
                 "message": F"Error Write File: {e}",
-                "path": None
+                "sequence": None
             }
 
     def ConcatTS(self, filename:str, mode:str) -> dict:

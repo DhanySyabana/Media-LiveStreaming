@@ -30,7 +30,7 @@ class MetroTV:
         self.custom_headers:dict = headers
         self.video_duration = 5
         self.duration_output = 60 * 10
-        self.sequence = None
+        self.last_sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
@@ -38,8 +38,8 @@ class MetroTV:
         Loggers()
         super().__init__()
 
-    def GetStreamSegment(self) -> m3u8.model.Segment:
-        stream_segment = None
+    def GetStreamSegment(self) -> list:
+        file_segments = []
 
         try:
             streams = streamlink.streams(self.url)
@@ -47,35 +47,30 @@ class MetroTV:
 
             m3u8_obj = m3u8.load(stream_url.args['url'])
             
-            if self.sequence is None:
-                stream_segment = m3u8_obj.segments[-1]
-                self.sequence = int(stream_segment.uri.split("sq/")[1].split("/goap")[0])
-            else:
-                for segment in m3u8_obj.segments:
-                    if int(segment.uri.split("sq/")[1].split("/goap")[0]) == self.sequence + 1:
-                        stream_segment = segment
-                        self.sequence = int(stream_segment.uri.split("sq/")[1].split("/goap")[0])
-                        break
+            segments = m3u8_obj.segments
+            for segment in segments:
+                file_segments.append({
+                    "url": segment.uri,
+                    "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                })
         except streamlink.exceptions.PluginError as e:
-            stream_segment = None
+            file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
 
-        return stream_segment
+        return file_segments
     
-    def RecordStream(self, stream_segment):
+    def RecordStream(self, segments:list) -> None:
         logging.info("Request to Server Converter - Download Segment")
-
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
-            
+
             to_server = {
                 "event": "download",
                 "environment": self.environment,
                 "storage_path": self.upload_location,
                 "method": "get",
-                "url": stream_segment.uri,
-                "headers": self.custom_headers,
-                "sequence": self.sequence
+                "segments": segments,
+                "headers": self.custom_headers
             }
 
             to_server = str(to_server).encode("utf-8")
@@ -90,14 +85,17 @@ class MetroTV:
 
             response = s.recv(self.buffer_size)
             response = eval(response)
-            logging.info(F"Message from Server Converter: {response['message']}")
-    
+            if response:
+                logging.info(F"Message from Server Converter: {response['message']}")
+                self.last_sequence = response["sequence"]
+                logging.info(F"Last Sequence: {self.last_sequence}")
+
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
     
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.sequence}.ts"
+        last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
         if get_total_files * self.video_duration == self.duration_output:
@@ -116,17 +114,17 @@ class MetroTV:
             while self.start_process:
 
                 logging.info("Get Stream Segment")
-                stream_segment = self.GetStreamSegment()
+                segments = self.GetStreamSegment()
 
-                while stream_segment is None:
+                while len(segments) == 0:
                     logging.info("Retrying Stream Segment")
-                    stream_segment = self.GetStreamSegment()
+                    segments = self.GetStreamSegment()
                     time.sleep(self.video_duration)
 
                 time.sleep(self.video_duration)
 
                 logging.info("Record Stream")
-                self.RecordStream(stream_segment)
+                self.RecordStream(segments)
 
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]

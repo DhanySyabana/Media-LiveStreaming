@@ -65,20 +65,31 @@ class ServerConverter:
                                 mode=data["mode"],
                             )
                         elif data["event"] == "download":
-                            response_http = HTTPRequest(data["method"], data["url"], data["headers"]).Hit()
-                            if response_http.status_code == 200:
-                                file_name = F"{data['sequence']}.ts"
+                            response = {
+                                "sequence": None,
+                                "message": None,
+                            }
+
+                            segments = data["segments"]
+
+                            for segment in segments:
                                 
-                                response = video_prosessor.WriteFile(
-                                    file_name=file_name,
-                                    content=response_http.content,
-                                    mode="wb",
-                                    folder="ts"
-                                )
-                                logging.info(F"Success Download Segment: {file_name}")
-                            else:
-                                logging.error(F"Error Download Segment: {response_http.status_code}")
-                            logging.info(F"Succes Download Segment")
+                                response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                if response_http.status_code == 200:
+                                    file_name = F"{segment['sequence']}.ts"
+                                    
+                                    write_file = video_prosessor.WriteFile(
+                                        file_name=file_name,
+                                        content=response_http.content,
+                                        mode="wb",
+                                        folder="ts"
+                                    )
+                                    response["sequence"] = write_file["sequence"]
+                                    response["message"] = write_file["message"]
+                                    logging.info(F"Success Download Segment: {file_name}")
+                                else:
+                                    logging.error(F"Error Download Segment: {response_http.status_code}")
+                                logging.info(F"Succes Download Segment")
                         else:
                             logging.error(F"Error Event: {data['event']}")
                         
