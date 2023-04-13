@@ -17,10 +17,8 @@ class INews:
                 self,
                 environment:str,
                 url:str,
-                sdi:str = None,
                 host_directory:str = None,
                 search_ext:str = ".m3u8",
-                auth_key:str = None,
                 resolution:str = None,
                 upload_location = None,
                 custom_headers:dict = None,
@@ -30,10 +28,9 @@ class INews:
             ) -> None:
         self.environment = environment
         self.url = url
-        self.sdi = sdi
         self.host_directory = host_directory
+        self.query = None
         self.search_ext = search_ext
-        self.auth_key = auth_key
         self.resolution = resolution
         self.upload_location = upload_location
         self.video_duration = 8
@@ -49,8 +46,8 @@ class INews:
         Loggers()
         super().__init__()
 
-    def GetTokenSDI(self, selenium:None) -> str:
-        token_uri = None
+    def GetPathSDI(self, selenium:None) -> str:
+        path_uri = None
         driver = selenium.DriverSelenium()
         driver.get(self.url)
 
@@ -59,10 +56,10 @@ class INews:
                 for request in driver.requests:
                     if request.response:
                         if self.search_ext in request.url and F"{self.host_directory}/" in request.url:
-                            params = parse.parse_qs(parse.urlparse(request.url).query)
-                            token_uri = params[self.auth_key][0]
+                            query = parse.parse_qs(parse.urlparse(request.url).query)["hdnts"][0]
+                            path_uri = F"inews-sdi.m3u8?hdnts={query}"
                             break
-                    if token_uri is not None:
+                    if path_uri is not None:
                         break
             except KeyError:
                 logging.error("Error: KeyError")
@@ -73,15 +70,15 @@ class INews:
                 self.start_process = False
                 selenium.CloseDriver()
                 break
-            if token_uri is not None:
+            if path_uri is not None:
                 break
         
-        logging.info(F"Token SDI: {token_uri}")
-        return token_uri
+        logging.info(F"Path SDI: {path_uri}")
+        return path_uri
     
-    def GetPlaylist(self, token_sdi) -> str:
+    def GetPlaylist(self, query_sdi) -> str:
         playlist_uri = None
-        url = F"{self.host_directory}/{self.sdi}?{self.auth_key}={token_sdi}"
+        url = F"{self.host_directory}/{query_sdi}"
         logging.info(F"URL: {url}")
 
         response = HTTPRequest("get", url, self.custom_headers).Hit()
@@ -91,6 +88,7 @@ class INews:
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
                     playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    self.query = playlist['uri'].split('/')[0]
                     break
             logging.info("Get Playlist Success")
         else:
@@ -109,6 +107,7 @@ class INews:
 
             segments = m3u8_data["segments"]
 
+            segment_uri = None
             if self.sequence is None:
                 segment_uri = segments[-1]["uri"]
                 self.sequence = int(segment_uri.split("seq=")[1].split(".ts")[0])
@@ -119,7 +118,7 @@ class INews:
                         self.sequence = int(segment["uri"].split("seq=")[1].split(".ts")[0])
                         break
 
-            url_segment = F"{self.host_directory}/{segment_uri}"
+            url_segment = F"{self.host_directory}/{self.query}/{segment_uri}"
         else:
             url_segment = None
             self.segment_status = response.status_code
@@ -173,7 +172,7 @@ class INews:
         logging.info("Setup Selenium Options")
 
         logging.info("Get Token SDI")
-        token = self.GetTokenSDI(selenium)
+        token = self.GetPathSDI(selenium)
 
         selenium.CloseDriver()
         logging.info("Close Selenium Driver")
@@ -198,7 +197,7 @@ class INews:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Token SDI")
+        logging.info("Get Path SDI")
         token = self.GetToken()
 
         logging.info("Get Playlist URI")
@@ -225,6 +224,7 @@ class INews:
                     time.sleep(self.video_duration)
                     
                     logging.info("Download segment")
+                    
                     self.DownloadSegment(segments_uri)
                     
                     check_ts = self.CheckTSFiles()
@@ -284,9 +284,7 @@ if __name__ == "__main__":
     inews = INews(
         environment=ENGINE["ENVIRONMENT"],
         url=ENGINE["URL"],
-        sdi=ENGINE["SDI"],
         host_directory=ENGINE["HOST_DIRECTORY"],
-        auth_key=ENGINE["AUTH_KEY"],
         resolution=ENGINE["RESOLUTION"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         custom_headers=ENGINE["HEADERS"],

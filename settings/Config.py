@@ -4,10 +4,8 @@ class Config(object):
         INEWSSTREAMING = dict(
             ENVIRONMENT = "prod",
             URL = "https://tv.inews.id/live",
-	        SDI = "inews-sdi.m3u8",
-            AUTH_KEY = "auth_key",
             RESOLUTION = "640x360",
-            HOST_DIRECTORY = "https://d-inews.rctiplus.id",
+            HOST_DIRECTORY = "https://inews-linier.rctiplus.id",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
             HEADERS = {
                 'origin': 'https://embed.rctiplus.com',

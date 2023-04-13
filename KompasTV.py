@@ -122,7 +122,7 @@ class KompasTV:
                 while stream_segment is None:
                     logging.info("Retrying Stream Segment")
                     stream_segment = self.GetStreamSegment()
-                    time.sleep(self.video_duration - 3)
+                    time.sleep(self.video_duration)
 
                 time.sleep(self.video_duration)
 

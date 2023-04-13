@@ -48,7 +48,7 @@ class CNNIndonesia:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-            
+            segment_uri = None
             if self.media_sequence is None:
                 segment_uri = segments[-1]["uri"]
                 self.media_sequence = int(segment_uri.split("_")[4].split(".")[0])
