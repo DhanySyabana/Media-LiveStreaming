@@ -54,6 +54,9 @@ class KompasTV:
                     "url": segment.uri,
                     "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
                 })
+        except ValueError as e:
+            file_segments = []
+            logging.error(F"Error Get Stream Segment: {e}")
         except streamlink.exceptions.PluginError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
