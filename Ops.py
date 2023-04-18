@@ -48,27 +48,47 @@ class Ops:
         key_data = list(data.keys())
 
         cpu_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $3}'").read()
+        if cpu_usage_0.find("\n") != -1:
+            cpu_usage_0 = cpu_usage_0.split("\n")[0]
         memory_usage_0 = os.popen("ps aux | grep INews.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_0.find("\n") != -1:
+            memory_usage_0 = memory_usage_0.split("\n")[0]
         if cpu_usage_0 == "" : cpu_usage_0 = 0
         if memory_usage_0 == "" : memory_usage_0 = 0
 
         cpu_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $3}'").read()
+        if cpu_usage_1.find("\n") != -1:
+            cpu_usage_1 = cpu_usage_1.split("\n")[0]
         memory_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_1.find("\n") != -1:
+            memory_usage_1 = memory_usage_1.split("\n")[0]
         if cpu_usage_1 == "" : cpu_usage_1 = 0
         if memory_usage_1 == "" : memory_usage_1 = 0
 
         cpu_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $3}'").read() 
+        if cpu_usage_2.find("\n") != -1:
+            cpu_usage_2 = cpu_usage_2.split("\n")[0]
         memory_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_2.find("\n") != -1:
+            memory_usage_2 = memory_usage_2.split("\n")[0]
         if cpu_usage_2 == "" : cpu_usage_2 = 0
         if memory_usage_2 == "" : memory_usage_2 = 0
 
         cpu_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $3}'").read()
+        if cpu_usage_3.find("\n") != -1:
+            cpu_usage_3 = cpu_usage_3.split("\n")[0]
         memory_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_3.find("\n") != -1:
+            memory_usage_3 = memory_usage_3.split("\n")[0]
         if cpu_usage_3 == "" : cpu_usage_3 = 0
         if memory_usage_3 == "" : memory_usage_3 = 0
 
         cpu_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $3}'").read()
+        if cpu_usage_4.find("\n") != -1:
+            cpu_usage_4 = cpu_usage_4.split("\n")[0]
         memory_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_4.find("\n") != -1:
+            memory_usage_4 = memory_usage_4.split("\n")[0]
         if cpu_usage_4 == "" : cpu_usage_4 = 0
         if memory_usage_4 == "" : memory_usage_4 = 0
 
