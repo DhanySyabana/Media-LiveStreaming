@@ -150,7 +150,18 @@ class CNNIndonesia:
                 time.sleep(self.video_duration)
 
                 logging.info("Download segment")
-                self.DownloadSegment(segments)
+
+                try:
+                    self.DownloadSegment(segments)
+                except ConnectionResetError or ConnectionRefusedError:
+                    while True:
+                        try:
+                            self.DownloadSegment(segments)
+                            break
+                        except ConnectionResetError or ConnectionRefusedError:
+                            logging.error("Retry Download Segment")
+                            time.sleep(self.video_duration)
+                            continue
                 
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]

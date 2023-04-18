@@ -128,8 +128,18 @@ class KompasTV:
                 time.sleep(self.video_duration)
 
                 logging.info("Record Stream")
-                self.RecordStream(segments)
-
+                try:
+                    self.RecordStream(segments)
+                except ConnectionResetError or ConnectionRefusedError:
+                    while True:
+                        try:
+                            self.RecordStream(segments)
+                            break
+                        except ConnectionResetError or ConnectionRefusedError:
+                            logging.error("Retry Download Segment")
+                            time.sleep(self.video_duration)
+                            continue
+                
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]
                 data_ts = check_ts["data_ts"]
