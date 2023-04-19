@@ -1,4 +1,5 @@
 import os
+import re
 import logging
 
 class VideoProsessor:
@@ -106,6 +107,7 @@ class VideoProsessor:
             
             #calculate total files in folder with last file ts
             files = sorted(os.listdir(path))
+            files.sort(key=lambda x: int(re.sub('\D', '', x)))
             total_files = 0
             for file in files:
                 if file.endswith(".ts"):
@@ -126,6 +128,7 @@ class VideoProsessor:
                 path = F"{self.storage_path}/{folder}"
             
             files = sorted(os.listdir(path))
+            files.sort(key=lambda x: int(re.sub('\D', '', x)))
             files_list = list()
             for file in files:
                 if file.endswith(".ts"):

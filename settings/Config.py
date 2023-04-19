@@ -3,9 +3,8 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "prod",
-            URL = "https://tv.inews.id/live",
-            RESOLUTION = "640x360",
-            HOST_DIRECTORY = "https://inews-linier.rctiplus.id",
+            RESOLUTION = "426x240",
+            HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
             HEADERS = {
                 'origin': 'https://embed.rctiplus.com',

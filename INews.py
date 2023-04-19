@@ -4,9 +4,7 @@ import socket
 import struct
 import logging
 import datetime
-from urllib import parse
 from libs.Loggers import Loggers
-from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
@@ -16,9 +14,7 @@ class INews:
     def __init__(
                 self,
                 environment:str,
-                url:str,
                 host_directory:str = None,
-                search_ext:str = ".m3u8",
                 resolution:str = None,
                 upload_location = None,
                 custom_headers:dict = None,
@@ -27,14 +23,10 @@ class INews:
                 buffer_size: int = None
             ) -> None:
         self.environment = environment
-        self.url = url
         self.host_directory = host_directory
-        self.query = None
-        self.search_ext = search_ext
         self.resolution = resolution
         self.upload_location = upload_location
-        self.video_duration = 8
-        self.duration_output = 60 * 10
+        self.video_duration = 7
         self.custom_headers = custom_headers
         self.last_sequence = None
         self.start_process = True
@@ -43,42 +35,14 @@ class INews:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
+        self.playlists = "inewstv3.m3u8"
+        self.resolution_path = None
         Loggers()
         super().__init__()
-
-    def GetPathSDI(self, selenium:None) -> str:
-        path_uri = None
-        driver = selenium.DriverSelenium()
-        driver.get(self.url)
-
-        while self.start_process:
-            try:
-                for request in driver.requests:
-                    if request.response:
-                        if self.search_ext in request.url and F"{self.host_directory}/" in request.url:
-                            query = parse.parse_qs(parse.urlparse(request.url).query)["hdnts"][0]
-                            path_uri = F"inews-sdi.m3u8?hdnts={query}"
-                            break
-                    if path_uri is not None:
-                        break
-            except KeyError:
-                logging.error("Error: KeyError")
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            except KeyboardInterrupt:
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            if path_uri is not None:
-                break
-        
-        logging.info(F"Path SDI: {path_uri}")
-        return path_uri
     
-    def GetPlaylist(self, query_sdi:str) -> str:
+    def GetPlaylist(self) -> str:
         playlist_uri = None
-        url = F"{self.host_directory}/{query_sdi}"
+        url = F"{self.host_directory}/{self.playlists}"
         logging.info(F"URL: {url}")
 
         response = HTTPRequest("get", url, self.custom_headers).Hit()
@@ -88,7 +52,7 @@ class INews:
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
                     playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    self.query = playlist['uri'].split('/')[0]
+                    self.resolution_path = playlist["uri"].split("/")[0]
                     break
             logging.info("Get Playlist Success")
         else:
@@ -109,8 +73,8 @@ class INews:
 
             for segment in segments:
                 file_segments.append({
-                    "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
-                    "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
+                    "url": F"{self.host_directory}/{self.resolution_path}/{segment['uri']}",
+                    "sequence": int(segment["uri"].split(".ts")[0])
                 })
             file_segments = file_segments[-5:]
         else:
@@ -153,33 +117,12 @@ class INews:
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
-    
-    def GetToken(self) -> str:
-        logging.info("Setup Selenium")
-        selenium = Selenium(self.url, {
-            "headless": True,
-        })
-
-        selenium.SeleniumCapabilities()
-        logging.info("Setup Selenium Capabilities")
-
-        selenium.SeleniumOptions()
-        logging.info("Setup Selenium Options")
-
-        logging.info("Get Token SDI")
-        token = self.GetPathSDI(selenium)
-
-        selenium.CloseDriver()
-        logging.info("Close Selenium Driver")
-        
-        return token
-    
 
     def CheckTSFiles(self) -> dict:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 75:
+        if get_total_files >= 86:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
@@ -192,12 +135,9 @@ class INews:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Path SDI")
-        token = self.GetToken()
-
         logging.info("Get Playlist URI")
-        playlist_uri = self.GetPlaylist(token)
-        
+        playlist_uri = self.GetPlaylist()
+
         try:
             while self.start_process:
                 if playlist_uri is not None:
@@ -206,11 +146,8 @@ class INews:
 
                     while len(segments) == 0:
                         if self.segment_status == 403:
-                            logging.info("Retry Get Token SDI")
-                            token = self.GetToken()
-
                             logging.info("Retry Get Playlist URI")
-                            playlist_uri = self.GetPlaylist(token)
+                            playlist_uri = self.GetPlaylist()
 
                         logging.info("Retry Get Segment URI")
                         segments = self.GetSegments(playlist_uri)
@@ -271,7 +208,7 @@ class INews:
 
                 else:
                     logging.info("Retry Get Playlist URI")
-                    playlist_uri = self.GetPlaylist(token)
+                    playlist_uri = self.GetPlaylist()
                     time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
@@ -288,7 +225,6 @@ if __name__ == "__main__":
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
     inews = INews(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URL"],
         host_directory=ENGINE["HOST_DIRECTORY"],
         resolution=ENGINE["RESOLUTION"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
