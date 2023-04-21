@@ -35,7 +35,7 @@ class INewsV2:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        self.playlists = "inewstv3.m3u8"
+        self.playlists = "inewstv1.m3u8"
         self.resolution_path = None
         Loggers()
         super().__init__()
