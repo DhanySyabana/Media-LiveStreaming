@@ -38,7 +38,7 @@ class Config(object):
         ),
         METROTVSTREAMING = dict(
             ENVIRONMENT = "prod",
-            URL = "https://www.youtube.com/watch?v=sUlVCNx19pQ",
+            URL = "https://www.youtube.com/watch?v=e2zmCmgQXR4",
             QUALITY = "360p",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
             HEADERS = {
