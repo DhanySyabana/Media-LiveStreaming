@@ -29,7 +29,6 @@ class MetroTV:
         self.upload_location:str = upload_location
         self.custom_headers:dict = headers
         self.video_duration = 5
-        self.duration_output = 60 * 10
         self.last_sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
@@ -53,6 +52,8 @@ class MetroTV:
                     "url": segment.uri,
                     "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
                 })
+            
+            file_segments = file_segments[-5:]
         except ValueError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
