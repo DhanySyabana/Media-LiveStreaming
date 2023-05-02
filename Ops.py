@@ -199,7 +199,7 @@ class Ops:
                 if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
                     self.execute()
                     progress_bar.reset()
-                    os.system('cls' if os.name == 'nt' else 'clear')
+                    # os.system('cls' if os.name == 'nt' else 'clear')
                        
                 progress_bar.update(1)
                 time.sleep(1)       
