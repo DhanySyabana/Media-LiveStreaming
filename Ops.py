@@ -39,8 +39,11 @@ class Ops:
                 "total_video": total_video,
                 "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
                 "total_video_last_hour": total_video_last_hour,
-                "last_video_filename": max(glob.iglob(F"{value}/*.mp4"), key=os.path.getctime).split("/")[-1],
+                "last_video_filename": "-",
             }
+
+            if total_video_last_hour > 0:
+                data[key]["last_video_filename"] = max(glob.iglob(F"{value}/*.mp4"), key=os.path.getctime).split("/")[-1]
 
         return data
     
@@ -199,7 +202,7 @@ class Ops:
                 if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
                     self.execute()
                     progress_bar.reset()
-                    # os.system('cls' if os.name == 'nt' else 'clear')
+                    os.system('cls' if os.name == 'nt' else 'clear')
                        
                 progress_bar.update(1)
                 time.sleep(1)       
