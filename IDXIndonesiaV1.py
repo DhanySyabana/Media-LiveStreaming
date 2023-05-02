@@ -28,7 +28,7 @@ class IDXIndonesiaV1:
         self.environment:str = environment
         self.url:str = url
         self.resolution:str = resolution
-        self.host_directory:str = host_directory
+        self.host_directory:str = None
         self.upload_location:str = upload_location
         self.headers:dict = headers
         self.playlist_directory:str = playlist_directory
@@ -53,6 +53,7 @@ class IDXIndonesiaV1:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
+                    self.host_directory = parse.urlparse(url).scheme + "://" + parse.urlparse(url).netloc
                     playlist_uri = playlist['uri']
                     break
             logging.info("Get Playlist Success")
