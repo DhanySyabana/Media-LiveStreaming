@@ -20,7 +20,6 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            URL_SEGMENT = "chunklist_w1002049210_b192000_sleng.m3u8",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
             HEADERS = {
                 'referer': 'https://www.cnnindonesia.com/',
@@ -38,13 +37,25 @@ class Config(object):
         ),
         METROTVSTREAMING = dict(
             ENVIRONMENT = "prod",
-            URL = "https://www.youtube.com/watch?v=e2zmCmgQXR4",
+            URL = "https://www.youtube.com/watch?v=a_PTnruagQ0",
             QUALITY = "360p",
             UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
+        CNBCSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = "640x360",
+            UPLOAD_LOCATION = "storage/cnbc",
+            HEADERS = {
+                'referer': 'https://www.cnbcindonesia.com/',
+                'origin': 'https://www.cnbcindonesia.com',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+            }
+        )
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -58,6 +69,7 @@ class Config(object):
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"]
         }
     )
 
