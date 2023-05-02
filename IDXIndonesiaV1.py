@@ -17,7 +17,6 @@ class IDXIndonesiaV1:
                  environment:str = None,
                  url:str = None,
                  resolution:str = None,
-                 host_directory:str = None,
                  upload_location:str = None,
                  headers:dict = None,
                  playlist_directory:str = None,
@@ -28,7 +27,6 @@ class IDXIndonesiaV1:
         self.environment:str = environment
         self.url:str = url
         self.resolution:str = resolution
-        self.host_directory:str = None
         self.upload_location:str = upload_location
         self.headers:dict = headers
         self.playlist_directory:str = playlist_directory
@@ -53,7 +51,6 @@ class IDXIndonesiaV1:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    self.host_directory = parse.urlparse(url).scheme + "://" + parse.urlparse(url).netloc
                     playlist_uri = playlist['uri']
                     break
             logging.info("Get Playlist Success")
@@ -122,9 +119,12 @@ class IDXIndonesiaV1:
 
             segments = m3u8_data["segments"]
 
+            url_host = parse.urlparse(playlist_uri).scheme + "://" + parse.urlparse(playlist_uri).netloc
+
             for segment in segments:
+                url  = F"{url_host}/joss/134/idx/{segment['uri']}"
                 file_segments.append({
-                    "url": F"{self.host_directory}/{segment['uri']}",
+                    "url": url,
                     "sequence": int(segment["uri"].split("sleng_")[1].split(".ts")[0])
                 })
             file_segments = file_segments[-5:]
@@ -259,7 +259,7 @@ class IDXIndonesiaV1:
                             logging.info("Close Connection - Concat TS")
 
                         logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                        # self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
                 else:
                     logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
@@ -285,7 +285,6 @@ if __name__ == "__main__":
         environment=ENGINE["ENVIRONMENT"],
         url=ENGINE["URLV1"],
         resolution=ENGINE["RESOLUTIONV1"],
-        host_directory=ENGINE["HOST_DIRECTORYV1"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         playlist_directory=ENGINE["PLAYLIST_DIRECTORYV1"],
