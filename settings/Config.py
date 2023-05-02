@@ -49,7 +49,7 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
+            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/CNBCSTREAMING",
             HEADERS = {
                 'referer': 'https://www.cnbcindonesia.com/',
                 'origin': 'https://www.cnbcindonesia.com',
