@@ -55,6 +55,19 @@ class Config(object):
                 'origin': 'https://www.cnbcindonesia.com',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
+        ),
+        IDXSTREAMING = dict(
+            ENVIRONMENT = "prod",
+            URLV1 = "https://www.indihometv.com/livetv/idx",
+            RESOLUTIONV1 = "640x360",
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8",
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
+            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/IDXSTREAMING",
+            HEADERS = {
+                'origin': 'https://www.indihometv.com',
+                'referer': 'https://www.indihometv.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+            }
         )
     )
 
@@ -69,7 +82,8 @@ class Config(object):
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"]
+            ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"]
         }
     )
 
