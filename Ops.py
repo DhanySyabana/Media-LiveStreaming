@@ -92,6 +92,15 @@ class Ops:
         if cpu_usage_4 == "" : cpu_usage_4 = 0
         if memory_usage_4 == "" : memory_usage_4 = 0
 
+        cpu_usage_5 = os.popen("ps aux | grep CNBCIndonesia.py | grep -v grep | awk '{print $3}'").read()
+        if cpu_usage_5.find("\n") != -1:
+            cpu_usage_5 = cpu_usage_5.split("\n")[0]
+        memory_usage_5 = os.popen("ps aux | grep CNBCIndonesia.py | grep -v grep | awk '{print $4}'").read()
+        if memory_usage_5.find("\n") != -1:
+            memory_usage_5 = memory_usage_5.split("\n")[0]
+        if cpu_usage_5 == "" : cpu_usage_5 = 0
+        if memory_usage_5 == "" : memory_usage_5 = 0
+
         return F"""
         
             <b>Ops - Live Streaming Status</b>
@@ -131,6 +140,15 @@ class Ops:
             CPU Usage: {float(cpu_usage_3):.2f}%
             Memory Usage: {float(memory_usage_3):.2f} MB
             Storage Usage: {data[key_data[3]]["total_size"]:.2f} MB
+
+            <b>{key_data[4]}</b>
+            Total Video: {data[key_data[4]]["total_video"]}
+            Total Video Last 1 Hour: {data[key_data[4]]["total_video_last_hour"]}
+            Last Video: {data[key_data[4]]["last_video_filename"]}
+
+            CPU Usage: {float(cpu_usage_5):.2f}%
+            Memory Usage: {float(memory_usage_5):.2f} MB
+            Storage Usage: {data[key_data[4]]["total_size"]:.2f} MB
 
             --------------------------------------------------------------
 

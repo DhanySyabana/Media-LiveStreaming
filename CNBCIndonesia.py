@@ -9,7 +9,7 @@ from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessor import VideoProsessor
 
-class CNNIndonesia:
+class CNBCIndonesia:
 
     def __init__(
             self,
@@ -29,7 +29,7 @@ class CNNIndonesia:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 4
+        self.video_duration = 3
         self.last_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port
@@ -102,7 +102,7 @@ class CNNIndonesia:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 150:
+        if get_total_files >= 200:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -167,7 +167,7 @@ class CNNIndonesia:
                 data_ts = check_ts["data_ts"]
 
                 if status_ts:
-                    now_filename = F"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    now_filename = F"CNBCSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
 
                     logging.info("Request to Server Converter - Concat TS")
                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -211,10 +211,10 @@ class CNNIndonesia:
 
 
 if __name__ == "__main__":
-    ENGINE_NAME = "CNNSTREAMING"
+    ENGINE_NAME = "CNBCSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    cnnindonesia = CNNIndonesia(
+    cnbcindonesia = CNBCIndonesia(
         environment=ENGINE["ENVIRONMENT"],
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
@@ -225,4 +225,4 @@ if __name__ == "__main__":
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )
-    cnnindonesia.StartEngine()
+    cnbcindonesia.StartEngine()

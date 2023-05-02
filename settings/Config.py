@@ -45,11 +45,11 @@ class Config(object):
             }
         ),
         CNBCSTREAMING = dict(
-            ENVIRONMENT = "dev",
+            ENVIRONMENT = "prod",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "storage/cnbc",
+            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
             HEADERS = {
                 'referer': 'https://www.cnbcindonesia.com/',
                 'origin': 'https://www.cnbcindonesia.com',
