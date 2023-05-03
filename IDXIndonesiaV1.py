@@ -259,7 +259,7 @@ class IDXIndonesiaV1:
                             logging.info("Close Connection - Concat TS")
 
                         logging.info("Cleanup TS")
-                        # self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
                 else:
                     logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
