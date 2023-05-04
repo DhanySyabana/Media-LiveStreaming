@@ -93,3 +93,10 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+
+    SOCKET_NOTIFICATIONS = dict(
+        HOST = "36.88.248.50",
+        PORT = 8888,
+        BUFFER_SIZE = 1024,
+        DELAY_CLIENT = 5
+    )
