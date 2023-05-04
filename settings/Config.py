@@ -96,7 +96,7 @@ class Config(object):
 
     SOCKET_NOTIFICATIONS = dict(
         HOST_SERVER = "0.0.0.0",
-        HOST_CLIENT = "36.88.248.50",
+        HOST_CLIENT = "36.88.246.50",
         PORT = 8888,
         BUFFER_SIZE = 1024,
         DELAY_CLIENT = 5

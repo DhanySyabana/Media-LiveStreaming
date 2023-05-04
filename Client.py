@@ -33,47 +33,51 @@ class Client:
         
     def Check(self) -> bool:
         logging.info("Checking server...")
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            try:
-                s.connect((self.host, self.port))
-            except Exception:
-                return False
+        
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(self.delay)
+            s.connect((self.host, self.port))
+        except Exception:
+            return False
 
-            to_server = {
-                "message": F"From client at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-            }
+        to_server = {
+            "message": F"From client at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        }
 
-            to_server = str(to_server).encode("utf-8")
-            data_format = struct.Struct('I')
-            data_length = len(to_server)
-            s.sendall(data_format.pack(data_length))
+        to_server = str(to_server).encode("utf-8")
+        data_format = struct.Struct('I')
+        data_length = len(to_server)
+        s.sendall(data_format.pack(data_length))
 
-            offset = 0
-            while offset < data_length:
-                sent_bytes = s.send(to_server[offset:])
-                offset += sent_bytes
+        offset = 0
+        while offset < data_length:
+            sent_bytes = s.send(to_server[offset:])
+            offset += sent_bytes
 
-            response = s.recv(self.buffer_size)
-            response = eval(response)
+        response = s.recv(self.buffer_size)
+        response = eval(response)
 
-            if response:
-                logging.info(F"From server: {response['message']}")
-            else:
-                return False
-            
-            s.close()
+        if response:
+            logging.info(F"From server: {response['message']}")
+        else:
+            return False
+        
+        s.close()
+
         return True
 
     def StartClient(self) -> None:
         while self.start_proses:
             try:
-                if time.time() - self.start_time > self.delay:
-                    if not self.Check():
-                        if self.SendMessage():
-                            logging.info("Message sent")
-                    self.start_time = time.time()
-                else:
-                    time.sleep(self.delay)
+                if not self.Check():
+                    logging.info("Server is died")
+                    if self.SendMessage():
+                        logging.info("Send message to telegram")
+                    else:
+                        logging.info("Failed send message to telegram")
+                    continue
+                time.sleep(self.delay)
             except KeyboardInterrupt:
                 logging.info("Close client")
                 self.start_proses = False
