@@ -67,7 +67,7 @@ class Server:
     
 if __name__ == "__main__":
     server = Server(
-        host=Config.SOCKET_NOTIFICATIONS["HOST"],
+        host=Config.SOCKET_NOTIFICATIONS["HOST_SERVER"],
         port=Config.SOCKET_NOTIFICATIONS["PORT"],
         buffer_size=Config.SOCKET_NOTIFICATIONS["BUFFER_SIZE"]
     )

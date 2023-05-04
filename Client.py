@@ -81,7 +81,7 @@ class Client:
 
 if __name__ == "__main__":
     client = Client(
-        host=Config.SOCKET_NOTIFICATIONS["HOST"],
+        host=Config.SOCKET_NOTIFICATIONS["HOST_CLIENT"],
         port=Config.SOCKET_NOTIFICATIONS["PORT"],
         buffer_size=Config.SOCKET_NOTIFICATIONS["BUFFER_SIZE"],
         delay=Config.SOCKET_NOTIFICATIONS["DELAY_CLIENT"],
