@@ -198,7 +198,7 @@ class IDXIndonesiaV1:
                     segments = self.GetSegments(playlist_uri)
 
                     while len(segments) == 0:
-                        if self.segment_status == 403:
+                        if self.segment_status == 403 or self.segment_status == 410:
                             logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
                             playlist_encrypted = self.GetPlaylist()
 
