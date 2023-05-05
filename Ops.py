@@ -50,69 +50,6 @@ class Ops:
     def parse_message(self, data:dict) -> str:
         key_data = list(data.keys())
 
-        cpu_usage_0 = os.popen("ps aux | grep INewsV1.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_0.find("\n") != -1:
-            cpu_usage_0 = cpu_usage_0.split("\n")[0]
-        memory_usage_0 = os.popen("ps aux | grep INewsV1.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_0.find("\n") != -1:
-            memory_usage_0 = memory_usage_0.split("\n")[0]
-        if cpu_usage_0 == "" : cpu_usage_0 = 0
-        if memory_usage_0 == "" : memory_usage_0 = 0
-
-        cpu_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_1.find("\n") != -1:
-            cpu_usage_1 = cpu_usage_1.split("\n")[0]
-        memory_usage_1 = os.popen("ps aux | grep CNNIndonesia.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_1.find("\n") != -1:
-            memory_usage_1 = memory_usage_1.split("\n")[0]
-        if cpu_usage_1 == "" : cpu_usage_1 = 0
-        if memory_usage_1 == "" : memory_usage_1 = 0
-
-        cpu_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $3}'").read() 
-        if cpu_usage_2.find("\n") != -1:
-            cpu_usage_2 = cpu_usage_2.split("\n")[0]
-        memory_usage_2 = os.popen("ps aux | grep MetroTV.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_2.find("\n") != -1:
-            memory_usage_2 = memory_usage_2.split("\n")[0]
-        if cpu_usage_2 == "" : cpu_usage_2 = 0
-        if memory_usage_2 == "" : memory_usage_2 = 0
-
-        cpu_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_3.find("\n") != -1:
-            cpu_usage_3 = cpu_usage_3.split("\n")[0]
-        memory_usage_3 = os.popen("ps aux | grep KompasTV.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_3.find("\n") != -1:
-            memory_usage_3 = memory_usage_3.split("\n")[0]
-        if cpu_usage_3 == "" : cpu_usage_3 = 0
-        if memory_usage_3 == "" : memory_usage_3 = 0
-
-        cpu_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_4.find("\n") != -1:
-            cpu_usage_4 = cpu_usage_4.split("\n")[0]
-        memory_usage_4 = os.popen("ps aux | grep ServerConverter.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_4.find("\n") != -1:
-            memory_usage_4 = memory_usage_4.split("\n")[0]
-        if cpu_usage_4 == "" : cpu_usage_4 = 0
-        if memory_usage_4 == "" : memory_usage_4 = 0
-
-        cpu_usage_5 = os.popen("ps aux | grep CNBCIndonesia.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_5.find("\n") != -1:
-            cpu_usage_5 = cpu_usage_5.split("\n")[0]
-        memory_usage_5 = os.popen("ps aux | grep CNBCIndonesia.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_5.find("\n") != -1:
-            memory_usage_5 = memory_usage_5.split("\n")[0]
-        if cpu_usage_5 == "" : cpu_usage_5 = 0
-        if memory_usage_5 == "" : memory_usage_5 = 0
-
-        cpu_usage_6 = os.popen("ps aux | grep IDXIndonesiaV1.py | grep -v grep | awk '{print $3}'").read()
-        if cpu_usage_6.find("\n") != -1:
-            cpu_usage_6 = cpu_usage_6.split("\n")[0]
-        memory_usage_6 = os.popen("ps aux | grep IDXIndonesiaV1.py | grep -v grep | awk '{print $4}'").read()
-        if memory_usage_6.find("\n") != -1:
-            memory_usage_6 = memory_usage_6.split("\n")[0]
-        if cpu_usage_6 == "" : cpu_usage_6 = 0
-        if memory_usage_6 == "" : memory_usage_6 = 0
-
         return F"""
         
             <b>Ops - Live Streaming Status</b>
@@ -121,62 +58,39 @@ class Ops:
             Total Video: {data[key_data[0]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[0]]["total_video_last_hour"]}
             Last Video: {data[key_data[0]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_0):.2f}%
-            Memory Usage: {float(memory_usage_0):.2f} MB
             Storage Usage: {data[key_data[0]]["total_size"]:.2f} MB
 
             <b>{key_data[1]}</b>
             Total Video: {data[key_data[1]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[1]]["total_video_last_hour"]}
             Last Video: {data[key_data[1]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_1):.2f}%
-            Memory Usage: {float(memory_usage_1):.2f} MB
             Storage Usage: {data[key_data[1]]["total_size"]:.2f} MB
 
             <b>{key_data[2]}</b>
             Total Video: {data[key_data[2]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[2]]["total_video_last_hour"]}
             Last Video: {data[key_data[2]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_2):.2f}%
-            Memory Usage: {float(memory_usage_2):.2f} MB
             Storage Usage: {data[key_data[2]]["total_size"]:.2f} MB
 
             <b>{key_data[3]}</b>
             Total Video: {data[key_data[3]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[3]]["total_video_last_hour"]}
             Last Video: {data[key_data[3]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_3):.2f}%
-            Memory Usage: {float(memory_usage_3):.2f} MB
             Storage Usage: {data[key_data[3]]["total_size"]:.2f} MB
 
             <b>{key_data[4]}</b>
             Total Video: {data[key_data[4]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[4]]["total_video_last_hour"]}
             Last Video: {data[key_data[4]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_5):.2f}%
-            Memory Usage: {float(memory_usage_5):.2f} MB
             Storage Usage: {data[key_data[4]]["total_size"]:.2f} MB
 
             <b>{key_data[5]}</b>
             Total Video: {data[key_data[5]]["total_video"]}
             Total Video Last 1 Hour: {data[key_data[5]]["total_video_last_hour"]}
             Last Video: {data[key_data[5]]["last_video_filename"]}
-
-            CPU Usage: {float(cpu_usage_6):.2f}%
-            Memory Usage: {float(memory_usage_6):.2f} MB
             Storage Usage: {data[key_data[5]]["total_size"]:.2f} MB
 
             --------------------------------------------------------------
-
-            <b>Server Converter</b>
-            CPU Usage: {float(cpu_usage_4):.2f}%
-            Memory Usage: {float(memory_usage_4):.2f} MB
-
 
         """
 

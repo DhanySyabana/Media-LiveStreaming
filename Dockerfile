@@ -27,6 +27,9 @@ RUN apt-get -y update
 # Magic happens
 RUN apt-get install -y google-chrome-stable
 
+# install FFMPEG
+RUN apt-get install -y ffmpeg
+
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt

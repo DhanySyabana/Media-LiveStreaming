@@ -156,6 +156,12 @@ services:
         - ENGINE=${ENGINE_OPS}
     volumes:
       - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -183,6 +189,8 @@ services:
     networks:
       default:
         ipv4_address: 10.10.10.10
+    ports:
+      - 0.0.0.0:8888:8888
     restart: unless-stopped
     command: python ${ENGINE_NOTIFICATION}
 
