@@ -79,8 +79,8 @@ class Client:
                     continue
                 time.sleep(self.delay)
             except TimeoutError:
-                if self.SendMessage():
-                    logging.info("Send message to telegram")
+                logging.info("Timeout")
+                time.sleep(self.delay)
                 continue
             except KeyboardInterrupt:
                 logging.info("Close client")
