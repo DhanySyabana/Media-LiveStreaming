@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  selenium:
+    image: seleniarm/standalone-chromium
+    container_name: selenium
+    ports:
+      - 4444:4444
+    hostname: selenium
+    privileged: true
+    shm_size: 2g
+    environment:
+      - JAVA_OPTS=-Dwebdriver.chrome.whitelistedIps=
+
+  engine_inews_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_inews_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_INEWS}
+    volumes:
+      - ./:/app
+      - ./${HOST_INEWS}:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    depends_on:
+      - selenium
+    command: python ${ENGINE_INEWS}

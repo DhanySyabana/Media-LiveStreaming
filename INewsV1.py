@@ -24,7 +24,9 @@ class INewsV1:
                 custom_headers:dict = None,
                 converter_host: str = None,
                 converter_port: int = None,
-                buffer_size: int = None
+                buffer_size: int = None,
+                selenium_host: str = None,
+                selenium_port: int = None,
             ) -> None:
         self.environment = environment
         self.url = url
@@ -42,6 +44,8 @@ class INewsV1:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
+        self.selenium_host = selenium_host
+        self.selenium_port = selenium_port
         Loggers()
         super().__init__()
 
@@ -157,7 +161,7 @@ class INewsV1:
         logging.info("Setup Selenium")
         selenium = Selenium(self.url, {
             "headless": True,
-        })
+        }, self.selenium_host, self.selenium_port)
 
         selenium.SeleniumCapabilities()
         logging.info("Setup Selenium Capabilities")
@@ -294,6 +298,8 @@ if __name__ == "__main__":
         custom_headers=ENGINE["HEADERS"],
         converter_host=CONFIG.SOCKET_SERVER["HOST"],
         converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        selenium_host=CONFIG.SELENIUM["HOST"],
+        selenium_port=CONFIG.SELENIUM["PORT"],
     )
     inews.StartEngine()   

@@ -101,3 +101,8 @@ class Config(object):
         BUFFER_SIZE = 1024,
         DELAY_CLIENT = 5
     )
+
+    SELENIUM = dict(
+        HOST = "selenium",
+        PORT = 4444,
+    )
