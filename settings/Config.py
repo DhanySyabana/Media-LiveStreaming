@@ -2,13 +2,13 @@ class Config(object):
 
     ENGINE = dict(
         INEWSSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             URLV1 = "https://tv.inews.id/live",
             RESOLUTIONV1 = "640x360",
             HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id",
             RESOLUTION = "426x240",
             HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/INEWSSTREAMING",
+            UPLOAD_LOCATION = "storage/inews",
             HEADERS = {
                 'origin': 'https://embed.rctiplus.com',
                 'referer': 'https://embed.rctiplus.com',
@@ -16,40 +16,40 @@ class Config(object):
             }
         ),
         CNNSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/CNNSTREAMING",
+            UPLOAD_LOCATION = "storage/cnn",
             HEADERS = {
                 'referer': 'https://www.cnnindonesia.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
         KOMPASSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=4rmf-lk3ito",
             QUALITY = "360p",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/KOMPASSTREAMING",
+            UPLOAD_LOCATION = "storage/kompas",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
         METROTVSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=a_PTnruagQ0",
             QUALITY = "360p",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/METROTVSTREAMING",
+            UPLOAD_LOCATION = "storage/metro",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
         CNBCSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/CNBCSTREAMING",
+            UPLOAD_LOCATION = "storage/cnbc",
             HEADERS = {
                 'referer': 'https://www.cnbcindonesia.com/',
                 'origin': 'https://www.cnbcindonesia.com',
@@ -57,12 +57,12 @@ class Config(object):
             }
         ),
         IDXSTREAMING = dict(
-            ENVIRONMENT = "prod",
+            ENVIRONMENT = "dev",
             URLV1 = "https://www.indihometv.com/livetv/idx",
             RESOLUTIONV1 = "640x360",
             PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8",
             HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
-            UPLOAD_LOCATION = "/home/kabayangroup/www/produksi-tv/public/video_list/IDXSTREAMING",
+            UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
                 'origin': 'https://www.indihometv.com',
                 'referer': 'https://www.indihometv.com/',
@@ -88,7 +88,7 @@ class Config(object):
     )
 
     SOCKET_SERVER = dict(
-        HOST = "127.0.0.1",
+        HOST = "10.10.10.8",
         PORT = 6969,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
@@ -100,9 +100,4 @@ class Config(object):
         PORT = 8888,
         BUFFER_SIZE = 1024,
         DELAY_CLIENT = 5
-    )
-
-    SELENIUM = dict(
-        HOST = "selenium",
-        PORT = 4444,
     )

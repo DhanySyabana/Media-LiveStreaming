@@ -7,14 +7,12 @@ class Selenium:
 
     def __init__(self, url:str=None, settings:dict={
         "headless": True,
-    }, selenium_host:str=None, selenium_port:int=None) -> None:
+    }) -> None:
         self.url = url
         self.driver = None
         self.desired_capabilities = None
         self.options = None
         self.settings = settings
-        self.selenium_host = selenium_host
-        self.selenium_port = selenium_port
         super().__init__()
 
     def SeleniumCapabilities(self) -> DesiredCapabilities:
@@ -44,14 +42,9 @@ class Selenium:
         return self.options
 
     def DriverSelenium(self) -> webdriver.Chrome:
-        driver = webdriver.Remote(
-            command_executor=F"http://{self.selenium_host}:{self.selenium_port}/wd/hub",
-            desired_capabilities=self.desired_capabilities,
+        driver = webdriver.Chrome(
             options=self.options,
-            seleniumwire_options={
-                'auto_config': True,
-                'host': self.selenium_host,
-            }
+            desired_capabilities=self.desired_capabilities
         )
         self.driver = driver
         return self.driver

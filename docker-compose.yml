@@ -1,16 +1,30 @@
 version: '3'
 
 services:
-  selenium:
-    image: seleniarm/standalone-chromium
-    container_name: selenium
-    ports:
-      - 4444:4444
-    hostname: selenium
-    privileged: true
-    shm_size: 2g
+  engine_server_converter_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
     environment:
-      - JAVA_OPTS=-Dwebdriver.chrome.whitelistedIps=
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.8
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER}
 
   engine_inews_v1:
     image: media_livestreaming_engine:latest
@@ -22,10 +36,157 @@ services:
         - ENGINE=${ENGINE_INEWS}
     volumes:
       - ./:/app
-      - ./${HOST_INEWS}:/app
+      - ${HOST_INEWS}:/app/storage/inews
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
-    depends_on:
-      - selenium
+    networks:
+      default:
+        ipv4_address: 10.10.10.2
+    restart: unless-stopped
     command: python ${ENGINE_INEWS}
+
+  engine_cnn_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_cnn_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CNN}
+    volumes:
+      - ./:/app
+      - ${HOST_CNN}:/app/storage/cnn
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.3
+    restart: unless-stopped
+    command: python ${ENGINE_CNN}
+
+  engine_kompas_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_kompas_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_KOMPAS}
+    volumes:
+      - ./:/app
+      - ${HOST_KOMPAS}:/app/storage/kompas
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.4
+    restart: unless-stopped
+    command: python ${ENGINE_KOMPAS}
+
+  engine_metro_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_metro_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_METRO}
+    volumes:
+      - ./:/app
+      - ${HOST_METRO}:/app/storage/metro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.5
+    restart: unless-stopped
+    command: python ${ENGINE_METRO}
+
+  engine_cnbc_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_cnbc_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CNBC}
+    volumes:
+      - ./:/app
+      - ${HOST_CNBC}:/app/storage/cnbc
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.6
+    restart: unless-stopped
+    command: python ${ENGINE_CNBC}
+
+  engine_idx_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_idx_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_IDX}
+    volumes:
+      - ./:/app
+      - ${HOST_IDX}:/app/storage/idx
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.7
+    restart: unless-stopped
+    command: python ${ENGINE_IDX}
+
+  engine_ops_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_ops_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_OPS}
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: 10.10.10.9
+    restart: unless-stopped
+    command: python ${ENGINE_OPS}
+
+  engine_server_notification_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_notification_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_NOTIFICATION}
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.10
+    restart: unless-stopped
+    command: python ${ENGINE_NOTIFICATION}
+
+networks:
+  default:
+    name: livestream_net
+    external: true

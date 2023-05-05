@@ -45,7 +45,7 @@ class VideoProsessor:
             if self.environment == "dev":
                 cwd = os.getcwd()
                 path_ts = F"{cwd}/{self.storage_path}/ts"
-                path_mp4 = F"{cwd}/{self.storage_path}/mp4"
+                path_mp4 = F"{cwd}/{self.storage_path}"
             else:
                 path_ts = F"{self.storage_path}/ts"
                 path_mp4 = F"{self.storage_path}"
