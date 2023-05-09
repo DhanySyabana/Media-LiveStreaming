@@ -81,8 +81,8 @@ class Client:
                         logging.info("Failed send message to telegram")
                     continue
                 time.sleep(self.delay)
-            except TimeoutError:
-                logging.info("Timeout")
+            except TimeoutError or ConnectionResetError or ConnectionRefusedError:
+                logging.info("Server is died")
                 time.sleep(self.delay)
                 continue
             except KeyboardInterrupt:
