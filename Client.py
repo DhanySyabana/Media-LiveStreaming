@@ -55,8 +55,11 @@ class Client:
             sent_bytes = s.send(to_server[offset:])
             offset += sent_bytes
 
-        response = s.recv(self.buffer_size)
-        response = eval(response)
+        try:
+            response = s.recv(self.buffer_size)
+            response = eval(response)
+        except ConnectionResetError:
+            return False
 
         if response:
             logging.info(F"From server: {response['message']}")
