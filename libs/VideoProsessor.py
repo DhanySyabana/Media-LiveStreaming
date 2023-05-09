@@ -13,6 +13,15 @@ class VideoProsessor:
         self.storage_path:str = storage_path
         super().__init__()
 
+    def OptimizeVideo(self, path, filename, extension = ".mp4"):
+        try:
+            convert_name = "_converted"
+            os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
+            os.remove(F"{path}/{filename}{extension}")
+            os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
+        except Exception as e:
+            logging.error(F"Error Optimize Video: {e}")
+
     def WriteFile(self, file_name:str, content, mode:str, folder:str) -> dict:
         try:
             if self.environment == "dev":
@@ -39,7 +48,7 @@ class VideoProsessor:
                 "sequence": None
             }
 
-    def ConcatTS(self, filename:str, mode:str) -> dict:
+    def ConcatTS(self, filename:str, mode:str, optimize_video:bool = False) -> dict:
         try:
             ts_files = list()
             if self.environment == "dev":
@@ -64,6 +73,11 @@ class VideoProsessor:
 
             os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
             logging.info("Success Concat TS to MP4")
+
+            if optimize_video:
+                self.OptimizeVideo(path_mp4, filename)
+                logging.info("Success Optimize Video")
+
             return {
                 "status": True,
                 "message": "Success Concat TS to MP4",

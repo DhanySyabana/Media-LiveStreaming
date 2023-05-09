@@ -56,13 +56,19 @@ class ServerConverter:
 
                         video_prosessor = VideoProsessor(
                             environment=data["environment"],
-                            storage_path=data["storage_path"]
+                            storage_path=data["storage_path"],
                         )
 
                         if data["event"] == "concat":
+                            optimize_video = False
+
+                            if "optimize_video" in data:    
+                                optimize_video = data["optimize_video"]
+
                             response = video_prosessor.ConcatTS(
                                 filename=data["filename"],
                                 mode=data["mode"],
+                                optimize_video=optimize_video
                             )
                         elif data["event"] == "download":
                             response = {

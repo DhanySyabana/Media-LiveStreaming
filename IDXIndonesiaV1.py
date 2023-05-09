@@ -240,6 +240,7 @@ class IDXIndonesiaV1:
                                 "storage_path": self.upload_location,
                                 "mode": "w",
                                 "filename": now_filename,
+                                "optimize_video" : True,
                             }
                             to_server = str(to_server).encode("utf-8")
                             data_format = struct.Struct('I')
