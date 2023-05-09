@@ -2,7 +2,6 @@ import os
 import logging
 import multiprocessing as mp
 from libs.Loggers import Loggers
-from settings.Config import Config
 from libs.VideoProsessor import VideoProsessor
 
 class FormatterVideo:
@@ -15,15 +14,13 @@ class FormatterVideo:
         Loggers()
         super().__init__()
 
-    def GetAllFiles(self) -> list:
-        path = F"{os.getcwd()}/{self.upload_location}"
-        
+    def GetAllFiles(self) -> list:    
         files = []
 
-        for file in os.listdir(path):
+        for file in os.listdir(self.upload_location):
             if file.endswith(self.extension):
                 files.append({
-                    "path": F"{path}",
+                    "path": F"{self.upload_location}",
                     "filename": file.split(".")[0],
                     "extension": self.extension
                 })
@@ -40,12 +37,9 @@ class FormatterVideo:
         logging.info("Success Formatter Video")
 
 if __name__ == '__main__':
-    ENGINE_NAME = "IDXSTREAMING"
-    CONFIG = Config()
-    ENGINE = CONFIG.ENGINE[ENGINE_NAME]
     f = FormatterVideo(
-        environment=ENGINE["ENVIRONMENT"],
-        upload_location=ENGINE["UPLOAD_LOCATION"],
+        environment="dev",
+        upload_location="/home/kabayangroup/www/produksi-tv/public/video_list/IDXSTREAMING",
         extension=".mp4"
     )
     f.Run()
