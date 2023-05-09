@@ -79,8 +79,8 @@ class Client:
                         logging.info("Send message to telegram")
                     else:
                         logging.info("Failed send message to telegram")
+                    time.sleep(self.delay)
                     continue
-                time.sleep(self.delay)
             except TimeoutError or ConnectionResetError or ConnectionRefusedError:
                 logging.info("Server is died")
                 time.sleep(self.delay)
