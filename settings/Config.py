@@ -110,3 +110,12 @@ class Config(object):
         BUFFER_SIZE = 1024,
         DELAY_CLIENT = 300
     )
+
+    DB = dict(
+        HOST = "127.0.0.1",
+        PORT = 11031,
+        NAME = "log_livestream",
+        USER = "root",
+        PASS = "1Teung@Kabayan123",
+        TABLE_NAME = "logs"
+    )
