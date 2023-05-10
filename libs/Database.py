@@ -1,5 +1,7 @@
+import logging
 import mysql.connector
 from settings.Config import Config
+from libs.Loggers import Loggers
 
 class Database:
     def __init__(
@@ -17,17 +19,21 @@ class Database:
         self.password = password
         self.database = database
         self.table_name = table_name
+        Loggers()
         super().__init__()
 
     def connect(self) -> None:
-        self.mydb = mysql.connector.connect(
-            host=self.host,
-            port=self.port,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
-        self.mycursor = self.mydb.cursor(buffered=True)
+        try:
+            self.mydb = mysql.connector.connect(
+                host=self.host,
+                port=self.port,
+                user=self.user,
+                password=self.password,
+                database=self.database
+            )
+            self.mycursor = self.mydb.cursor()
+        except Exception as e:
+            logging.error(e)
 
     def close(self) -> None:
         self.mydb.close()
