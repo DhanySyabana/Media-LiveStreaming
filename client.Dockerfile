@@ -4,8 +4,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-# install pillow
-RUN apt-get update && apt-get install -y libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
+# install apt-utils & pillow requirements
+RUN apt-get update && apt-get install -y apt-utils libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
+
 
 COPY requirements.txt ./
 RUN pip install --upgrade pip
