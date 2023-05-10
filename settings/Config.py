@@ -112,8 +112,8 @@ class Config(object):
     )
 
     DB = dict(
-        HOST = "127.0.0.1",
-        PORT = 11031,
+        HOST = "172.22.0.2",
+        PORT = 3306,
         NAME = "log_livestream",
         USER = "root",
         PASS = "1Teung@Kabayan123",
