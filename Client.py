@@ -28,20 +28,27 @@ class Client:
         super().__init__()
         
     def InsertLog(self, status:str) -> None:
-        self.database.insert(
-            fields=["status", "timestamp"],
-            data={
-                "status": status,
-                "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            }
-        )
+        try:
+            self.database.insert(
+                fields=["status", "timestamp"],
+                data={
+                    "status": status,
+                    "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                }
+            )
+        except Exception as e:
+            logging.error(e)
 
     def GetLog(self) -> list:
-        interval = self.chart_time / 60
-        data, message = self.database.select(self.database.query_log(interval))
-        if message:
-            logging.error(message)
-        return data
+        try:
+            interval = self.chart_time / 60
+            data, message = self.database.select(self.database.query_log(interval))
+            if message:
+                logging.error(message)
+            return data
+        except Exception as e:
+            logging.error(e)
+            return []
         
     def Check(self) -> None:
         logging.info("Checking server...")
@@ -91,6 +98,9 @@ class Client:
     
     def CreateChart(self) -> None:
         data = self.GetLog()
+        if len(data) == 0:
+            return None
+        
         labels = [data['status'] for data in data]
         values = [data['total'] for data in data]
 
