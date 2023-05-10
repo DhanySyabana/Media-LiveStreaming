@@ -5,6 +5,7 @@ services:
     build: 
       context: .
       dockerfile: client.Dockerfile
+    network_mode: "host"
     volumes:
       - .:/app
     environment:
