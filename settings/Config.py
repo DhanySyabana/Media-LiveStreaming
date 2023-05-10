@@ -99,5 +99,5 @@ class Config(object):
         HOST_CLIENT = "36.88.246.50",
         PORT = 8888,
         BUFFER_SIZE = 1024,
-        DELAY_CLIENT = 60
+        DELAY_CLIENT = 300
     )
