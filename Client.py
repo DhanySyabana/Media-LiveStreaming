@@ -35,7 +35,7 @@ class Client:
         
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(self.delay)
+            s.settimeout(10)
             s.connect((self.host, self.port))
         except Exception:
             return False, F"Cant connect to server at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
