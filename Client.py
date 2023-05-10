@@ -21,9 +21,8 @@ class Client:
         Loggers()
         super().__init__()
 
-    def SendMessage(self) -> int:
+    def SendMessage(self, message) -> int|str:
         try:
-            message = F"<b>Server is died at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</b>"
             url = F"https://api.telegram.org/bot{self.token}/sendMessage?chat_id={self.chat_id}&text={message}&parse_mode=html"
             response = HTTPRequest("get", url, headers=None).Hit()
             return response.ok
@@ -39,7 +38,7 @@ class Client:
             s.settimeout(self.delay)
             s.connect((self.host, self.port))
         except Exception:
-            return False
+            return False, F"Cant connect to server at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
 
         to_server = {
             "message": F"From client at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
@@ -59,23 +58,24 @@ class Client:
             response = s.recv(self.buffer_size)
             response = eval(response)
         except ConnectionResetError:
-            return False
+            return False, F"Connection reset at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
 
         if response:
             logging.info(F"From server: {response['message']}")
         else:
-            return False
+            return False, F"Cant get response from server at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         
         s.close()
 
-        return True
+        return True, F"Server is alive at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
 
     def StartClient(self) -> None:
         while self.start_proses:
             try:
-                if not self.Check():
+                cond, message = self.Check()
+                if not cond:
                     logging.info("Server is died")
-                    if self.SendMessage():
+                    if self.SendMessage(message):
                         logging.info("Send message to telegram")
                     else:
                         logging.info("Failed send message to telegram")
