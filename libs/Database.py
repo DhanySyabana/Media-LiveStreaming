@@ -31,7 +31,7 @@ class Database:
                 password=self.password,
                 database=self.database
             )
-            self.mycursor = self.mydb.cursor()
+            self.mycursor = self.mydb.cursor(buffered=True)
         except Exception as e:
             logging.error(e)
 
