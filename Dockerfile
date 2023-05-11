@@ -1,5 +1,6 @@
 FROM python:3.10.11
 
+ENV DEBIAN_FRONTEND=noninteractive
 ARG ENGINE
 WORKDIR /app
 
@@ -11,6 +12,9 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 
 # Updating apt to see and install Google Chrome
 RUN apt-get -y update
+
+# install apt-utils & pillow requirements
+RUN apt-get install -y apt-utils libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
 
 # Magic happens
 RUN apt-get install -y google-chrome-stable
