@@ -184,7 +184,7 @@ class Ops:
         try:
             self.start_time = time.time()
             data = self.get_file_data()
-            self.send_chart(data)
+            self.generate_send_chart(data)
             logging.info("Success execute task")
         except Exception as e:
             logging.error(f"Error: {e}")
