@@ -127,22 +127,22 @@ class Ops:
         ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
 
         # total last video
-        total_video_1_hour = [data[key_data[0]]["total_video_1_hour"], data[key_data[1]]["total_video_1_hour"], data[key_data[2]]["total_video_1_hour"], data[key_data[3]]["total_video_1_hour"], data[key_data[4]]["total_video_1_hour"], data[key_data[5]]["total_video_1_hour"]]
+        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
-        # explode with a bigger value of total_video_1_hour
-        explode = [0.1 if i == min(total_video_1_hour) else 0 for i in total_video_1_hour]
+        # explode with a bigger value of total_video_last_hour
+        explode = [0.1 if i == min(total_video_last_hour) else 0 for i in total_video_last_hour]
 
         # Add a pie plot to the lower row
         ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
-        _, _, autotexts = ax_total_video_1_hour.pie(total_video_1_hour, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+        _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
         for autotext in autotexts:
             autotext.set_color('white')
         handles = []
         for i, l in enumerate(labels):
             handles.append(mpatches.Patch(color=colors[i], label=l))
         # use a list comprehension to update the labels
-        labels = [f'{l}: {s}' for l, s in zip(labels, total_video_1_hour)]
+        labels = [f'{l}: {s}' for l, s in zip(labels, total_video_last_hour)]
         ax_total_video_1_hour.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
         ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
@@ -150,7 +150,7 @@ class Ops:
         total_storage = [data[key_data[0]]["total_storage"], data[key_data[1]]["total_storage"], data[key_data[2]]["total_storage"], data[key_data[3]]["total_storage"], data[key_data[4]]["total_storage"], data[key_data[5]]["total_storage"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
-        # explode with a bigger value of total_video_1_hour
+        # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == min(total_storage) else 0 for i in total_storage]
 
         # Add a pie plot to the lower row
