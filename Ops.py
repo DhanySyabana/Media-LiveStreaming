@@ -146,16 +146,16 @@ class Ops:
         ax_total_video_1_hour.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
         ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
-        # total last video
-        total_storage = [data[key_data[0]]["total_storage"], data[key_data[1]]["total_storage"], data[key_data[2]]["total_storage"], data[key_data[3]]["total_storage"], data[key_data[4]]["total_storage"], data[key_data[5]]["total_storage"]]
+        # total storage
+        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
         # explode with a bigger value of total_video_last_hour
-        explode = [0.1 if i == min(total_storage) else 0 for i in total_storage]
+        explode = [0.1 if i == min(total_size) else 0 for i in total_size]
 
         # Add a pie plot to the lower row
         ax_storage = fig.add_subplot(gs[1, 0:2])
-        _, _, autotexts = ax_storage.pie(total_storage, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+        _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
         for autotext in autotexts:
             autotext.set_color('white')
         handles = []
@@ -163,7 +163,7 @@ class Ops:
             handles.append(mpatches.Patch(color=colors[i], label=l))
 
         # use a list comprehension to update the labels
-        labels = [f'{l}: {s} MB' for l, s in zip(labels, total_storage)]
+        labels = [f'{l}: {s} MB' for l, s in zip(labels, total_size)]
         ax_storage.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
         ax_storage.set_title('STORAGE USAGE', weight='bold', fontsize=16)
 
