@@ -56,8 +56,16 @@ class Ops:
         # Add a line plot to the upper left subplot
         ax1 = fig.add_subplot(gs[0, 0])
 
+        color = "black"
+        if data[key_data[0]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax1.spines['bottom'].set_color('red')
+            ax1.spines['top'].set_color('red')
+            ax1.spines['right'].set_color('red')
+            ax1.spines['left'].set_color('red')
+
         ax1.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax1.text(0.5, 0.5, key_data[0], ha='center', va='center', fontsize=16, weight='bold')
+        ax1.text(0.5, 0.5, key_data[0], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax1.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax1.text(0.5, 0.3, data[key_data[0]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax1.set_xticks([])
@@ -65,8 +73,16 @@ class Ops:
 
         # Add a bar plot to the upper right subplot
         ax2 = fig.add_subplot(gs[0, 1])
+        color = "black"
+        if data[key_data[1]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax2.spines['bottom'].set_color('red')
+            ax2.spines['top'].set_color('red')
+            ax2.spines['right'].set_color('red')
+            ax2.spines['left'].set_color('red')
+        
         ax2.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax2.text(0.5, 0.5, key_data[1], ha='center', va='center', fontsize=16, weight='bold')
+        ax2.text(0.5, 0.5, key_data[1], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax2.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax2.text(0.5, 0.3, data[key_data[1]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax2.set_xticks([])
@@ -74,8 +90,16 @@ class Ops:
 
         # Add a scatter plot to the lower left subplot
         ax3 = fig.add_subplot(gs[0, 2])
+        color = "black"
+        if data[key_data[2]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax3.spines['bottom'].set_color('red')
+            ax3.spines['top'].set_color('red')
+            ax3.spines['right'].set_color('red')
+            ax3.spines['left'].set_color('red')
+
         ax3.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax3.text(0.5, 0.5, key_data[2], ha='center', va='center', fontsize=16, weight='bold')
+        ax3.text(0.5, 0.5, key_data[2], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax3.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax3.text(0.5, 0.3, data[key_data[2]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax3.set_xticks([])
@@ -83,24 +107,46 @@ class Ops:
 
         # Add a text box to the lower right subplot
         ax4 = fig.add_subplot(gs[0, 3])
+        color = "black"
+        if data[key_data[3]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax4.spines['bottom'].set_color('red')
+            ax4.spines['top'].set_color('red')
+            ax4.spines['right'].set_color('red')
+            ax4.spines['left'].set_color('red')
         ax4.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax4.text(0.5, 0.5, key_data[3], ha='center', va='center', fontsize=16, weight='bold')
+        ax4.text(0.5, 0.5, key_data[3], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax4.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax4.text(0.5, 0.3, data[key_data[3]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax4.set_xticks([])
         ax4.set_yticks([])
 
         ax5 = fig.add_subplot(gs[0, 4])
+        color = "black"
+        if data[key_data[4]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax5.spines['bottom'].set_color('red')
+            ax5.spines['top'].set_color('red')
+            ax5.spines['right'].set_color('red')
+            ax5.spines['left'].set_color('red')
+
         ax5.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax5.text(0.5, 0.5, key_data[4], ha='center', va='center', fontsize=16, weight='bold')
+        ax5.text(0.5, 0.5, key_data[4], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax5.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax5.text(0.5, 0.3, data[key_data[4]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax5.set_xticks([])
         ax5.set_yticks([])
 
         ax6 = fig.add_subplot(gs[0, 5])
+        color = "black"
+        if data[key_data[5]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax6.spines['bottom'].set_color('red')
+            ax6.spines['top'].set_color('red')
+            ax6.spines['right'].set_color('red')
+            ax6.spines['left'].set_color('red')
         ax6.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax6.text(0.5, 0.5, key_data[5], ha='center', va='center', fontsize=16, weight='bold')
+        ax6.text(0.5, 0.5, key_data[5], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax6.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax6.text(0.5, 0.3, data[key_data[5]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax6.set_xticks([])
