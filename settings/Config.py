@@ -102,3 +102,20 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+
+    SOCKET_NOTIFICATIONS = dict(
+        HOST_SERVER = "0.0.0.0",
+        HOST_CLIENT = "36.88.246.50",
+        PORT = 8888,
+        BUFFER_SIZE = 1024,
+        DELAY_CLIENT = 300
+    )
+
+    DB = dict(
+        HOST = "172.22.0.2",
+        PORT = 3306,
+        NAME = "log_livestream",
+        USER = "root",
+        PASS = "1Teung@Kabayan123",
+        TABLE_NAME = "logs"
+    )
