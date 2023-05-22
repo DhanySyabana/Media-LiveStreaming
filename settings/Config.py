@@ -5,7 +5,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://tv.inews.id/live",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://eng.rctiplus.id",
+            # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
+            HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", # OLD
             RESOLUTION = "426x240",
             HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
