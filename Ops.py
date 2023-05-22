@@ -29,12 +29,27 @@ class Ops:
         data = {}
         for key, value in self.storage_path_mp4.items():
             total_video = len([name for name in os.listdir(value) if name.endswith(".mp4")])
+            if math.isnan(total_video):
+                total_video = 0
+            else:
+                total_video = int(total_video)
 
             # total video last 60 minutes
             total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 3600])
+            if math.isnan(total_video_last_hour):
+                total_video_last_hour = 0
+            else:
+                total_video_last_hour = int(total_video_last_hour)
+
+            total_size = sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024
+            if math.isnan(total_size):
+                total_size = 0
+            else:
+                total_size = int(total_size)
+
             data[key] = {
                 "total_video": total_video,
-                "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
+                "total_size": total_size,
                 "total_video_last_hour": total_video_last_hour,
                 "last_video_filename": "-",
             }
@@ -195,7 +210,6 @@ class Ops:
 
         # total storage
         total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"]]
-        total_size = [0 if math.isnan(i) else int(i) for i in total_size]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
         # explode with a bigger value of total_video_last_hour
