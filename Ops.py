@@ -2,6 +2,7 @@ import os
 import glob
 import time
 import tqdm
+import math
 import logging
 import requests
 import numpy as np
@@ -193,7 +194,8 @@ class Ops:
         ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
         # total storage
-        total_size = [int(data[key_data[0]]["total_size"]), int(data[key_data[1]]["total_size"]), int(data[key_data[2]]["total_size"]), int(data[key_data[3]]["total_size"]), int(data[key_data[4]]["total_size"]), int(data[key_data[5]]["total_size"])]
+        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"]]
+        total_size = [0 if math.isnan(i) else int(i) for i in total_size]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
         # explode with a bigger value of total_video_last_hour
