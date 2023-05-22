@@ -177,7 +177,9 @@ class Ops:
 
         # Add a pie plot to the lower row
         ax_total_video = fig.add_subplot(gs[1, 2:4])
-        _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+        # handle autopct, cannot convert float NaN to integer
+        autopct = lambda p: '{:.0f}'.format(p * sum(total_video) / 100) if p > 0 else ''
+        _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
         for autotext in autotexts:
             autotext.set_color('white')
         handles = []
@@ -197,7 +199,8 @@ class Ops:
 
         # Add a pie plot to the lower row
         ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
-        _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+        autopct = lambda p: '{:.0f}'.format(p * sum(total_video_last_hour) / 100) if p > 0 else ''
+        _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
         for autotext in autotexts:
             autotext.set_color('white')
         handles = []
@@ -217,7 +220,8 @@ class Ops:
 
         # Add a pie plot to the lower row
         ax_storage = fig.add_subplot(gs[1, 0:2])
-        _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+        autopct = lambda p: '{:.0f}'.format(p * sum(total_size) / 100) if p > 0 else ''
+        _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
         for autotext in autotexts:
             autotext.set_color('white')
         handles = []
