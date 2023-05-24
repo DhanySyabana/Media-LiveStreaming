@@ -77,6 +77,15 @@ class Config(object):
                 'referer': 'https://www.indihometv.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
+        ),
+        TVONESTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
+            QUALITY = "360p",
+            UPLOAD_LOCATION = "storage/tvone",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+            }
         )
     )
 
@@ -92,7 +101,8 @@ class Config(object):
             ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"]
+            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"]
         }
     )
 

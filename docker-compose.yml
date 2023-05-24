@@ -17,6 +17,7 @@ services:
       - ${HOST_METRO}:/app/storage/metro
       - ${HOST_CNBC}:/app/storage/cnbc
       - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -146,6 +147,26 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_IDX}
 
+  engine_tvone_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvone_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVONE}
+    volumes:
+      - ./:/app
+      - ${HOST_TVONE}:/app/storage/tvone
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.10
+    restart: unless-stopped
+    command: python ${ENGINE_TVONE}
+
   engine_ops_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v1
@@ -162,6 +183,7 @@ services:
       - ${HOST_METRO}:/app/storage/metro
       - ${HOST_CNBC}:/app/storage/cnbc
       - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
