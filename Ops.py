@@ -152,8 +152,23 @@ class Ops:
         ax6.set_xticks([])
         ax6.set_yticks([])
 
-        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
+        ax7 = fig.add_subplot(gs[0, 6])
+        color = "black"
+        if data[key_data[6]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax7.spines['bottom'].set_color('red')
+            ax7.spines['top'].set_color('red')
+            ax7.spines['right'].set_color('red')
+            ax7.spines['left'].set_color('red')
+        ax7.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
+        ax7.text(0.5, 0.5, key_data[6], ha='center', va='center', fontsize=16, weight='bold', color=color)
+        ax7.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
+        ax7.text(0.5, 0.3, data[key_data[6]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
+        ax7.set_xticks([])
+        ax7.set_yticks([])
+
+        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"],data[key_data[6]]["total_video"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5],key_data[6]]
         colors = plt.cm.Set2(np.linspace(0, 1, len(labels)))
         
         # explode with a bigger value of total_video
@@ -173,7 +188,7 @@ class Ops:
         ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
 
         # total last video
-        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"]]
+        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"],data[key_data[6]]["total_video_last_hour"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
 
         # explode with a bigger value of total_video_last_hour
@@ -193,8 +208,8 @@ class Ops:
         ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
         # total storage
-        total_size = [int(data[key_data[0]]["total_size"]), int(data[key_data[1]]["total_size"]), int(data[key_data[2]]["total_size"]), int(data[key_data[3]]["total_size"]), int(data[key_data[4]]["total_size"]), int(data[key_data[5]]["total_size"])]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
+        total_size = [int(data[key_data[0]]["total_size"]), int(data[key_data[1]]["total_size"]), int(data[key_data[2]]["total_size"]), int(data[key_data[3]]["total_size"]), int(data[key_data[4]]["total_size"]), int(data[key_data[5]]["total_size"]), int(data[key_data[6]]["total_size"])]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
 
         # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == min(total_size) else 0 for i in total_size]
