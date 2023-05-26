@@ -183,8 +183,8 @@ class Ops:
         ax7.set_xticks([])
         ax7.set_yticks([])
 
-        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"],data[key_data[6]]["total_video"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5],key_data[6]]
+        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"], data[key_data[6]]["total_video"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
         colors = plt.cm.Set2(np.linspace(0, 1, len(labels)))
         
         # explode with a bigger value of total_video
@@ -207,8 +207,8 @@ class Ops:
             ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
 
         # total last video
-        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"],data[key_data[6]]["total_video_last_hour"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
+        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"], data[key_data[6]]["total_video_last_hour"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
 
         # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == max(total_video_last_hour) else 0 for i in total_video_last_hour]
@@ -229,7 +229,7 @@ class Ops:
             ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
         # total storage
-        total_size = [int(data[key_data[0]]["total_size"]), int(data[key_data[1]]["total_size"]), int(data[key_data[2]]["total_size"]), int(data[key_data[3]]["total_size"]), int(data[key_data[4]]["total_size"]), int(data[key_data[5]]["total_size"]), int(data[key_data[6]]["total_size"])]
+        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"], data[key_data[6]]["total_size"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
 
         # explode with a bigger value of total_video_last_hour
@@ -285,7 +285,6 @@ class Ops:
                     self.execute()
                     progress_bar.reset()
                     os.system('cls' if os.name == 'nt' else 'clear')
-                       
                 progress_bar.update(1)
                 time.sleep(1)       
             except Exception as e:
