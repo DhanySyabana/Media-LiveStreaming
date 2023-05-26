@@ -64,7 +64,7 @@ class Ops:
 
         # Create a figure and GridSpec object
         fig = plt.figure(figsize=(23, 7))
-        gs = GridSpec(nrows=2, ncols=6, figure=fig)
+        gs = GridSpec(nrows=2, ncols=7, figure=fig)
 
         # update margin 
         plt.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.1, hspace=0.1)
