@@ -2,6 +2,7 @@ import os
 import glob
 import time
 import tqdm
+import math
 import logging
 import requests
 import numpy as np
@@ -28,12 +29,27 @@ class Ops:
         data = {}
         for key, value in self.storage_path_mp4.items():
             total_video = len([name for name in os.listdir(value) if name.endswith(".mp4")])
+            if math.isnan(total_video):
+                total_video = 0
+            else:
+                total_video = int(total_video)
 
             # total video last 60 minutes
             total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 3600])
+            if math.isnan(total_video_last_hour):
+                total_video_last_hour = 0
+            else:
+                total_video_last_hour = int(total_video_last_hour)
+
+            total_size = sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024
+            if math.isnan(total_size):
+                total_size = 0
+            else:
+                total_size = int(total_size)
+
             data[key] = {
                 "total_video": total_video,
-                "total_size": sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024,
+                "total_size": total_size,
                 "total_video_last_hour": total_video_last_hour,
                 "last_video_filename": "-",
             }
@@ -167,66 +183,73 @@ class Ops:
         ax7.set_xticks([])
         ax7.set_yticks([])
 
-        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"],data[key_data[6]]["total_video"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5],key_data[6]]
+        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"], data[key_data[6]]["total_video"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
         colors = plt.cm.Set2(np.linspace(0, 1, len(labels)))
         
         # explode with a bigger value of total_video
         explode = [0.1 if i == max(total_video) else 0 for i in total_video]
 
         # Add a pie plot to the lower row
-        ax_total_video = fig.add_subplot(gs[1, 2:4])
-        _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
-        for autotext in autotexts:
-            autotext.set_color('white')
-        handles = []
-        for i, l in enumerate(labels):
-            handles.append(mpatches.Patch(color=colors[i], label=l))
-        # use a list comprehension to update the labels
-        labels = [f'{l}: {s}' for l, s in zip(labels, total_video)]
-        ax_total_video.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
-        ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
+        if max(total_video) > 0:
+            ax_total_video = fig.add_subplot(gs[1, 2:4])
+            # handle autopct, cannot convert float NaN to integer
+            autopct = lambda p: '{:.0f}'.format(p * sum(total_video) / 100) if p > 0 else ''
+            _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+            for autotext in autotexts:
+                autotext.set_color('white')
+            handles = []
+            for i, l in enumerate(labels):
+                handles.append(mpatches.Patch(color=colors[i], label=l))
+            # use a list comprehension to update the labels
+            labels = [f'{l}: {s}' for l, s in zip(labels, total_video)]
+            ax_total_video.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
+            ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
 
         # total last video
-        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"],data[key_data[6]]["total_video_last_hour"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5]]
+        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"], data[key_data[6]]["total_video_last_hour"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
 
         # explode with a bigger value of total_video_last_hour
-        explode = [0.1 if i == min(total_video_last_hour) else 0 for i in total_video_last_hour]
+        explode = [0.1 if i == max(total_video_last_hour) else 0 for i in total_video_last_hour]
 
         # Add a pie plot to the lower row
-        ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
-        _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
-        for autotext in autotexts:
-            autotext.set_color('white')
-        handles = []
-        for i, l in enumerate(labels):
-            handles.append(mpatches.Patch(color=colors[i], label=l))
-        # use a list comprehension to update the labels
-        labels = [f'{l}: {s}' for l, s in zip(labels, total_video_last_hour)]
-        ax_total_video_1_hour.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
-        ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
+        if max(total_video_last_hour) > 0:
+            ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
+            autopct = lambda p: '{:.0f}'.format(p * sum(total_video_last_hour) / 100) if p > 0 else ''
+            _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+            for autotext in autotexts:
+                autotext.set_color('white')
+            handles = []
+            for i, l in enumerate(labels):
+                handles.append(mpatches.Patch(color=colors[i], label=l))
+            # use a list comprehension to update the labels
+            labels = [f'{l}: {s}' for l, s in zip(labels, total_video_last_hour)]
+            ax_total_video_1_hour.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
+            ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
         # total storage
-        total_size = [int(data[key_data[0]]["total_size"]), int(data[key_data[1]]["total_size"]), int(data[key_data[2]]["total_size"]), int(data[key_data[3]]["total_size"]), int(data[key_data[4]]["total_size"]), int(data[key_data[5]]["total_size"]), int(data[key_data[6]]["total_size"])]
+        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"], data[key_data[6]]["total_size"]]
         labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6]]
 
         # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == min(total_size) else 0 for i in total_size]
 
         # Add a pie plot to the lower row
-        ax_storage = fig.add_subplot(gs[1, 0:2])
-        _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct='%1.1f%%', pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
-        for autotext in autotexts:
-            autotext.set_color('white')
-        handles = []
-        for i, l in enumerate(labels):
-            handles.append(mpatches.Patch(color=colors[i], label=l))
+        if max(total_size) > 0:
+            ax_storage = fig.add_subplot(gs[1, 0:2])
+            autopct = lambda p: '{:.0f}'.format(p * sum(total_size) / 100) if p > 0 else ''
+            _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
+            for autotext in autotexts:
+                autotext.set_color('white')
+            handles = []
+            for i, l in enumerate(labels):
+                handles.append(mpatches.Patch(color=colors[i], label=l))
 
-        # use a list comprehension to update the labels
-        labels = [f'{l}: {s} MB' for l, s in zip(labels, total_size)]
-        ax_storage.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
-        ax_storage.set_title('STORAGE USAGE', weight='bold', fontsize=16)
+            # use a list comprehension to update the labels
+            labels = [f'{l}: {s} MB' for l, s in zip(labels, total_size)]
+            ax_storage.legend(handles,labels, bbox_to_anchor=(0.85, 1.025), loc="upper left", fontsize=10, frameon=False)
+            ax_storage.set_title('STORAGE USAGE', weight='bold', fontsize=16)
 
         filename = F"chart-{datetime.now().strftime('%Y-%m-%d-%H-%M')}.png"
 
@@ -262,7 +285,6 @@ class Ops:
                     self.execute()
                     progress_bar.reset()
                     os.system('cls' if os.name == 'nt' else 'clear')
-                       
                 progress_bar.update(1)
                 time.sleep(1)       
             except Exception as e:
