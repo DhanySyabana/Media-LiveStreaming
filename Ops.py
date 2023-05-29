@@ -63,7 +63,7 @@ class Ops:
         key_data = list(data.keys())
 
         # Create a figure and GridSpec object
-        fig = plt.figure(figsize=(23, 7))
+        fig = plt.figure(figsize=(20, 20))
         gs = GridSpec(nrows=4, ncols=3, figure=fig)
 
         # update margin 
