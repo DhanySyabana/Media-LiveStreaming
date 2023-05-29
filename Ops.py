@@ -63,14 +63,14 @@ class Ops:
         key_data = list(data.keys())
 
         # Create a figure and GridSpec object
-        fig = plt.figure(figsize=(20, 20))
-        gs = GridSpec(nrows=4, ncols=3, figure=fig)
+        fig = plt.figure(figsize=(23, 7))
+        gs = GridSpec(nrows=2, ncols=7, figure=fig)
 
         # update margin 
         plt.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.1, hspace=0.1)
 
         # Add a line plot to the upper left subplot
-        ax1 = fig.add_subplot(gs[1, 0])
+        ax1 = fig.add_subplot(gs[0, 0])
 
         color = "black"
         if data[key_data[0]]["total_video_last_hour"] < 6:
@@ -88,7 +88,7 @@ class Ops:
         ax1.set_yticks([])
 
         # Add a bar plot to the upper right subplot
-        ax2 = fig.add_subplot(gs[1, 1])
+        ax2 = fig.add_subplot(gs[0, 1])
         color = "black"
         if data[key_data[1]]["total_video_last_hour"] < 6:
             color = "red"
@@ -105,7 +105,7 @@ class Ops:
         ax2.set_yticks([])
 
         # Add a scatter plot to the lower left subplot
-        ax3 = fig.add_subplot(gs[1, 2])
+        ax3 = fig.add_subplot(gs[0, 2])
         color = "black"
         if data[key_data[2]]["total_video_last_hour"] < 6:
             color = "red"
@@ -122,7 +122,7 @@ class Ops:
         ax3.set_yticks([])
 
         # Add a text box to the lower right subplot
-        ax4 = fig.add_subplot(gs[2, 0])
+        ax4 = fig.add_subplot(gs[0, 3])
         color = "black"
         if data[key_data[3]]["total_video_last_hour"] < 6:
             color = "red"
@@ -137,7 +137,7 @@ class Ops:
         ax4.set_xticks([])
         ax4.set_yticks([])
 
-        ax5 = fig.add_subplot(gs[2, 1])
+        ax5 = fig.add_subplot(gs[0, 4])
         color = "black"
         if data[key_data[4]]["total_video_last_hour"] < 6:
             color = "red"
@@ -153,7 +153,7 @@ class Ops:
         ax5.set_xticks([])
         ax5.set_yticks([])
 
-        ax6 = fig.add_subplot(gs[2, 2])
+        ax6 = fig.add_subplot(gs[0, 5])
         color = "black"
         if data[key_data[5]]["total_video_last_hour"] < 6:
             color = "red"
@@ -168,7 +168,7 @@ class Ops:
         ax6.set_xticks([])
         ax6.set_yticks([])
 
-        ax7 = fig.add_subplot(gs[3, 0])
+        ax7 = fig.add_subplot(gs[0, 6])
         color = "black"
         if data[key_data[6]]["total_video_last_hour"] < 6:
             color = "red"
@@ -192,7 +192,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_video) > 0:
-            ax_total_video = fig.add_subplot(gs[0, 2:4])
+            ax_total_video = fig.add_subplot(gs[1, 2:4])
             # handle autopct, cannot convert float NaN to integer
             autopct = lambda p: '{:.0f}'.format(p * sum(total_video) / 100) if p > 0 else ''
             _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
@@ -215,7 +215,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_video_last_hour) > 0:
-            ax_total_video_1_hour = fig.add_subplot(gs[0, 4:6])
+            ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_video_last_hour) / 100) if p > 0 else ''
             _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
@@ -237,7 +237,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_size) > 0:
-            ax_storage = fig.add_subplot(gs[0, 0:2])
+            ax_storage = fig.add_subplot(gs[1, 0:2])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_size) / 100) if p > 0 else ''
             _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
