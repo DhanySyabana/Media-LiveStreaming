@@ -3,26 +3,15 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://tv.inews.id/live",
+            URLV1 = "https://www.indihometv.com/livetv/inews",
             RESOLUTIONV1 = "640x360",
-            # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
-            HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", # OLD
-            RESOLUTION = "426x240",
-            HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/inews/playlist.m3u8",
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/inews",
             UPLOAD_LOCATION = "storage/inews",
             HEADERS = {
-                'origin': 'https://embed.rctiplus.com',
-                'referer': 'https://embed.rctiplus.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"macOS"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
+                'origin': 'https://www.indihometv.com',
+                'referer': 'https://www.indihometv.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
         ),
         CNNSTREAMING = dict(
@@ -87,6 +76,32 @@ class Config(object):
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
+        ),
+        BERITASATUTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "https://www.beritasatu.com/livestream",
+            RESOLUTION = "940x540",
+            PLAYLIST = "B1News_960x540.m3u8",
+            HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",
+            UPLOAD_LOCATION = "storage/beritasatu",
+            HEADERS = {
+                'origin': 'https://www.beritasatu.com',
+                'referer': 'https://www.beritasatu.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+            }
+        ),
+        SCTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "https://www.indihometv.com/livetv/sctv",
+            RESOLUTIONV1 = "640x360",
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/133/sctv/playlist.m3u8",
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/133/sctv",
+            UPLOAD_LOCATION = "storage/sctv",
+            HEADERS = {
+                'origin': 'https://www.indihometv.com',
+                'referer': 'https://www.indihometv.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+            }
         )
     )
 
@@ -103,10 +118,11 @@ class Config(object):
             ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"]
+            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"]
         }
     )
-
+    
     SOCKET_SERVER = dict(
         HOST = "10.10.10.8",
         PORT = 6969,

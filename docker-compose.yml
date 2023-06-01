@@ -18,6 +18,8 @@ services:
       - ${HOST_CNBC}:/app/storage/cnbc
       - ${HOST_IDX}:/app/storage/idx
       - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_SCTV}:/app/storage/sctv 
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -167,6 +169,46 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_TVONE}
 
+  engine_beritasatu_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_beritasatu_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_BERITASATU}
+    volumes:
+      - ./:/app
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.11
+    restart: unless-stopped
+    command: python ${ENGINE_BERITASATU}
+
+  engine_sctv_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_sctv_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_SCTV}
+    volumes:
+      - ./:/app
+      - ${HOST_SCTV}:/app/storage/sctv
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.12
+    restart: unless-stopped
+    command: python ${ENGINE_SCTV}
+
   engine_ops_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v1
@@ -184,6 +226,8 @@ services:
       - ${HOST_CNBC}:/app/storage/cnbc
       - ${HOST_IDX}:/app/storage/idx
       - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_SCTV}:/app/storage/sctv 
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
