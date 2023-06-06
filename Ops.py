@@ -63,7 +63,7 @@ class Ops:
         key_data = list(data.keys())
 
         # Create a figure and GridSpec object
-        fig = plt.figure(figsize=(23, 5))
+        fig = plt.figure(figsize=(23, 10))
         gs = GridSpec(nrows=3, ncols=5, figure=fig)
 
         # update margin 
@@ -192,7 +192,7 @@ class Ops:
             ax8.spines['right'].set_color('red')
             ax8.spines['left'].set_color('red')
         ax8.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
-        ax8.text(0.5, 0.5, key_data[6], ha='center', va='center', fontsize=16, weight='bold', color=color)
+        ax8.text(0.5, 0.5, key_data[7], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax8.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
         ax8.text(0.5, 0.3, data[key_data[7]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax8.set_xticks([])
@@ -230,7 +230,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_video_last_hour) > 0:
-            ax_total_video_1_hour = fig.add_subplot(gs[1, 4:6])
+            ax_total_video_1_hour = fig.add_subplot(gs[2, 4:6])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_video_last_hour) / 100) if p > 0 else ''
             _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
@@ -252,7 +252,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_size) > 0:
-            ax_storage = fig.add_subplot(gs[1, 0:2])
+            ax_storage = fig.add_subplot(gs[2, 0:2])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_size) / 100) if p > 0 else ''
             _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
