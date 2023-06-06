@@ -37,6 +37,7 @@ class VideoProsessor:
             
             with open(F"{path}/{file_name}", mode) as file:
                 file.write(content)
+                file.close()
             logging.info(F"Success Write File: {file_name}")
             return {
                 "status": True,
