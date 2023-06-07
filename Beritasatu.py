@@ -7,7 +7,7 @@ import datetime
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessor import VideoProsessor
+from libs.VideoProsessorBeritsasatu import VideoProsessor
 
 class BeritaSatu:
 
@@ -210,7 +210,7 @@ class BeritaSatu:
 
 
 if __name__ == "__main__":
-    ENGINE_NAME = "BERITASATUTREAMING"
+    ENGINE_NAME = "BERITASATUSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
     BeritaSatu = BeritaSatu(
@@ -218,9 +218,9 @@ if __name__ == "__main__":
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_BERITASATU["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_BERITASATU["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_BERITASATU["BUFFER_SIZE"],
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )

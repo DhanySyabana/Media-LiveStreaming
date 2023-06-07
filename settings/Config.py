@@ -88,12 +88,12 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
-        BERITASATUTREAMING = dict(
+        BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
             URLV1 = "https://beritasatu.tv/",
-            RESOLUTION = "940x540",
-            PLAYLIST = "B1News_960x540.m3u8",
+            RESOLUTION = "320x240",
+            PLAYLIST = "B1News_320x240.m3u8",
             HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
@@ -135,12 +135,35 @@ class Config(object):
         }
     )
     
+    ### Server ###
     SOCKET_SERVER = dict(
         HOST = "10.10.10.8",
         PORT = 6969,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+
+    SOCKET_SERVER_BERITASATU = dict(
+        HOST = "10.10.10.13",
+        PORT = 6868,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    ### Local ###
+    # SOCKET_SERVER_BERITASATU = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7001,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+
+    # SOCKET_SERVER = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7000,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     SOCKET_NOTIFICATIONS = dict(
         HOST_SERVER = "0.0.0.0",
