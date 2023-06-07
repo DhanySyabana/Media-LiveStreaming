@@ -90,7 +90,8 @@ class Config(object):
         ),
         BERITASATUTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.beritasatu.com/livestream",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://beritasatu.tv/",
             RESOLUTION = "940x540",
             PLAYLIST = "B1News_960x540.m3u8",
             HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",

@@ -30,10 +30,9 @@ class VideoProsessor:
                 path = F"{self.storage_path}/{folder}"
 
             if not os.path.exists(path):
-                # os.makedirs(path)
-                oldmask = os.umask(000)
+                # oldmask = os.umask(000)
                 os.makedirs(path)
-                os.umask(oldmask)
+                # os.umask(oldmask)
             
             with open(F"{path}/{file_name}", mode) as file:
                 file.write(content)
