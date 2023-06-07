@@ -58,9 +58,6 @@ class INewsV1:
                             query = parse.parse_qs(parse.urlparse(request.url).query)["hdnts"][0]
                             path_uri = F"inews-sdi.m3u8?hdnts={query}"
                             break
-                        else:
-                            logging.error("Error: Gagal ambil Path")
-                            return self.GetToken()
                     if path_uri is not None:
                         break
             except KeyError:
