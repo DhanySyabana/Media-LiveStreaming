@@ -140,7 +140,6 @@ class INewsV1:
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
-
             for segment in segments:
                 auth = segment['uri'].partition('?auth_key=')[2]
                 headers={
@@ -160,12 +159,14 @@ class INewsV1:
                     'accept-language': 'en-US,en;q=0.9'
                     }
                 self.custom_headers = headers
-                # print(F"{self.host_directory}/{self.query}")
-                # p = requests.get(F"{self.host_directory}/{self.query}", headers=self.custom_headers)
+                # print(F"{self.host_directory}/{segment['uri']}")
+                # p = requests.get(F"{self.host_directory}/{segment['uri']}", headers=self.custom_headers)
+                # # m3u8_master = m3u8.loads(p.text)
+                # # m3u8_data = m3u8_master.data
                 # print(p)
                 # exit()
                 file_segments.append({
-                    "url": F"{self.host_directory}/{self.query}",
+                    "url": F"{self.host_directory}/{segment['uri']}",
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
 
