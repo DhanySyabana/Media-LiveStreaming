@@ -28,10 +28,9 @@ class Config(object):
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
-            RESOLUTIONV1 = "256x144",
-            # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
+            RESOLUTIONV1 = "426x240",
             HOST_DIRECTORYV1 = "https://1d-inews.rctiplus.id", # OLD
-            RESOLUTION = "256x144",
+            RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
             HEADERS = {
