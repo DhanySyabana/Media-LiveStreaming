@@ -188,7 +188,7 @@ class Config(object):
     OPSV2 = dict(
         TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
         TELE_CHAT_ID = "-987535028",
-        SEND_TIME = 60 * 1,
+        SEND_TIME = 60 * 30,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
