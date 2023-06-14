@@ -31,7 +31,7 @@ class BeritaSatu:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 4
+        self.video_duration = 6
         self.last_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port
