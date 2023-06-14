@@ -125,16 +125,17 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
         ),
-        SCTVSTREAMING = dict(
+        TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.indihometv.com/livetv/sctv",
-            RESOLUTIONV1 = "640x360",
-            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/133/sctv/playlist.m3u8",
-            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/133/sctv",
-            UPLOAD_LOCATION = "storage/sctv",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "480x270",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)",
+            HOST_DIRECTORY_TS = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)/Stream(02)",
+            UPLOAD_LOCATION = "storage/tvri",
             HEADERS = {
-                'origin': 'https://www.indihometv.com',
-                'referer': 'https://www.indihometv.com/',
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
         ),
@@ -178,7 +179,8 @@ class Config(object):
             ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"]
+            ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"]
         }
     )
     
