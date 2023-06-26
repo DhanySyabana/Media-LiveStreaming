@@ -187,7 +187,7 @@ class Config(object):
     ### Notif channel mati ###
     OPSV2 = dict(
         TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
-        TELE_CHAT_ID = "-987535028",
+        TELE_CHAT_ID = "-897317690",
         SEND_TIME = 60 * 30,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
