@@ -188,7 +188,7 @@ class Config(object):
     OPSV2 = dict(
         TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
         TELE_CHAT_ID = "-897317690",
-        SEND_TIME = 60 * 30,
+        SEND_TIME = 60 * 20,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
@@ -217,7 +217,24 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_IDX = dict(
+        HOST = "10.10.10.14",
+        PORT = 6868,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    ### end Server ###
+
     ### Local ###
+
+    # SOCKET_SERVER_IDX = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7002,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+
     # SOCKET_SERVER_BERITASATU = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7001,
@@ -231,6 +248,8 @@ class Config(object):
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
+
+    ### end local ###
 
     SOCKET_NOTIFICATIONS = dict(
         HOST_SERVER = "0.0.0.0",

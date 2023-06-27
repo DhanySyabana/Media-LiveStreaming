@@ -9,7 +9,7 @@ from libs.Loggers import Loggers
 from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessor import VideoProsessor
+from libs.VideoProsessorIDX import VideoProsessor
 
 class IDXIndonesiaV1:
 
@@ -289,8 +289,8 @@ if __name__ == "__main__":
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         playlist_directory=ENGINE["PLAYLIST_DIRECTORYV1"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_IDX["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_IDX["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_IDX["BUFFER_SIZE"]
     )
     idxindonesia.StartEngine()
