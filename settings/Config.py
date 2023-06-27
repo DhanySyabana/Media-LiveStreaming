@@ -218,8 +218,8 @@ class Config(object):
     )
 
     SOCKET_SERVER_IDX = dict(
-        HOST = "10.10.10.14",
-        PORT = 6868,
+        HOST = "10.10.10.15",
+        PORT = 6767,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
