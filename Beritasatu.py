@@ -115,11 +115,10 @@ class BeritaSatu:
         response = HTTPRequest("get", url, self.custom_headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
+            playlists = m3u8_master.data["segments"]
             for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    break
+                playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
@@ -133,73 +132,78 @@ class BeritaSatu:
         self.video_prosessor.CleanUPTSFolder()
 
         logging.info("Get Playlist URI")
-        self.url_segment = self.GetPlaylist()
+        playlist_uri = self.GetPlaylist()
 
         try:
             while self.start_process:
-                logging.info("Get Segment URI")
-                segments = self.GetSegment()
-
-                while len(segments) == 0:
-                    logging.info("Retry Get Segment URI")
+                if playlist_uri is not None:
+                    logging.info("Get Segment URI")
                     segments = self.GetSegment()
+
+                    while len(segments) == 0:
+                        logging.info("Retry Get Segment URI")
+                        segments = self.GetSegment()
+                        time.sleep(self.video_duration)
+
                     time.sleep(self.video_duration)
 
-                time.sleep(self.video_duration)
+                    logging.info("Download segment")
 
-                logging.info("Download segment")
+                    try:
+                        self.DownloadSegment(segments)
+                    except ConnectionResetError or ConnectionRefusedError:
+                        while True:
+                            try:
+                                self.DownloadSegment(segments)
+                                break
+                            except ConnectionResetError or ConnectionRefusedError:
+                                logging.error("Retry Download Segment")
+                                time.sleep(self.video_duration)
+                                continue
+                    
+                    check_ts = self.CheckTSFiles()
+                    status_ts = check_ts["status"]
+                    data_ts = check_ts["data_ts"]
 
-                try:
-                    self.DownloadSegment(segments)
-                except ConnectionResetError or ConnectionRefusedError:
-                    while True:
-                        try:
-                            self.DownloadSegment(segments)
-                            break
-                        except ConnectionResetError or ConnectionRefusedError:
-                            logging.error("Retry Download Segment")
-                            time.sleep(self.video_duration)
-                            continue
-                
-                check_ts = self.CheckTSFiles()
-                status_ts = check_ts["status"]
-                data_ts = check_ts["data_ts"]
+                    if status_ts:
+                        now_filename = F"BERITASATUSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
 
-                if status_ts:
-                    now_filename = F"BERITASATUSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                        logging.info("Request to Server Converter - Concat TS")
+                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                            s.connect((self.converter_host, self.converter_port))
 
-                    logging.info("Request to Server Converter - Concat TS")
-                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                        s.connect((self.converter_host, self.converter_port))
+                            to_server = {
+                                "event": "concat",
+                                "environment": self.environment,
+                                "storage_path": self.upload_location,
+                                "mode": "w",
+                                "filename": now_filename,
+                            }
 
-                        to_server = {
-                            "event": "concat",
-                            "environment": self.environment,
-                            "storage_path": self.upload_location,
-                            "mode": "w",
-                            "filename": now_filename,
-                        }
+                            to_server = str(to_server).encode("utf-8")
+                            data_format = struct.Struct('I')
+                            data_length = len(to_server)
+                            s.sendall(data_format.pack(data_length))
 
-                        to_server = str(to_server).encode("utf-8")
-                        data_format = struct.Struct('I')
-                        data_length = len(to_server)
-                        s.sendall(data_format.pack(data_length))
+                            offset = 0
+                            while offset < data_length:
+                                sent_bytes = s.send(to_server[offset:])
+                                offset += sent_bytes
 
-                        offset = 0
-                        while offset < data_length:
-                            sent_bytes = s.send(to_server[offset:])
-                            offset += sent_bytes
+                            response = s.recv(self.buffer_size)
+                            response = eval(response)
+                            logging.info(F"Message from Server Converter: {response['message']}")
 
-                        response = s.recv(self.buffer_size)
-                        response = eval(response)
-                        logging.info(F"Message from Server Converter: {response['message']}")
+                            s.close()
+                            logging.info("Close Connection - Concat TS")
 
-                        s.close()
-                        logging.info("Close Connection - Concat TS")
+                        logging.info("Cleanup TS")
+                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
-                    logging.info("Cleanup TS")
-                    self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
+                else:
+                    logging.info("Retry Get Playlist URI")
+                    playlist_uri = self.GetPlaylist()
+                    time.sleep(self.video_duration)
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")

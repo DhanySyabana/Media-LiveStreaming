@@ -120,8 +120,8 @@ class Config(object):
             HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
-                'origin': 'https://www.beritasatu.com',
-                'referer': 'https://www.beritasatu.com/',
+                'origin': 'https://beritasatu.tv',
+                'referer': 'https://beritasatu.tv/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
         ),
