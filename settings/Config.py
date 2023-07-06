@@ -28,7 +28,7 @@ class Config(object):
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
-            RESOLUTIONV1 = "426x240",
+            RESOLUTIONV1 = "640x360",
             HOST_DIRECTORYV1 = "https://1d-inews.rctiplus.id", # OLD
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
@@ -203,51 +203,51 @@ class Config(object):
     )
     
     ### Server ###
-    SOCKET_SERVER = dict(
-        HOST = "10.10.10.8",
-        PORT = 6969,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_BERITASATU = dict(
-        HOST = "10.10.10.13",
-        PORT = 6868,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_IDX = dict(
-        HOST = "10.10.10.15",
-        PORT = 6767,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    ### end Server ###
-
-    ### Local ###
-
-    # SOCKET_SERVER_IDX = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7002,
+    # SOCKET_SERVER = dict(
+    #     HOST = "10.10.10.8",
+    #     PORT = 6969,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
 
     # SOCKET_SERVER_BERITASATU = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7001,
+    #     HOST = "10.10.10.13",
+    #     PORT = 6868,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7000,
+    # SOCKET_SERVER_IDX = dict(
+    #     HOST = "10.10.10.15",
+    #     PORT = 6767,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
+
+    ### end Server ###
+
+    ### Local ###
+
+    SOCKET_SERVER_IDX = dict(
+        HOST = "127.0.0.1",
+        PORT = 7002,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    SOCKET_SERVER_BERITASATU = dict(
+        HOST = "127.0.0.1",
+        PORT = 7001,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    SOCKET_SERVER = dict(
+        HOST = "127.0.0.1",
+        PORT = 7004,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end local ###
 
