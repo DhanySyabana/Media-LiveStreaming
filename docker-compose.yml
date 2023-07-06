@@ -308,6 +308,7 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -337,7 +338,8 @@ services:
       - ${HOST_IDX}:/app/storage/idx
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
-      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti   
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
