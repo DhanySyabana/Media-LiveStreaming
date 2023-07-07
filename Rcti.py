@@ -269,6 +269,13 @@ class INewsV1:
 
                             logging.info("Retry Get Playlist URI")
                             playlist_uri = self.GetPlaylist(token)
+                            
+                        if self.segment_status == 404:
+                            logging.info("Retry Get Token SDI")
+                            token = self.GetToken()
+
+                            logging.info("Retry Get Playlist URI")
+                            playlist_uri = self.GetPlaylist(token)
 
                         logging.info("Retry Get Segment URI")
                         segments = self.GetSegments(playlist_uri)
