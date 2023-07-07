@@ -31,6 +31,7 @@ class BeritaSatu:
         self.start_process = True
         self.video_duration = 6
         self.last_sequence = None
+        self.segment_status = None
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
@@ -58,6 +59,7 @@ class BeritaSatu:
             file_segments = file_segments[-5:]
         else:
             file_segments = []
+            self.segment_status = response.status_code
             logging.error(F"Error Get Segments: {response.status_code}")
             
         return file_segments
@@ -141,6 +143,11 @@ class BeritaSatu:
                     segments = self.GetSegment()
 
                     while len(segments) == 0:
+                        if self.segment_status == 404:
+                            logging.info("Retry Get Segment URI")
+                            playlist_uri = self.GetPlaylist()
+                            time.sleep(self.video_duration)
+
                         logging.info("Retry Get Segment URI")
                         segments = self.GetSegment()
                         time.sleep(self.video_duration)
