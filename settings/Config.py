@@ -148,21 +148,45 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
             }
         ),
+        # RCTISTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URLV1 = "https://www.rctiplus.com/tv/rcti",
+        #     RESOLUTIONV1 = "426x240",
+        #     HOST_DIRECTORYV1 = "https://1d-rcti.rctiplus.id", # OLD
+        #     RESOLUTION = "640x360",
+        #     # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+        #     UPLOAD_LOCATION = "storage/rcti",
+        #     HEADERS = {
+        #         'origin': 'https://www.rctiplus.com',
+        #         'referer': 'https://www.rctiplus.com/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # )
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.rctiplus.com/tv/rcti",
+            URLV1 = "https://tv.okezone.com/streaming/rcti",
             RESOLUTIONV1 = "426x240",
-            HOST_DIRECTORYV1 = "https://1d-rcti.rctiplus.id", # OLD
-            RESOLUTION = "640x360",
-            # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+            # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
+            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", # OLD
+            RESOLUTION = "426x240",
+            HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/rcti",
             HEADERS = {
-                'origin': 'https://www.rctiplus.com',
-                'referer': 'https://www.rctiplus.com/',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'origin': 'https://embed.rctiplus.com',
+                'referer': 'https://embed.rctiplus.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
                 'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
+                'sec-ch-ua-platform': '"macOS"',
                 'sec-fetch-dest': 'empty',
                 'sec-fetch-mode': 'cors',
                 'sec-fetch-site': 'cross-site',
@@ -170,7 +194,7 @@ class Config(object):
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9'
             }
-        )
+        ),
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -207,7 +231,8 @@ class Config(object):
             ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"]
+            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"]
         }
     )
     
