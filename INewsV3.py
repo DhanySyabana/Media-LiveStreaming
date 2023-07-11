@@ -103,25 +103,25 @@ class INewsV1:
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
                     playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    self.query = playlist['uri'].split('/')[0]
-                    auth = self.query.partition('?auth_key=')[2]
-                    headers={
-                        'accept': 'application/json',
-                        'Authorization':'Bearer '+auth,
-                        'origin': 'https://www.rctiplus.com',
-                        'referer': 'https://www.rctiplus.com/',
-                        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                        'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                        'sec-ch-ua-mobile': '?0',
-                        'sec-ch-ua-platform': '"Windows"',
-                        'sec-fetch-dest': 'empty',
-                        'sec-fetch-mode': 'cors',
-                        'sec-fetch-site': 'cross-site',
-                        'accept': '*/*',
-                        'accept-encoding': 'gzip, deflate, br',
-                        'accept-language': 'en-US,en;q=0.9'
-                        }
-                    self.custom_headers = headers
+                    # self.query = playlist['uri'].split('/')[0]
+                    # auth = self.query.partition('?auth_key=')[2]
+                    # headers={
+                    #     'accept': 'application/json',
+                    #     'Authorization':'Bearer '+auth,
+                    #     'origin': 'https://www.rctiplus.com',
+                    #     'referer': 'https://www.rctiplus.com/',
+                    #     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                    #     'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                    #     'sec-ch-ua-mobile': '?0',
+                    #     'sec-ch-ua-platform': '"Windows"',
+                    #     'sec-fetch-dest': 'empty',
+                    #     'sec-fetch-mode': 'cors',
+                    #     'sec-fetch-site': 'cross-site',
+                    #     'accept': '*/*',
+                    #     'accept-encoding': 'gzip, deflate, br',
+                    #     'accept-language': 'en-US,en;q=0.9'
+                    #     }
+                    # self.custom_headers = headers
                     response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
                     break
             logging.info("Get Playlist Success")
@@ -141,30 +141,24 @@ class INewsV1:
 
             segments = m3u8_data["segments"]
             for segment in segments:
-                auth = segment['uri'].partition('?auth_key=')[2]
-                headers={
-                    'accept': 'application/json',
-                    'Authorization':'Bearer '+auth,
-                    'origin': 'https://www.rctiplus.com',
-                    'referer': 'https://www.rctiplus.com/',
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9'
-                    }
-                self.custom_headers = headers
-                # print(F"{self.host_directory}/{segment['uri']}")
-                # p = requests.get(F"{self.host_directory}/{segment['uri']}", headers=self.custom_headers)
-                # # m3u8_master = m3u8.loads(p.text)
-                # # m3u8_data = m3u8_master.data
-                # print(p)
-                # exit()
+                # auth = segment['uri'].partition('?auth_key=')[2]
+                # headers={
+                #     'accept': 'application/json',
+                #     'Authorization':'Bearer '+auth,
+                #     'origin': 'https://www.rctiplus.com',
+                #     'referer': 'https://www.rctiplus.com/',
+                #     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                #     'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                #     'sec-ch-ua-mobile': '?0',
+                #     'sec-ch-ua-platform': '"Windows"',
+                #     'sec-fetch-dest': 'empty',
+                #     'sec-fetch-mode': 'cors',
+                #     'sec-fetch-site': 'cross-site',
+                #     'accept': '*/*',
+                #     'accept-encoding': 'gzip, deflate, br',
+                #     'accept-language': 'en-US,en;q=0.9'
+                #     }
+                # self.custom_headers = headers
                 file_segments.append({
                     "url": F"{self.host_directory}/{segment['uri']}",
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
