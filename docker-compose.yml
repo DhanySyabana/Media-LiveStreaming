@@ -20,7 +20,8 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri
-      - ${HOST_RCTI}:/app/storage/rcti  
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -49,7 +50,9 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri
-      - ${HOST_RCTI}:/app/storage/rcti  
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7  
+
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -78,7 +81,8 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri 
-      - ${HOST_RCTI}:/app/storage/rcti 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7   
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -88,6 +92,35 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX}
 
+  engine_server_converter_trans:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_trans
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_TRANS}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7   
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.18
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_TRANS}
 
   engine_inews_v1:
     image: media_livestreaming_engine:latest
@@ -289,6 +322,26 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_RCTI}
 
+  engine_trans7_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_trans7_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TRANS7}
+    volumes:
+      - ./:/app
+      - ${HOST_TRANS7}:/app/storage/trans7
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.17
+    restart: unless-stopped
+    command: python ${ENGINE_TRANS7}
+
   engine_ops_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v1
@@ -309,6 +362,7 @@ services:
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri 
       - ${HOST_RCTI}:/app/storage/rcti  
+      - ${HOST_TRANS7}:/app/storage/trans7  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -339,7 +393,8 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri
-      - ${HOST_RCTI}:/app/storage/rcti   
+      - ${HOST_RCTI}:/app/storage/rcti 
+      - ${HOST_TRANS7}:/app/storage/trans7    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta

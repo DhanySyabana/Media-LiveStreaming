@@ -192,7 +192,7 @@ class Config(object):
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9'
             }
-        )
+        ),
         # RCTISTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URLV1 = "https://tv.okezone.com/streaming/rcti",
@@ -217,6 +217,18 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        TRANS7STREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = "640x360",
+            UPLOAD_LOCATION = "storage/trans7",
+            HEADERS = {
+                'origin': 'https://20.detik.com',
+                'referer': 'https://20.detik.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+            }
+        )
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -280,9 +292,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_TRANS = dict(
+        HOST = "10.10.10.18",
+        PORT = 6565,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_TRANS = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7005,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_IDX = dict(
     #     HOST = "127.0.0.1",

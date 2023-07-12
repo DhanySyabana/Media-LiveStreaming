@@ -29,8 +29,9 @@ class CNNIndonesia:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 4
+        self.video_duration = 3
         self.last_sequence = None
+        self.segment_status = None
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
@@ -58,6 +59,7 @@ class CNNIndonesia:
             file_segments = file_segments[-5:]
         else:
             file_segments = []
+            self.segment_status = response.status_code
             logging.error(F"Error Get Segments: {response.status_code}")
             
         return file_segments
@@ -102,7 +104,7 @@ class CNNIndonesia:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 150:
+        if get_total_files >= 200:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -142,7 +144,15 @@ class CNNIndonesia:
                 segments = self.GetSegment()
 
                 while len(segments) == 0:
-                    logging.info("Retry Get Segment URI")
+                    if self.segment_status == 403:
+                        logging.info("Retry Get Playlist URI")
+                        self.url_segment = self.GetPlaylist()
+
+                    if self.segment_status == 404:
+                        logging.info("Retry Get Playlist URI")
+                        self.url_segment = self.GetPlaylist()
+
+                        logging.info("Retry Get Segment URI")
                     segments = self.GetSegment()
                     time.sleep(self.video_duration)
 
@@ -167,7 +177,7 @@ class CNNIndonesia:
                 data_ts = check_ts["data_ts"]
 
                 if status_ts:
-                    now_filename = F"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    now_filename = F"TRANS7STREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
 
                     logging.info("Request to Server Converter - Concat TS")
                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -211,7 +221,7 @@ class CNNIndonesia:
 
 
 if __name__ == "__main__":
-    ENGINE_NAME = "CNNSTREAMING"
+    ENGINE_NAME = "TRANS7STREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
     cnnindonesia = CNNIndonesia(
