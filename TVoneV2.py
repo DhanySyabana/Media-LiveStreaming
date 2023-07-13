@@ -271,8 +271,8 @@ if __name__ == "__main__":
         resolution=ENGINE["RESOLUTION"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         custom_headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_VIDIO["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_VIDIO["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_VIDIO["BUFFER_SIZE"],
     )
     inews.StartEngine()   

@@ -335,9 +335,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_VIDIO = dict(
+        HOST = "10.10.10.21",
+        PORT = 6262,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_VIDIO = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7008,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_YT = dict(
     #     HOST = "127.0.0.1",
