@@ -321,9 +321,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_CNBC = dict(
+        HOST = "10.10.10.19",
+        PORT = 6464,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_CNBC = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7006,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_TRANS = dict(
     #     HOST = "127.0.0.1",

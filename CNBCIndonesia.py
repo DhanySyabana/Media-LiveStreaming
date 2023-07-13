@@ -7,7 +7,7 @@ import datetime
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessor import VideoProsessor
+from libs.VideoProsessorCNBC import VideoProsessor
 
 class CNBCIndonesia:
 
@@ -219,9 +219,9 @@ if __name__ == "__main__":
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_CNBC["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_CNBC["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_CNBC["BUFFER_SIZE"],
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )
