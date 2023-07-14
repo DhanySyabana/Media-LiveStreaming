@@ -178,18 +178,40 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        # TVRISTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URLV1 = "http://klik.tvri.go.id/",
+        #     RESOLUTION = "480x270",
+        #     PLAYLIST = "index.m3u8",
+        #     HOST_DIRECTORY = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)",
+        #     HOST_DIRECTORY_TS = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)/Stream(02)",
+        #     UPLOAD_LOCATION = "storage/tvri",
+        #     HEADERS = {
+        #         'origin': 'http://klik.tvri.go.id',
+        #         'referer': 'http://klik.tvri.go.id/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+        #     }
+        # ),
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "http://klik.tvri.go.id/",
-            RESOLUTION = "480x270",
+            URL = "https://www.vidio.com/live/6441/tokens",
+            RESOLUTION = "640x360",
             PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)",
-            HOST_DIRECTORY_TS = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)/Stream(02)",
+            HOST_DIRECTORY = "https://etslive-app.vidio.com/live/6441/master.m3u8",
             UPLOAD_LOCATION = "storage/tvri",
             HEADERS = {
-                'origin': 'http://klik.tvri.go.id',
-                'referer': 'http://klik.tvri.go.id/',
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         RCTISTREAMING = dict(
