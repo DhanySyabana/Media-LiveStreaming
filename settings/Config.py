@@ -29,7 +29,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id",
+            # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
+            HOST_DIRECTORYV1 = "https://1d-inews.rctiplus.id", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
@@ -218,7 +219,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
+            # HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
+            HOST_DIRECTORYV1 = "https://1d-rcti.rctiplus.id", #NEW
             RESOLUTION = "426x240",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/rcti",
