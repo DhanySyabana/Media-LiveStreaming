@@ -7,7 +7,7 @@ import datetime
 import streamlink
 from libs.Loggers import Loggers
 from settings.Config import Config
-from libs.VideoProsessor import VideoProsessor
+from libs.VideoProsessorVidio import VideoProsessor
 
 class TVone:
 
@@ -195,9 +195,9 @@ if __name__ == "__main__":
         quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_VIDIO["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_VIDIO["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_VIDIO["BUFFER_SIZE"]
     )
     tv_one.StartEngine()
     
