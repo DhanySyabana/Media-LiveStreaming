@@ -191,10 +191,11 @@ class Config(object):
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
-            RESOLUTION = "480x270",
+            RESOLUTION = "240x136",
+            # RESOLUTION = "480x270", #OLD
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)",
-            HOST_DIRECTORY_TS = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)/Stream(02)",
+            HOST_DIRECTORY_TS = "http://wpc.d1627.nucdn.net/80D1627/o-tvri/Content/HLS/Live/Channel(TVRINASIONAL)/Stream(01)",
             UPLOAD_LOCATION = "storage/tvri",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
