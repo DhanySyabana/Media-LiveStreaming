@@ -44,23 +44,25 @@ class BeritaSatu:
 
     def GetSegment(self) -> list:
         file_segments = []
-        time.sleep(3)
+        logging.info(F"URL: {self.url_segment}")
+        # time.sleep(3)
         response = HTTPRequest("get", F"{self.url_segment}", self.custom_headers).Hit()
+        logging.info(F"Status Get Segments: {response.status_code}")
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
+            url_segment = self.url_segment.replace('/index.m3u8','')
             for segment in segments:
                 file_segments.append({
-                    "url": F"{self.host_directory_ts}/{segment['uri']}",
+                    "url": F"{url_segment}/{segment['uri']}",
                     "sequence": str(segment["uri"]).replace('.ts','').replace('/segment','').replace('(','-').replace(')','')
                 })
             file_segments = file_segments[-5:]
         else:
             file_segments = []
             logging.error(F"Error Get Segments: {response.status_code}")
-            
         return file_segments
 
     def DownloadSegment(self, segments: list) -> None:
@@ -112,15 +114,18 @@ class BeritaSatu:
         playlist_uri = None
         url = F"{self.host_directory}/{self.playlist}"
         logging.info(F"URL: {url}")
-        time.sleep(3)
+        # time.sleep(3)
         response = HTTPRequest("get", url, self.custom_headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    break
+            # uri yang pertama
+            playlist_uri = F"{self.host_directory}/{playlists[0]['uri']}"
+
+            # for playlist in playlists:
+            #     if playlist["stream_info"]["resolution"] == self.resolution:
+            #         playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+            #         break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
@@ -133,11 +138,10 @@ class BeritaSatu:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Playlist URI")
-        self.url_segment = self.GetPlaylist()
-
         try:
             while self.start_process:
+                logging.info("Get Playlist URI")
+                self.url_segment = self.GetPlaylist()
                 logging.info("Get Segment URI")
                 segments = self.GetSegment()
 
