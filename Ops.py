@@ -317,11 +317,11 @@ class Ops:
         fig.tight_layout()
         fig.savefig(F"static/{filename}", dpi=300)
 
-        # url = F"https://api.telegram.org/bot{self.TOKEN}/sendPhoto?chat_id={self.CHAT_ID}"
-        # response = requests.post(url, files={"photo": open(F"static/{filename}", "rb")})
-        # if response.ok:
-        #     os.remove(F"static/{filename}")
-        #     logging.info("Send chart to telegram")
+        url = F"https://api.telegram.org/bot{self.TOKEN}/sendPhoto?chat_id={self.CHAT_ID}"
+        response = requests.post(url, files={"photo": open(F"static/{filename}", "rb")})
+        if response.ok:
+            os.remove(F"static/{filename}")
+            logging.info("Send chart to telegram")
 
 
     def execute(self) -> None:
