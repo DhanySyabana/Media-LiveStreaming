@@ -65,7 +65,7 @@ class Ops:
         text += "\n List Channel Streaming OFF :\n"
         no = 0
         for key, channel in enumerate(key_data):
-            if data[key_data[key]]["total_video_last_hour"] < 2:
+            if data[key_data[key]]["total_video_last_hour"] < 1:
                 channel = channel.replace("STREAMING"," - STREAMING")
                 no += 1
                 text += "\n"+ str(no) +". " +channel

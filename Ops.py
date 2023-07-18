@@ -64,7 +64,7 @@ class Ops:
 
         # Create a figure and GridSpec object
         fig = plt.figure(figsize=(23, 10))
-        gs = GridSpec(nrows=3, ncols=5, figure=fig)
+        gs = GridSpec(nrows=4, ncols=5, figure=fig)
 
         # update margin 
         plt.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.1, hspace=0.1)
@@ -228,8 +228,23 @@ class Ops:
         ax10.set_xticks([])
         ax10.set_yticks([])
 
-        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"], data[key_data[6]]["total_video"], data[key_data[7]]["total_video"], data[key_data[8]]["total_video"], data[key_data[9]]["total_video"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7],  key_data[8], key_data[9]]
+        ax11 = fig.add_subplot(gs[2, 0])
+        color = "black"
+        if data[key_data[10]]["total_video_last_hour"] < 6:
+            color = "red"
+            ax11.spines['bottom'].set_color('red')
+            ax11.spines['top'].set_color('red')
+            ax11.spines['right'].set_color('red')
+            ax11.spines['left'].set_color('red')
+        ax11.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
+        ax11.text(0.5, 0.5, key_data[10], ha='center', va='center', fontsize=16, weight='bold', color=color)
+        ax11.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
+        ax11.text(0.5, 0.3, data[key_data[10]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
+        ax11.set_xticks([])
+        ax11.set_yticks([])
+
+        total_video = [data[key_data[0]]["total_video"], data[key_data[1]]["total_video"], data[key_data[2]]["total_video"], data[key_data[3]]["total_video"], data[key_data[4]]["total_video"], data[key_data[5]]["total_video"], data[key_data[6]]["total_video"], data[key_data[7]]["total_video"], data[key_data[8]]["total_video"], data[key_data[9]]["total_video"], data[key_data[10]]["total_video"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7],  key_data[8], key_data[9],key_data[10]]
         colors = plt.cm.Set2(np.linspace(0, 1, len(labels)))
         
         # explode with a bigger value of total_video
@@ -237,7 +252,7 @@ class Ops:
 
         # Add a pie plot to the lower row
         if max(total_video) > 0:
-            ax_total_video = fig.add_subplot(gs[2, 2:4])
+            ax_total_video = fig.add_subplot(gs[3, 2:4])
             # handle autopct, cannot convert float NaN to integer
             autopct = lambda p: '{:.0f}'.format(p * sum(total_video) / 100) if p > 0 else ''
             _, _, autotexts = ax_total_video.pie(total_video, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
@@ -252,15 +267,15 @@ class Ops:
             ax_total_video.set_title('TOTAL VIDEO', weight='bold', fontsize=16)
 
         # total last video
-        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"], data[key_data[6]]["total_video_last_hour"], data[key_data[7]]["total_video_last_hour"],  data[key_data[8]]["total_video_last_hour"], data[key_data[9]]["total_video_last_hour"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7], key_data[8], key_data[9]]
+        total_video_last_hour = [data[key_data[0]]["total_video_last_hour"], data[key_data[1]]["total_video_last_hour"], data[key_data[2]]["total_video_last_hour"], data[key_data[3]]["total_video_last_hour"], data[key_data[4]]["total_video_last_hour"], data[key_data[5]]["total_video_last_hour"], data[key_data[6]]["total_video_last_hour"], data[key_data[7]]["total_video_last_hour"],  data[key_data[8]]["total_video_last_hour"], data[key_data[9]]["total_video_last_hour"], data[key_data[10]]["total_video_last_hour"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7], key_data[8], key_data[9], key_data[10]]
 
         # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == max(total_video_last_hour) else 0 for i in total_video_last_hour]
 
         # Add a pie plot to the lower row
         if max(total_video_last_hour) > 0:
-            ax_total_video_1_hour = fig.add_subplot(gs[2, 4:6])
+            ax_total_video_1_hour = fig.add_subplot(gs[3, 4:6])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_video_last_hour) / 100) if p > 0 else ''
             _, _, autotexts = ax_total_video_1_hour.pie(total_video_last_hour, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
@@ -274,15 +289,15 @@ class Ops:
             ax_total_video_1_hour.set_title('TOTAL VIDEO LAST ONE HOUR', weight='bold', fontsize=16)
 
         # total storage
-        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"], data[key_data[6]]["total_size"], data[key_data[7]]["total_size"], data[key_data[8]]["total_size"], data[key_data[9]]["total_size"]]
-        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7], key_data[8],  key_data[9]]
+        total_size = [data[key_data[0]]["total_size"], data[key_data[1]]["total_size"], data[key_data[2]]["total_size"], data[key_data[3]]["total_size"], data[key_data[4]]["total_size"], data[key_data[5]]["total_size"], data[key_data[6]]["total_size"], data[key_data[7]]["total_size"], data[key_data[8]]["total_size"], data[key_data[9]]["total_size"], data[key_data[10]]["total_size"]]
+        labels = [key_data[0], key_data[1], key_data[2], key_data[3], key_data[4], key_data[5], key_data[6], key_data[7], key_data[8],  key_data[9], key_data[10]]
 
         # explode with a bigger value of total_video_last_hour
         explode = [0.1 if i == min(total_size) else 0 for i in total_size]
 
         # Add a pie plot to the lower row
         if max(total_size) > 0:
-            ax_storage = fig.add_subplot(gs[2, 0:2])
+            ax_storage = fig.add_subplot(gs[3, 0:2])
             autopct = lambda p: '{:.0f}'.format(p * sum(total_size) / 100) if p > 0 else ''
             _, _, autotexts = ax_storage.pie(total_size, radius=1, colors=colors, autopct=autopct, pctdistance=0.8, startangle=90, explode=explode, wedgeprops = { 'linewidth': 2, "edgecolor" :"k" })
             for autotext in autotexts:
