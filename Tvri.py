@@ -44,7 +44,7 @@ class BeritaSatu:
 
     def GetSegment(self) -> list:
         file_segments = []
-
+        time.sleep(3)
         response = HTTPRequest("get", F"{self.url_segment}", self.custom_headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -112,7 +112,7 @@ class BeritaSatu:
         playlist_uri = None
         url = F"{self.host_directory}/{self.playlist}"
         logging.info(F"URL: {url}")
-
+        time.sleep(3)
         response = HTTPRequest("get", url, self.custom_headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)

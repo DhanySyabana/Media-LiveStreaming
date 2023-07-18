@@ -1,6 +1,7 @@
 import socket
 import struct
 import logging
+import time
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -81,6 +82,7 @@ class ServerConverter:
                             for segment in segments:
                                 
                                 try:
+                                    time.sleep(2)
                                     response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"
