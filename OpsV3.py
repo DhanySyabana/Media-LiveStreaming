@@ -1,4 +1,5 @@
 import os
+import subprocess
 import glob
 import time
 import tqdm
@@ -76,10 +77,14 @@ class Ops:
                     print("CNBCSTREAMING")
                 elif channel == "IDXSTREAMING":
                     try:
-                        time.sleep(3)
-                        os.system(f"docker restart engine_server_converter_idx")
-                        time.sleep(3)
-                        os.system(f"docker restart engine_idx_v1")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_server_converter_idx")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_idx_v1")
+                        server_container_idx ="engine_server_converter_idx"
+                        container_idx ="engine_idx_v1"
+                        subprocess.call(["docker", "restart", server_container_idx])
+                        subprocess.call(["docker", "restart", container_idx])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
@@ -87,30 +92,42 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     try:
-                        time.sleep(3)
-                        os.system(f"docker restart engine_server_converter_vidio")
-                        time.sleep(3)
-                        os.system(f"docker restart engine_tvone_v1")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_server_converter_vidio")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_tvone_v1")
+                        server_container_tvone ="engine_server_converter_vidio"
+                        container_tvone ="engine_tvone_v1"
+                        subprocess.call(["docker", "restart", server_container_tvone])
+                        subprocess.call(["docker", "restart", container_tvone])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
                 elif channel == "BERITASATUSTREAMING":
                     try:
-                        time.sleep(3)
-                        os.system(f"docker restart engine_server_converter_beritasatu")
-                        time.sleep(3)
-                        os.system(f"docker restart engine_beritasatu_v1")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_server_converter_beritasatu")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_beritasatu_v1")
+                        server_container_beritasatu ="engine_server_converter_beritasatu"
+                        container_beritasatu ="engine_beritasatu_v1"
+                        subprocess.call(["docker", "restart", server_container_beritasatu])
+                        subprocess.call(["docker", "restart", container_beritasatu])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
                 elif channel == "TVRISTREAMING":
                     try:
-                        time.sleep(3)
-                        os.system(f"docker restart engine_server_converter_v1")
-                        time.sleep(3)
-                        os.system(f"docker restart engine_tvri_v1")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_server_converter_v1")
+                        # time.sleep(3)
+                        # os.system(f"docker restart engine_tvri_v1")
+                        server_container_tvri ="engine_server_converter_v1"
+                        container_tvri ="engine_tvri_v1"
+                        subprocess.call(["docker", "restart", server_container_tvri])
+                        subprocess.call(["docker", "restart", container_tvri])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
