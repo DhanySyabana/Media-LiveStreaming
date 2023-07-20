@@ -526,6 +526,38 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_OPS_V2}
 
+  engine_ops_v3:
+    image: media_livestreaming_engine:latest
+    container_name: engine_ops_v3
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_OPS_V3}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti 
+      - ${HOST_TRANS7}:/app/storage/trans7    
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: 10.10.10.23
+    restart: unless-stopped
+    command: python ${ENGINE_OPS_V3}
+
   # engine_server_notification_v1:
   #   image: media_livestreaming_engine:latest
   #   container_name: engine_server_notification_v1
