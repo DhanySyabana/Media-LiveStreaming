@@ -81,10 +81,10 @@ class Ops:
                         # os.system(f"docker restart engine_server_converter_idx")
                         # time.sleep(3)
                         # os.system(f"docker restart engine_idx_v1")
-                        server_container_idx ="docker restart engine_server_converter_idx"
-                        container_idx ="docker restart engine_idx_v1"
-                        subprocess.call([server_container_idx])
-                        subprocess.call([container_idx])
+                        server_container_idx ="engine_server_converter_idx"
+                        container_idx ="engine_idx_v1"
+                        subprocess.run(["docker", "restart", server_container_idx])
+                        subprocess.run(["docker", "restart", container_idx])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
@@ -96,10 +96,10 @@ class Ops:
                         # os.system(f"docker restart engine_server_converter_vidio")
                         # time.sleep(3)
                         # os.system(f"docker restart engine_tvone_v1")
-                        server_container_tvone ="docker restart engine_server_converter_vidio"
-                        container_tvone ="docker restart engine_tvone_v1"
-                        subprocess.call([server_container_tvone])
-                        subprocess.call([container_tvone])
+                        server_container_tvone ="engine_server_converter_vidio"
+                        container_tvone ="engine_tvone_v1"
+                        subprocess.run(["docker", "restart", server_container_tvone])
+                        subprocess.run(["docker", "restart", container_tvone])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
@@ -110,10 +110,10 @@ class Ops:
                         # os.system(f"docker restart engine_server_converter_beritasatu")
                         # time.sleep(3)
                         # os.system(f"docker restart engine_beritasatu_v1")
-                        server_container_beritasatu ="docker restart engine_server_converter_beritasatu"
-                        container_beritasatu ="docker restart engine_beritasatu_v1"
-                        subprocess.call([server_container_beritasatu])
-                        subprocess.call([container_beritasatu])
+                        server_container_beritasatu ="engine_server_converter_beritasatu"
+                        container_beritasatu ="engine_beritasatu_v1"
+                        subprocess.run(["docker", "restart", server_container_beritasatu])
+                        subprocess.run(["docker", "restart", container_beritasatu])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
@@ -124,10 +124,10 @@ class Ops:
                         # os.system(f"docker restart engine_server_converter_v1")
                         # time.sleep(3)
                         # os.system(f"docker restart engine_tvri_v1")
-                        server_container_tvri ="docker restart engine_server_converter_v1"
-                        container_tvri ="docker restart engine_tvri_v1"
-                        subprocess.call([server_container_tvri])
-                        subprocess.call([container_tvri])
+                        server_container_tvri ="engine_server_converter_v1"
+                        container_tvri ="engine_tvri_v1"
+                        subprocess.run(["docker", "restart", server_container_tvri])
+                        subprocess.run(["docker", "restart", container_tvri])
                         logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
