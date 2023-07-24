@@ -34,8 +34,8 @@ class Ops:
             else:
                 total_video = int(total_video)
 
-            # total video last 30 minutes
-            total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 1800])
+            # total video last 20 minutes
+            total_video_last_hour = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 1200])
             if math.isnan(total_video_last_hour):
                 total_video_last_hour = 0
             else:
