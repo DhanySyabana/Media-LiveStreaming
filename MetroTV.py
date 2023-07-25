@@ -7,7 +7,7 @@ import datetime
 import streamlink
 from libs.Loggers import Loggers
 from settings.Config import Config
-from libs.VideoProsessorYT import VideoProsessor
+from libs.VideoProsessorKompas import VideoProsessor
 
 class MetroTV:
 
@@ -195,9 +195,9 @@ if __name__ == "__main__":
         quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_YT["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_YT["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_YT["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_METRO["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_METRO["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_METRO["BUFFER_SIZE"]
     )
     metro_tv.StartEngine()
     

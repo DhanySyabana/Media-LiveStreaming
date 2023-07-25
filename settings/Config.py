@@ -394,7 +394,7 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_YT = dict(
+    SOCKET_SERVER_KOMPAS = dict(
         HOST = "10.10.10.20",
         PORT = 6363,
         MAX_CONNECTION = 4,
@@ -415,9 +415,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_METRO = dict(
+        HOST = "10.10.10.24",
+        PORT = 6060,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_METRO = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7010,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_RCTI = dict(
     #     HOST = "127.0.0.1",
@@ -426,14 +440,14 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_VIDIO = dict(
+    # SOCKET_SERVER_TVONE = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7008,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_YT = dict(
+    # SOCKET_SERVER_KOMPAS = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7007,
     #     MAX_CONNECTION = 4,
