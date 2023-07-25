@@ -294,6 +294,18 @@ class Config(object):
                 'referer': 'https://20.detik.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
+        ),
+        TRANSTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://video.detik.com/transtv/smil:transtv.smil",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = "640x360",
+            UPLOAD_LOCATION = "storage/transtv",
+            HEADERS = {
+                'origin': 'https://20.detik.com',
+                'referer': 'https://20.detik.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+            }
         )
     )
 
@@ -315,6 +327,7 @@ class Config(object):
             ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
         }
     )
 
@@ -335,6 +348,7 @@ class Config(object):
             ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
         }
     )
     
@@ -355,6 +369,7 @@ class Config(object):
             ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
         }
     )
     
@@ -422,9 +437,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_TRANSTV = dict(
+        HOST = "10.10.10.26",
+        PORT = 7979,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_TRANSTV = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7011,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_METRO = dict(
     #     HOST = "127.0.0.1",
