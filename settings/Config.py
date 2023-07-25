@@ -444,9 +444,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_CNN = dict(
+        HOST = "10.10.10.27",
+        PORT = 7878,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_CNN = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7012,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_TRANSTV = dict(
     #     HOST = "127.0.0.1",

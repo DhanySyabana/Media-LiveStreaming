@@ -7,7 +7,7 @@ import datetime
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorTrans import VideoProsessor
+from libs.VideoProsessorCNN import VideoProsessor
 
 class CNNIndonesia:
 
@@ -219,9 +219,9 @@ if __name__ == "__main__":
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_TRANS["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_TRANS["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_TRANS["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_CNN["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_CNN["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_CNN["BUFFER_SIZE"],
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )
