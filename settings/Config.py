@@ -410,8 +410,8 @@ class Config(object):
     )
 
     SOCKET_SERVER_KOMPAS = dict(
-        HOST = "10.10.10.20",
-        PORT = 6363,
+        HOST = "10.10.10.31",
+        PORT = 5353,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
