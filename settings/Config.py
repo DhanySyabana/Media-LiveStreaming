@@ -401,7 +401,7 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_VIDIO = dict(
+    SOCKET_SERVER_TVONE = dict(
         HOST = "10.10.10.21",
         PORT = 6262,
         MAX_CONNECTION = 4,

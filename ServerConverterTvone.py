@@ -4,7 +4,7 @@ import logging
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorVidio import VideoProsessor
+from libs.VideoProsessorTvone import VideoProsessor
 
 class ServerConverter:
 
@@ -112,7 +112,7 @@ class ServerConverter:
             s.close()
 
 if __name__ == "__main__":
-    CONFIG_SERVER = Config().SOCKET_SERVER_VIDIO
+    CONFIG_SERVER = Config().SOCKET_SERVER_TVONE
     server_converter = ServerConverter(
         host=CONFIG_SERVER["HOST"],
         port=CONFIG_SERVER["PORT"],

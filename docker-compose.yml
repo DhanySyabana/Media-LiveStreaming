@@ -182,14 +182,14 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_YT}
 
-  engine_server_converter_vidio:
+  engine_server_converter_tvone:
     image: media_livestreaming_engine:latest
-    container_name: engine_server_converter_vidio
+    container_name: engine_server_converter_tvone
     build: 
       context: .
       dockerfile: Dockerfile
       args:
-        - ENGINE=${ENGINE_CONVERTER_VIDIO}
+        - ENGINE=${ENGINE_CONVERTER_TVONE}
     volumes:
       - ./:/app
       - ${HOST_INEWS}:/app/storage/inews
@@ -210,7 +210,7 @@ services:
       default:
         ipv4_address: 10.10.10.21
     restart: unless-stopped
-    command: python ${ENGINE_CONVERTER_VIDIO}
+    command: python ${ENGINE_CONVERTER_TVONE}
 
   engine_server_converter_rcti:
     image: media_livestreaming_engine:latest
