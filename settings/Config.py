@@ -69,14 +69,36 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
+        # METROTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
+        #     URL = "https://www.youtube.com/watch?v=RAe5U88mcNE",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/metro",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            URL = "https://www.youtube.com/watch?v=RAe5U88mcNE",
-            QUALITY = "360p",
+            URL = "https://www.vidio.com/live/777/tokens",
+            RESOLUTION = "640x360",
+            PLAYLIST = "B1News_320x240.m3u8",
+            HOST_DIRECTORY = "https://etslive-app.vidio.com/live/777/master.m3u8",
             UPLOAD_LOCATION = "storage/metro",
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         CNBCSTREAMING = dict(
