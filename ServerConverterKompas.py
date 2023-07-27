@@ -1,3 +1,4 @@
+import cloudscraper
 import socket
 import struct
 import logging
@@ -81,7 +82,9 @@ class ServerConverter:
                             for segment in segments:
                                 
                                 try:
-                                    response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                    scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
+                                    response_http = scraper.get(segment["url"], headers=data["headers"])
+                                    # response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"
                                         
