@@ -82,6 +82,7 @@ class ServerConverter:
                                 
                                 try:
                                     response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                    logging.info(F"Status Request Segment: {response_http.status_code}")
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"
                                         
@@ -96,9 +97,11 @@ class ServerConverter:
                                         logging.info(F"Success Download Segment: {file_name}")
                                     else:
                                         logging.error(F"Error Download Segment: {response_http.status_code}")
+                                        continue
                                     logging.info(F"Succes Download Segment")
                                 except AttributeError:
                                     logging.error(F"Error Download Segment: {segment['url']}")
+                                    continue
                                     
                         else:
                             logging.error(F"Error Event: {data['event']}")

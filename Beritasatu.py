@@ -143,7 +143,7 @@ class BeritaSatu:
                     segments = self.GetSegment()
 
                     while len(segments) == 0:
-                        if self.segment_status == 404:
+                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404 or self.segment_status == 503:
                             logging.info("Retry Get Segment URI")
                             playlist_uri = self.GetPlaylist()
                             time.sleep(self.video_duration)
