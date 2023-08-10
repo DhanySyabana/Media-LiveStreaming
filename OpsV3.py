@@ -106,12 +106,12 @@ class Ops:
                         logging.error(F"Error : {str(e)}")
                 elif channel == "BERITASATUSTREAMING":
                     try:
-                        file_path ='/restart/Beritasatu.sh'
+                        file_path ='/home/kabayangroup/restart/Beritasatu.sh'
                         subprocess.call(['bash', file_path])
-                        logging.info(F"Success Restart : {str(channel)}")
                     except Exception as e:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
+                    logging.info(F"Success Restart : {str(channel)}")
                 elif channel == "TVRISTREAMING":
                     try:
                         # time.sleep(3)
