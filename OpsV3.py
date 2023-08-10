@@ -91,8 +91,9 @@ class Ops:
                         logging.error(F"Error : {str(e)}")
                     
                 elif channel == "TVONESTREAMING":
+                    logging.info(F"Start : {str(channel)}")
                     try:
-                        file_path ='/home/kabayangroup/restart/Tvone.sh'
+                        file_path ='./home/kabayangroup/restart/Tvone.sh'
                         subprocess.call(['sh', file_path])
                     except FileNotFoundError as e:
                         print(f"Error: {e}")
