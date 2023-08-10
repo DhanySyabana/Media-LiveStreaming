@@ -94,8 +94,8 @@ class Ops:
                     logging.info(F"Start : {str(channel)}")
                     try:
                         file_path ='/home/kabayangroup/restart/Tvone.sh'
-                        os.system('sh /home/kabayangroup/restart/Tvone.sh')
-                        subprocess.call(['sh', file_path])
+                        os.system('docker restart engine_server_converter_tvone')
+                        subprocess.call("sh " + file_path, shell=True)
                     except FileNotFoundError as e:
                         print(f"Error: {e}")
                         logging.error(F"Error : {str(e)}")
