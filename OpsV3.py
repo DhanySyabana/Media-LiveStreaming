@@ -92,25 +92,25 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     try:
-                        # time.sleep(3)
-                        # os.system(f"docker restart engine_server_converter_vidio")
-                        # time.sleep(3)
-                        # os.system(f"docker restart engine_tvone_v1")
-                        # server_container_tvone ="engine_server_converter_vidio"
-                        # container_tvone ="engine_tvone_v1"
-                        # subprocess.run(["docker", "restart", server_container_tvone])
-                        # subprocess.run(["docker", "restart", container_tvone])
-                        logging.info(F"Success Restart : {str(channel)}")
+                        file_path ='/home/kabayangroup/restart/Tvone.sh'
+                        subprocess.call(file_path, shell=True)
+                    except FileNotFoundError as e:
+                        print(f"Error: {e}")
+                        logging.error(F"Error : {str(e)}")
+                    except subprocess.CalledProcessError as e:
+                        print(f"Command execution failed: {e}")
+                        logging.error(F"Error : {str(e)}")
                     except Exception as e:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
+                    logging.info(F"Success Restart : {str(channel)}")
                 elif channel == "BERITASATUSTREAMING":
-                    try:
-                        file_path ='/home/kabayangroup/restart/Beritasatu.sh'
-                        subprocess.call(['bash', file_path])
-                    except Exception as e:
-                        print(str(e))
-                        logging.error(F"Error : {str(e)}")
+                    # try:
+                    #     file_path ='/home/kabayangroup/restart/Beritasatu.sh'
+                    #     subprocess.call(['bash', file_path])
+                    # except Exception as e:
+                    #     print(str(e))
+                    #     logging.error(F"Error : {str(e)}")
                     logging.info(F"Success Restart : {str(channel)}")
                 elif channel == "TVRISTREAMING":
                     try:
