@@ -93,7 +93,7 @@ class Ops:
                 elif channel == "TVONESTREAMING":
                     try:
                         file_path ='/home/kabayangroup/restart/Tvone.sh'
-                        subprocess.call(file_path, shell=True)
+                        subprocess.call(['sh', file_path])
                     except FileNotFoundError as e:
                         print(f"Error: {e}")
                         logging.error(F"Error : {str(e)}")
