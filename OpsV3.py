@@ -104,6 +104,18 @@ class Ops:
 
                         print("Output:")
                         print(docker_path)
+                        docker_paths = subprocess.run(
+                            ["sudo docker ps"],
+                            check=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True,
+                        ).stdout.strip()
+
+                        print("Output:")
+                        print(docker_path)
+                        print("hasil:")
+                        print(docker_paths)
 
                     except subprocess.CalledProcessError as e:
                         print("Error:")
