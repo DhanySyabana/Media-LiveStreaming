@@ -93,6 +93,7 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
+                    print(os.environ['PATH'])
                     try:
                         completed_process = subprocess.run(
                             ["docker", "ps"],
