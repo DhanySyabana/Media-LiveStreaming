@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import glob
 import time
 import tqdm
@@ -93,16 +94,22 @@ class Ops:
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
                     try:
+                        docker_path = subprocess.run(
+                            ["which", "docker"],
+                            check=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True,
+                        ).stdout.strip()
+
                         completed_process = subprocess.run(
-                            "/usr/bin/docker ps",
-                            shell=True,
-                            check=True,  # Menganggap non-zero exit code sebagai error
-                            stdout=subprocess.PIPE,  # Menangkap output
-                            stderr=subprocess.PIPE,  # Menangkap error
-                            text=True,  # Membaca output dan error sebagai teks
+                            [docker_path, "ps"],
+                            check=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True,
                         )
 
-                        # Menampilkan output
                         print("Output:")
                         print(completed_process.stdout)
 
