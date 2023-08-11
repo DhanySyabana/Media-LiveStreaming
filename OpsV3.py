@@ -1,5 +1,6 @@
 import os
 import subprocess
+import docker
 import sys
 import glob
 import time
@@ -93,18 +94,38 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
-
                     try:
-                        # file_path ='/home/kabayangroup/restart/Tvone.sh'
-                        # os.chdir("/home/kabayangroup/restart")
-                        result =  subprocess.run("sh Tvone.sh", shell=True)
-                        print("Exit code:", result)
-                    except subprocess.CalledProcessError as e:
-                        print("Error:", e.returncode, e.stderr)
+                        # Membuat koneksi dengan Docker daemon
+                        client = docker.from_env()
+
+                        # Nama atau ID dari container yang ingin di-restart
+                        container_name_or_id = "docker restart engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
+
+                        # Mengambil objek container berdasarkan nama atau ID
+                        container = client.containers.get(container_name_or_id)
+
+                        # Memulai ulang (restart) container
+                        container.restart()
+
+                        print(f"Container '{container_name_or_id}' berhasil di-restart.")
+                    except docker.errors.NotFound as e:
+                        print(f"Error: Container '{container_name_or_id}' tidak ditemukan.")
+                    except docker.errors.APIError as e:
+                        print(f"Error: Terjadi kesalahan API Docker - {e}")
                     except Exception as e:
-                        print(str(e))
-                        logging.error(F"Error : {str(e)}")
-                    logging.info(F"Success Restart : {str(channel)}")
+                        print(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+
+                    # try:
+                    #     # file_path ='/home/kabayangroup/restart/Tvone.sh'
+                    #     # os.chdir("/home/kabayangroup/restart")
+                    #     result =  subprocess.run("sh Tvone.sh", shell=True)
+                    #     print("Exit code:", result)
+                    # except subprocess.CalledProcessError as e:
+                    #     print("Error:", e.returncode, e.stderr)
+                    # except Exception as e:
+                    #     print(str(e))
+                    #     logging.error(F"Error : {str(e)}")
+                    # logging.info(F"Success Restart : {str(channel)}")
                 elif channel == "BERITASATUSTREAMING":
                     # try:
                     #     file_path ='/home/kabayangroup/restart/Beritasatu.sh'
