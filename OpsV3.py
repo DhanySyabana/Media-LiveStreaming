@@ -93,12 +93,22 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
+                    import os
+
+                    # Tentukan path ke docker (sesuaikan dengan path yang sesuai di sistem Anda)
+                    docker_path = "/usr/bin/docker"
+
                     try:
+                        # Ubah PATH untuk mencakup path ke docker
+                        os.environ['PATH'] = os.environ['PATH'] + ':' + os.path.dirname(docker_path)
+
+                        # Jalankan perintah docker
                         result = os.system("docker --version")
                         print("Hasil:", result)
 
                     except Exception as e:
                         print("Error:", str(e))
+
                     
                     # try:
                     #     # file_path ='/home/kabayangroup/restart/Tvone.sh'
