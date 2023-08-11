@@ -93,7 +93,6 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
-                    import os
 
                     # Tentukan path ke docker (sesuaikan dengan path yang sesuai di sistem Anda)
                     docker_path = "/usr/bin/docker"
