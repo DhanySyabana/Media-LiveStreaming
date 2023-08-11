@@ -95,7 +95,7 @@ class Ops:
                     try:
                         # file_path ='/home/kabayangroup/restart/Tvone.sh'
                         # os.chdir("/home/kabayangroup/restart")
-                        result =  subprocess.run("Tvone.sh", shell=True)
+                        result =  subprocess.run("sh", "Tvone.sh", shell=True)
                         print("Exit code:", result)
                     except subprocess.CalledProcessError as e:
                         print("Error:", e.returncode, e.stderr)
