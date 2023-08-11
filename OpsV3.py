@@ -93,15 +93,12 @@ class Ops:
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
                     try:
-                        file_path ='/home/kabayangroup/restart/Tvone.sh'
-                        os.system('docker restart engine_server_converter_tvone')
-                        subprocess.call("sh " + file_path, shell=True)
-                    except FileNotFoundError as e:
-                        print(f"Error: {e}")
-                        logging.error(F"Error : {str(e)}")
+                        # file_path ='/home/kabayangroup/restart/Tvone.sh'
+                        os.chdir("/home/kabayangroup/restart/")
+                        result =  subprocess.call("sh Tvone.sh ", shell=True)
+                        print("Exit code:", result)
                     except subprocess.CalledProcessError as e:
-                        print(f"Command execution failed: {e}")
-                        logging.error(F"Error : {str(e)}")
+                        print("Error:", e.returncode, e.stderr)
                     except Exception as e:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
