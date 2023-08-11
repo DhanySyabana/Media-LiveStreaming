@@ -94,7 +94,8 @@ class Ops:
                     logging.info(F"Start : {str(channel)}")
                     try:
                         completed_process = subprocess.run(
-                            ["/usr/bin/docker", "ps"],
+                            "/usr/bin/docker ps",
+                            shell=True,
                             check=True,  # Menganggap non-zero exit code sebagai error
                             stdout=subprocess.PIPE,  # Menangkap output
                             stderr=subprocess.PIPE,  # Menangkap error
