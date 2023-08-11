@@ -95,23 +95,15 @@ class Ops:
                     logging.info(F"Start : {str(channel)}")
                     try:
                         docker_path = subprocess.run(
-                            ["which", "docker"],
+                            ["whoami"],
                             check=True,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             text=True,
                         ).stdout.strip()
 
-                        completed_process = subprocess.run(
-                            [docker_path, "ps"],
-                            check=True,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            text=True,
-                        )
-
                         print("Output:")
-                        print(completed_process.stdout)
+                        print(docker_path)
 
                     except subprocess.CalledProcessError as e:
                         print("Error:")
