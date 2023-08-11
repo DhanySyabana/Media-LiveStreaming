@@ -93,23 +93,13 @@ class Ops:
                     
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
-                    print(os.environ['PATH'])
                     try:
-                        completed_process = subprocess.run(
-                            ["docker", "ps"],
-                            check=True,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            text=True,
-                            env={"PATH": "/usr/bin/docker:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},
-                        )
+                        result = os.system("docker --version")
+                        print("Hasil:", result)
 
-                        print("Output:")
-                        print(completed_process.stdout)
-
-                    except subprocess.CalledProcessError as e:
-                        print("Error:")
-                        print(e.stderr)
+                    except Exception as e:
+                        print("Error:", str(e))
+                    
                     # try:
                     #     # file_path ='/home/kabayangroup/restart/Tvone.sh'
                     #     # os.chdir("/home/kabayangroup/restart")
