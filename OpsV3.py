@@ -100,7 +100,7 @@ class Ops:
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             text=True,
-                            env={"PATH": "/bin/docker" },  # Ganti dengan path ke binary Docker
+                            env={"PATH": "/usr/bin/docker:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},
                         )
 
                         print("Output:")
