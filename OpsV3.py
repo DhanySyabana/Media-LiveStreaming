@@ -93,16 +93,32 @@ class Ops:
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
                     try:
-                        # file_path ='/home/kabayangroup/restart/Tvone.sh'
-                        # os.chdir("/home/kabayangroup/restart")
-                        result =  subprocess.run("sh Tvone.sh", shell=True)
-                        print("Exit code:", result)
+                        completed_process = subprocess.run(
+                            ["docker", "ps"],
+                            check=True,  # Menganggap non-zero exit code sebagai error
+                            stdout=subprocess.PIPE,  # Menangkap output
+                            stderr=subprocess.PIPE,  # Menangkap error
+                            text=True,  # Membaca output dan error sebagai teks
+                        )
+
+                        # Menampilkan output
+                        print("Output:")
+                        print(completed_process.stdout)
+
                     except subprocess.CalledProcessError as e:
-                        print("Error:", e.returncode, e.stderr)
-                    except Exception as e:
-                        print(str(e))
-                        logging.error(F"Error : {str(e)}")
-                    logging.info(F"Success Restart : {str(channel)}")
+                        print("Error:")
+                        print(e.stderr)
+                    # try:
+                    #     # file_path ='/home/kabayangroup/restart/Tvone.sh'
+                    #     # os.chdir("/home/kabayangroup/restart")
+                    #     result =  subprocess.run("sh Tvone.sh", shell=True)
+                    #     print("Exit code:", result)
+                    # except subprocess.CalledProcessError as e:
+                    #     print("Error:", e.returncode, e.stderr)
+                    # except Exception as e:
+                    #     print(str(e))
+                    #     logging.error(F"Error : {str(e)}")
+                    # logging.info(F"Success Restart : {str(channel)}")
                 elif channel == "BERITASATUSTREAMING":
                     # try:
                     #     file_path ='/home/kabayangroup/restart/Beritasatu.sh'
