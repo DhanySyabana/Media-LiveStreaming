@@ -630,7 +630,7 @@ services:
     image: media_livestreaming_engine:latest
     container_name: engine_rtv_v1
     build: 
-      context:
+      context: .
       dockerfile: Dockerfile
       args:
         - ENGINE=${ENGINE_RTV}
