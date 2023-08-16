@@ -66,7 +66,7 @@ class Ops:
         key_data = list(data.keys())
         no = 0
         for key, channel in enumerate(key_data):
-            if data[key_data[key]]["total_video_last_hour"] < 1:
+            if data[key_data[key]]["total_video_last_hour"] < 2:
                 if channel == "INEWSSTREAMING":
                     containers_to_restart = ["engine_server_converter_rcti", "engine_inews_v1","engine_rcti_v1"]
 
