@@ -99,7 +99,7 @@ class Ops:
                         client = docker.from_env()
 
                         # Nama atau ID dari container yang ingin di-restart
-                        container_name_or_id = "docker restart engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
+                        container_name_or_id = "engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
 
                         # Mengambil objek container berdasarkan nama atau ID
                         container = client.containers.get(container_name_or_id)
