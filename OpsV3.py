@@ -103,7 +103,16 @@ class Ops:
                         client = docker.DockerClient(base_url=docker_api_url)
 
                         # Nama atau ID dari container yang ingin di-restart
-                        container_name_or_id = "engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
+                        container_server_tvone = "engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
+
+                        # Mengambil objek container berdasarkan nama atau ID
+                        container = client.containers.get(container_server_tvone)
+
+                        # Memulai ulang (restart) container
+                        container.restart()
+
+                        # Nama atau ID dari container yang ingin di-restart
+                        container_name_or_id = "engine_tvone_v1"  # Ganti dengan nama atau ID sesuai container Anda
 
                         # Mengambil objek container berdasarkan nama atau ID
                         container = client.containers.get(container_name_or_id)
@@ -111,6 +120,7 @@ class Ops:
                         # Memulai ulang (restart) container
                         container.restart()
 
+                        print(f"Container '{container_server_tvone}' berhasil di-restart.")
                         print(f"Container '{container_name_or_id}' berhasil di-restart.")
                     except docker.errors.NotFound as e:
                         print(f"Error: Container '{container_name_or_id}' tidak ditemukan.")
