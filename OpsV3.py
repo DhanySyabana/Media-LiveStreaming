@@ -96,7 +96,11 @@ class Ops:
                     logging.info(F"Start : {str(channel)}")
                     try:
                         # Membuat koneksi dengan Docker daemon
-                        client = docker.from_env()
+                        # Menentukan URL Docker API
+                        docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+
+                        # Membuat objek klien Docker dengan URL yang ditentukan
+                        client = docker.DockerClient(base_url=docker_api_url)
 
                         # Nama atau ID dari container yang ingin di-restart
                         container_name_or_id = "engine_server_converter_tvone"  # Ganti dengan nama atau ID sesuai container Anda
