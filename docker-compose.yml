@@ -724,6 +724,7 @@ services:
         - ENGINE=${ENGINE_OPS_V3}
     volumes:
       - ./:/app
+      - /var/run/docker.sock:/var/run/docker.sock
       - ${HOST_INEWS}:/app/storage/inews
       - ${HOST_CNN}:/app/storage/cnn
       - ${HOST_KOMPAS}:/app/storage/kompas
