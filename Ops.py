@@ -269,7 +269,7 @@ class Ops:
         ax13.text(0.5, 0.6, 'CHANNEL', ha='center', va='center', fontsize=10, weight='bold')
         ax13.text(0.5, 0.5, key_data[12], ha='center', va='center', fontsize=16, weight='bold', color=color)
         ax13.text(0.5, 0.4, 'LAST VIDEO', ha='center', va='center', fontsize=10, weight='bold')
-        ax13.text(0.5, 0.3, data[key_data[11]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
+        ax13.text(0.5, 0.3, data[key_data[12]]["last_video_filename"], ha='center', va='center', fontsize=10, weight='bold')
         ax13.set_xticks([])
         ax13.set_yticks([])
 
