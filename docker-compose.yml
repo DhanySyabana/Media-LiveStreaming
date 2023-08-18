@@ -23,7 +23,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv      
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc     
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -55,7 +56,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv    
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc   
 
     environment:
       - PYTHONUNBUFFERED=1
@@ -88,7 +90,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -120,7 +123,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -152,7 +156,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -184,7 +189,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -216,7 +222,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -248,7 +255,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -280,7 +288,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -312,7 +321,8 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -344,7 +354,8 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -376,7 +387,8 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv 
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -385,6 +397,39 @@ services:
           ipv4_address: 10.10.10.29
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_RTV}
+
+  engine_server_converter_mnc:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_mnc
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_MNC}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc   
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.32
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_MNC}
 
   engine_inews_v1:
     image: media_livestreaming_engine:latest
@@ -646,6 +691,26 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_RTV}
 
+  engine_mnc_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_mnc_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_MNC}
+    volumes:
+      - ./:/app
+      - ${HOST_MNC}:/app/storage/mnc
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.33
+    restart: unless-stopped
+    command: python ${ENGINE_MNC}
+
   engine_ops_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v1
@@ -668,7 +733,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti  
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv   
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -702,7 +768,8 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti 
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv     
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -738,6 +805,7 @@ services:
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv    
+      - ${HOST_MNC}:/app/storage/mnc    
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
