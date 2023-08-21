@@ -431,6 +431,40 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_MNC}
 
+  engine_server_converter_inews:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_inews
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_INEWS}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc   
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.34
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_INEWS}
+
+
   engine_inews_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_inews_v1

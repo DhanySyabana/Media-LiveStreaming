@@ -538,9 +538,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_INEWS = dict(
+        HOST = "10.10.10.34",
+        PORT = 7575,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
+
+    # SOCKET_SERVER_INEWS = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7014,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     # SOCKET_SERVER_MNC = dict(
     #     HOST = "127.0.0.1",

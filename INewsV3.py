@@ -16,7 +16,7 @@ from libs.Loggers import Loggers
 from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorRcti import VideoProsessor
+from libs.VideoProsessorInews import VideoProsessor
 
 class INewsV1:
 
@@ -352,8 +352,8 @@ if __name__ == "__main__":
         resolution=ENGINE["RESOLUTIONV1"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         custom_headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_RCTI["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_RCTI["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_RCTI["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_INEWS["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_INEWS["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_INEWS["BUFFER_SIZE"],
     )
     inews.StartEngine()   
