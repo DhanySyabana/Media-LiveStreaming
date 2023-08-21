@@ -43,6 +43,12 @@ class Ops:
                 total_video_last_hour = 0
             else:
                 total_video_last_hour = int(total_video_last_hour)
+            # # total video last 90 minutes
+            # total_video_last_hour_idx = len([name for name in os.listdir(value) if name.endswith(".mp4") and (time.time() - os.path.getmtime(F"{value}/{name}")) < 5400])
+            # if math.isnan(total_video_last_hour_idx):
+            #     total_video_last_hour_idx = 0
+            # else:
+            #     total_video_last_hour_idx = int(total_video_last_hour_idx)
 
             total_size = sum(os.path.getsize(F"{value}/{name}") for name in os.listdir(value) if name.endswith(".mp4")) / 1024 / 1024
             if math.isnan(total_size):
@@ -53,6 +59,7 @@ class Ops:
             data[key] = {
                 "total_video": total_video,
                 "total_size": total_size,
+                # "total_video_last_hour_idx": total_video_last_hour_idx,
                 "total_video_last_hour": total_video_last_hour,
                 "last_video_filename": "-",
             }
@@ -68,7 +75,7 @@ class Ops:
         for key, channel in enumerate(key_data):
             if data[key_data[key]]["total_video_last_hour"] < 2:
                 if channel == "INEWSSTREAMING":
-                    containers_to_restart = ["engine_server_converter_rcti", "engine_inews_v1","engine_rcti_v1"]
+                    containers_to_restart = ["engine_server_converter_inews", "engine_inews_v1"]
 
                     for name_containers in containers_to_restart:
                         try:
@@ -273,7 +280,7 @@ class Ops:
                         print(str(e))
                         logging.error(F"Error : {str(e)}")
                 elif channel == "RCTISTREAMING":
-                    containers_to_restart = ["engine_server_converter_rcti", "engine_inews_v1","engine_rcti_v1"]
+                    containers_to_restart = ["engine_server_converter_rcti","engine_rcti_v1"]
 
                     for name_containers in containers_to_restart:
                         try:
@@ -384,7 +391,36 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-            elif data[key_data[key]]["total_video_last_hour"] < 1:
+                elif channel == "MNCSTREAMING":
+                    containers_to_restart = ["engine_server_converter_mnc", "engine_mnc_v1"]
+
+                    for name_containers in containers_to_restart:
+                        try:
+                            # Membuat koneksi dengan Docker daemon
+                            # Menentukan URL Docker API
+                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+
+                            # Membuat objek klien Docker dengan URL yang ditentukan
+                            client = docker.DockerClient(base_url=docker_api_url)
+
+                            # Mengambil objek container berdasarkan nama atau ID
+                            container = client.containers.get(name_containers)
+
+                            # Memulai ulang (restart) container
+                            container.restart()
+
+                            logging.info(f"Container '{name_containers}' berhasil di-restart.")
+                        except docker.errors.NotFound as e:
+                            logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
+                            continue
+                        except docker.errors.APIError as e:
+                            logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
+                            continue
+                        except Exception as e:
+                            logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+                            continue
+
+            if data[key_data[key]]["total_video_last_hour"] < 1:
                 if channel == "IDXSTREAMING":
                     containers_to_restart = ["engine_server_converter_idx", "engine_idx_v1"]
 

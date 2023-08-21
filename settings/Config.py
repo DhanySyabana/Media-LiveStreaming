@@ -405,7 +405,7 @@ class Config(object):
     OPSV2 = dict(
         TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
         TELE_CHAT_ID = "-897317690",
-        SEND_TIME = 60 * 20,
+        SEND_TIME = 60 * 60,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
@@ -420,6 +420,7 @@ class Config(object):
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
         }
     )
     
