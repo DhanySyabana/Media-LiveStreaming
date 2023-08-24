@@ -509,12 +509,12 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_TRANSTV = dict(
-        HOST = "10.10.10.26",
-        PORT = 7979,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_TRANSTV = dict(
+    #     HOST = "10.10.10.26",
+    #     PORT = 7979,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     SOCKET_SERVER_CNN = dict(
         HOST = "10.10.10.27",
@@ -576,12 +576,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_TRANSTV = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7011,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_TRANSTV = dict(
+        HOST = "127.0.0.1",
+        PORT = 7011,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     # SOCKET_SERVER_METRO = dict(
     #     HOST = "127.0.0.1",
