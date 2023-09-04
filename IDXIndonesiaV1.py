@@ -186,88 +186,90 @@ class IDXIndonesiaV1:
         self.video_prosessor.CleanUPTSFolder()
 
         logging.info("Get Playslist Encrypted")
-        playlist_encrypted = self.GetPlaylist()
+        # playlist_encrypted = self.GetPlaylist()
+        playlist_uri =None
 
-        logging.info("Get Playlist")
-        playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+        # logging.info("Get Playlist")
+        # playlist_uri = self.GetPlaylistURI(playlist_encrypted)
 
         try:
             while self.start_process:
-                if playlist_uri is not None:
-                    logging.info("Get Segment URI")
-                    segments = self.GetSegments(playlist_uri)
+                print('trs')
+                # if playlist_uri is not None:
+                #     logging.info("Get Segment URI")
+                #     segments = self.GetSegments(playlist_uri)
 
-                    while len(segments) == 0:
-                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
-                            logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                            playlist_encrypted = self.GetPlaylist()
+                #     while len(segments) == 0:
+                #         if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
+                #             logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
+                #             playlist_encrypted = self.GetPlaylist()
 
-                            playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+                #             playlist_uri = self.GetPlaylistURI(playlist_encrypted)
 
-                        logging.info("Retry Get Segment URI")
-                        segments = self.GetSegments(playlist_uri)
-                        time.sleep(self.video_duration)
+                #         logging.info("Retry Get Segment URI")
+                #         segments = self.GetSegments(playlist_uri)
+                #         time.sleep(self.video_duration)
 
-                    time.sleep(self.video_duration)
+                #     time.sleep(self.video_duration)
                     
-                    logging.info("Download segment")
+                #     logging.info("Download segment")
                     
-                    try:
-                        self.DownloadSegment(segments)
-                    except ConnectionResetError or ConnectionRefusedError:
-                        while True:
-                            try:
-                                self.DownloadSegment(segments)
-                                break
-                            except ConnectionResetError or ConnectionRefusedError:
-                                logging.error("Retry Download Segment")
-                                time.sleep(self.video_duration)
-                                continue
+                #     try:
+                #         self.DownloadSegment(segments)
+                #     except ConnectionResetError or ConnectionRefusedError:
+                #         while True:
+                #             try:
+                #                 self.DownloadSegment(segments)
+                #                 break
+                #             except ConnectionResetError or ConnectionRefusedError:
+                #                 logging.error("Retry Download Segment")
+                #                 time.sleep(self.video_duration)
+                #                 continue
                     
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
+                #     check_ts = self.CheckTSFiles()
+                #     status_ts = check_ts["status"]
+                #     data_ts = check_ts["data_ts"]
 
-                    if status_ts:
-                        now_filename = F"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                        logging.info("Request to Server Converter - Concat TS")
-                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                            s.connect((self.converter_host, self.converter_port))
+                #     if status_ts:
+                #         now_filename = F"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                #         logging.info("Request to Server Converter - Concat TS")
+                #         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                #             s.connect((self.converter_host, self.converter_port))
 
-                            to_server = {
-                                "event": "concat",
-                                "environment": self.environment,
-                                "storage_path": self.upload_location,
-                                "mode": "w",
-                                "filename": now_filename,
-                                "optimize_video" : True,
-                            }
-                            to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
+                #             to_server = {
+                #                 "event": "concat",
+                #                 "environment": self.environment,
+                #                 "storage_path": self.upload_location,
+                #                 "mode": "w",
+                #                 "filename": now_filename,
+                #                 "optimize_video" : True,
+                #             }
+                #             to_server = str(to_server).encode("utf-8")
+                #             data_format = struct.Struct('I')
+                #             data_length = len(to_server)
+                #             s.sendall(data_format.pack(data_length))
 
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
+                #             offset = 0
+                #             while offset < data_length:
+                #                 sent_bytes = s.send(to_server[offset:])
+                #                 offset += sent_bytes
 
-                            response = s.recv(self.buffer_size)
-                            response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
+                #             response = s.recv(self.buffer_size)
+                #             response = eval(response)
+                #             logging.info(F"Message from Server Converter: {response['message']}")
                             
-                            s.close()
-                            logging.info("Close Connection - Concat TS")
+                #             s.close()
+                #             logging.info("Close Connection - Concat TS")
 
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                #         logging.info("Cleanup TS")
+                #         self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
-                else:
-                    logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                    playlist_encrypted = self.GetPlaylist()
+                # else:
+                #     logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
+                #     playlist_encrypted = self.GetPlaylist()
 
-                    playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-                    time.sleep(self.video_duration)
+                #     playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+                #     time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
             self.start_process = False
