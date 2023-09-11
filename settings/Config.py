@@ -353,18 +353,16 @@ class Config(object):
         ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.rctiplus.com/tv/mnctv",
+            URLV1 = "https://www.indihometv.com/livetv/mncnews",
             RESOLUTIONV1 = "640x360",
-            # HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
-            HOST_DIRECTORYV1 = "https://linier2.rctiplus.id", #NEW
-            RESOLUTION = "426x240",
-            # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
-                'origin': 'https://www.rctiplus.com',
-                'referer': 'https://www.rctiplus.com/',
+                'origin': 'https://www.indihometv.com',
+                'referer': 'https://www.indihometv.com/',
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
                 'sec-fetch-dest': 'empty',
@@ -372,8 +370,9 @@ class Config(object):
                 'sec-fetch-site': 'cross-site',
                 'accept': '*/*',
                 'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
+
         ),
     )
 
