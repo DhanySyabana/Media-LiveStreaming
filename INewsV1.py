@@ -33,7 +33,7 @@ class INewsV1:
         self.search_ext = search_ext
         self.resolution = resolution
         self.upload_location = upload_location
-        self.video_duration = 8
+        self.video_duration = 10
         self.custom_headers = custom_headers
         self.last_sequence = None
         self.start_process = True
@@ -178,7 +178,7 @@ class INewsV1:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 75:
+        if get_total_files >= 60:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
@@ -292,8 +292,8 @@ if __name__ == "__main__":
         resolution=ENGINE["RESOLUTIONV1"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         custom_headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER["BUFFER_SIZE"],
+        converter_host=CONFIG.SOCKET_SERVER_INEWS["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_INEWS["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_INEWS["BUFFER_SIZE"],
     )
     inews.StartEngine()   
