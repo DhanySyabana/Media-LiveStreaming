@@ -62,7 +62,7 @@ class Config(object):
         ),
         KOMPASSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=4rmf-lk3ito",
+            URL = "https://www.youtube.com/watch?v=1BTsX2WBg8Q",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/kompas",
             HEADERS = {
