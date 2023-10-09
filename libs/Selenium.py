@@ -44,7 +44,7 @@ class Selenium:
     def DriverSelenium(self) -> webdriver.Chrome:
         driver = webdriver.Chrome(
             options=self.options,
-            desired_capabilities=self.desired_capabilities
+            # desired_capabilities=self.desired_capabilities
         )
         self.driver = driver
         return self.driver
