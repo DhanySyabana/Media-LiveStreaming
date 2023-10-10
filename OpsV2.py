@@ -61,7 +61,7 @@ class Ops:
     
     def generate_send_chart(self, data:dict) -> None:
         key_data = list(data.keys())
-        text ="⚠️  ⚠️  ⚠️   ⚠️  ⚠️ ⚠️  ⚠️"
+        text ="⚠️ SERVER 1 STREAMING TV ⚠️"
         text += "\n List Channel Streaming OFF :\n"
         no = 0
         for key, channel in enumerate(key_data):
@@ -129,3 +129,4 @@ if __name__ == "__main__":
         storage_path_mp4=CONFIG["STORAGE_PATH"],
     )
     ops.StartEngine()
+

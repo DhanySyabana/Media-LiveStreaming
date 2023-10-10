@@ -1,46 +1,22 @@
 class Config(object):
 
     ENGINE = dict(
-        INEWSSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URLV1 = "https://tv.okezone.com/streaming/inews_tv",
-            RESOLUTIONV1 = "640x360",
-            # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
-            HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", # OLD
-            RESOLUTION = "426x240",
-            HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-            UPLOAD_LOCATION = "storage/inews",
-            HEADERS = {
-                'origin': 'https://embed.rctiplus.com',
-                'referer': 'https://embed.rctiplus.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"macOS"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
-            }
-        ),
         # INEWSSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://www.rctiplus.com/tv/inews",
+        #     URLV1 = "https://tv.inews.id/live",
         #     RESOLUTIONV1 = "640x360",
-        #     # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
-        #     HOST_DIRECTORYV1 = "https://1d-inews.rctiplus.id", #NEW
-        #     RESOLUTION = "640x360",
-        #     # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+        #     # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
+        #     HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", # OLD
+        #     RESOLUTION = "426x240",
+        #     HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
         #     UPLOAD_LOCATION = "storage/inews",
         #     HEADERS = {
-        #         'origin': 'https://www.rctiplus.com',
-        #         'referer': 'https://www.rctiplus.com/',
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'origin': 'https://embed.rctiplus.com',
+        #         'referer': 'https://embed.rctiplus.com/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
         #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-ch-ua-platform': '"macOS"',
         #         'sec-fetch-dest': 'empty',
         #         'sec-fetch-mode': 'cors',
         #         'sec-fetch-site': 'cross-site',
@@ -49,6 +25,30 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        INEWSSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "https://www.rctiplus.com/tv/inews",
+            RESOLUTIONV1 = "640x360",
+            # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
+            HOST_DIRECTORYV1 = "https://1d-inews.rctiplus.id", #NEW
+            RESOLUTION = "640x360",
+            # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
+            UPLOAD_LOCATION = "storage/inews",
+            HEADERS = {
+                'origin': 'https://www.rctiplus.com',
+                'referer': 'https://www.rctiplus.com/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
         CNNSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
@@ -69,28 +69,28 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        METROTVSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            URL = "https://www.youtube.com/watch?v=3LCGJy6b904",
-            QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/metro",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/777/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/777/master.m3u8",
+        #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
+        #     URL = "https://www.youtube.com/watch?v=nO7kSkv30O8",
+        #     QUALITY = "360p",
         #     UPLOAD_LOCATION = "storage/metro",
         #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
+        # METROTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URLV1 = "https://www.indihometv.com/livetv/metrotv",
+        #     RESOLUTIONV1 = "640x360",
+        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/133/metrotv1080/playlist.m3u8",
+        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/133/metrotv1080",
+        #     UPLOAD_LOCATION = "storage/metro",
+        #     HEADERS = {
+        #         'origin': 'https://www.indihometv.com',
+        #         'referer': 'https://www.indihometv.com/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
         #         'sec-ch-ua-mobile': '?0',
         #         'sec-ch-ua-platform': '"Windows"',
         #         'sec-fetch-dest': 'empty',
@@ -98,9 +98,31 @@ class Config(object):
         #         'sec-fetch-site': 'cross-site',
         #         'accept': '*/*',
         #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
+        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
         #     }
         # ),
+        METROTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://www.vidio.com/live/777/tokens",
+            RESOLUTION = "640x360",
+            PLAYLIST = "B1News_320x240.m3u8",
+            HOST_DIRECTORY = "https://etslive-app.vidio.com/live/777/master.m3u8",
+            UPLOAD_LOCATION = "storage/metro",
+            HEADERS = {
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
         CNBCSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
@@ -586,7 +608,7 @@ class Config(object):
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
-
+    
     # SOCKET_SERVER_INEWS = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7014,
@@ -703,3 +725,4 @@ class Config(object):
         PASS = "1Teung@Kabayan123",
         TABLE_NAME = "logs"
     )
+
