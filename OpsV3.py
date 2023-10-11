@@ -251,15 +251,8 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-<<<<<<< HEAD
                 elif channel == "RTVSTREAMING":
                     containers_to_restart = ["engine_server_converter_rtv", "engine_rtv_v1"]
-=======
-                elif channel == "TVONESTREAMING":
-                    logging.info(F"Start : {str(channel)}")
-                    # # nama container yang mau di restart
-                    containers_to_restart = ["engine_server_converter_tvone", "engine_tvone_v1"]
->>>>>>> 348e0c2794a4830038e0ea3939461604db7045dd
 
                     for name_containers in containers_to_restart:
                         try:
@@ -286,14 +279,8 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-<<<<<<< HEAD
                 elif channel == "MNCSTREAMING":
                     containers_to_restart = ["engine_server_converter_mnc", "engine_mnc_v1"]
-=======
-                elif channel == "BERITASATUSTREAMING":
-                    # nama container yang mau di restart
-                    containers_to_restart = ["engine_server_converter_beritasatu", "engine_beritasatu_v1"]
->>>>>>> 348e0c2794a4830038e0ea3939461604db7045dd
 
                     for name_containers in containers_to_restart:
                         try:
@@ -463,38 +450,6 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-<<<<<<< HEAD
-=======
-                elif channel == "SEATODAYSTREAMING":
-                    containers_to_restart = ["engine_server_converter_seatoday", "engine_seatoday_v1"]
-
-                    for name_containers in containers_to_restart:
-                        try:
-                            # Membuat koneksi dengan Docker daemon
-                            # Menentukan URL Docker API
-                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
-
-                            # Membuat objek klien Docker dengan URL yang ditentukan
-                            client = docker.DockerClient(base_url=docker_api_url)
-
-                            # Mengambil objek container berdasarkan nama atau ID
-                            container = client.containers.get(name_containers)
-
-                            # Memulai ulang (restart) container
-                            container.restart()
-
-                            logging.info(f"Container '{name_containers}' berhasil di-restart.")
-                        except docker.errors.NotFound as e:
-                            logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
-                            continue
-                        except docker.errors.APIError as e:
-                            logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
-                            continue
-                        except Exception as e:
-                            logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
-                            continue
-                
->>>>>>> 348e0c2794a4830038e0ea3939461604db7045dd
             if data[key_data[key]]["total_video_last_hour"] < 1:
                 if channel == "IDXSTREAMING":
                     containers_to_restart = ["engine_server_converter_idx", "engine_idx_v1"]
