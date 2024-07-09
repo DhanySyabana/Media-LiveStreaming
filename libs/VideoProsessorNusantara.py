@@ -13,12 +13,13 @@ class VideoProsessor:
         self.storage_path:str = storage_path
         super().__init__()
 
-    def OptimizeVideo(self, path, filename, extension = ".mp4"):
+    def OptimizeVideo(self, path: str, filename: str, extension: str = ".mp4"):
         try:
             convert_name = "_converted"
             os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
             os.remove(F"{path}/{filename}{extension}")
             os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
+            logging.info("Successfully Optimized Video")
         except Exception as e:
             logging.error(F"Error Optimize Video: {e}")
 
@@ -51,7 +52,21 @@ class VideoProsessor:
                 "sequence": None
             }
 
-    def ConcatTS(self, filename:str, mode:str, optimize_video:bool = False) -> dict:
+
+    def CompressVideo(self, input_path: str):
+        try:
+            temp_output_path = F"{input_path}.temp.mp4"
+            scale_option = "-vf scale=854:480"
+            crf_value = 30 
+            os.system(F"ffmpeg -i {input_path} -vcodec libx264 -crf {crf_value} {scale_option} -b:a 64k {temp_output_path}")
+
+            os.remove(input_path)
+            os.rename(temp_output_path, input_path)
+            logging.info("Successfully Compressed MP4")
+        except Exception as e:
+            logging.error(F"Error Compressing MP4: {e}")
+
+    def ConcatTS(self, filename: str, mode: str, optimize_video: bool = True, compress_video: bool = True) -> dict:
         try:
             ts_files = list()
             if self.environment == "dev":
@@ -77,16 +92,18 @@ class VideoProsessor:
             os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
             logging.info("Success Concat TS to MP4")
 
-            if optimize_video:
-                self.OptimizeVideo(path_mp4, filename)
-                logging.info("Success Optimize Video")
+            # self.OptimizeVideo(path_mp4, filename)
+            # logging.info("Success Optimize Video")
+
+            self.CompressVideo(F"{path_mp4}/{filename}.mp4")
+            logging.info("Success Compress MP4")
 
             return {
                 "status": True,
                 "message": "Success Concat TS to MP4",
                 "path": F"{path_mp4}/{filename}.mp4"
             }
-        
+
         except Exception as e:
             logging.error(F"Error Concat TS to MP4: {e}")
             return {
@@ -94,8 +111,7 @@ class VideoProsessor:
                 "message": F"Error Concat TS to MP4: {e}",
                 "path": None
             }
-
-
+    
     def CleanUPTSFolder(self, list_ts:list = [], metadata:str = None) -> None:
         try:
             if self.environment == "dev":
