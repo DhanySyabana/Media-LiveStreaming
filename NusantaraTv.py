@@ -172,7 +172,7 @@ class Nusantaratv:
                     data_ts = check_ts["data_ts"]
 
                     if status_ts:
-                        now_filename = F"NUSANTARATVSTREAMING{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                        now_filename = F"NUSANTARATVSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
 
                         logging.info("Request to Server Converter - Concat TS")
                         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
