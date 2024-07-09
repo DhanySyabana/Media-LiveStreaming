@@ -102,12 +102,11 @@ class INewsV1:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
+                    # playlist_uri = F"{playlist['uri']}"
                     playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    self.query = playlist['uri'].split('/')[0]
-                    auth = self.query.partition('?auth_key=')[2]
+                    # self.query = playlist['uri'].split('/')[0]
+                    # auth = self.query.partition('?auth_key=')[2]
                     headers={
-                        'accept': 'application/json',
-                        'Authorization':'Bearer '+auth,
                         'origin': 'https://www.rctiplus.com',
                         'referer': 'https://www.rctiplus.com/',
                         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
@@ -134,17 +133,17 @@ class INewsV1:
         file_segments = []
 
         response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
-        
+        self.host_directory = playlist_uri.partition('/inews-sdi')[0]
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
             for segment in segments:
-                auth = segment['uri'].partition('?auth_key=')[2]
+                # auth = segment['uri'].partition('?auth_key=')[2]
                 headers={
-                    'accept': 'application/json',
-                    'Authorization':'Bearer '+auth,
+                    # 'accept': 'application/json',
+                    # 'Authorization':'Bearer '+auth,
                     'origin': 'https://www.rctiplus.com',
                     'referer': 'https://www.rctiplus.com/',
                     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',

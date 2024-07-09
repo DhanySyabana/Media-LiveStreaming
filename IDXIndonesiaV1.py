@@ -4,138 +4,88 @@ import socket
 import struct
 import logging
 import datetime
-from urllib import parse
+import streamlink
 from libs.Loggers import Loggers
-from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorIDX import VideoProsessor
+from libs.VideoProsessorTvone import VideoProsessor
 
-class IDXIndonesiaV1:
+class TVone:
 
-    def __init__(self, 
-                 environment:str = None,
-                 url:str = None,
-                 resolution:str = None,
-                 upload_location:str = None,
-                 headers:dict = None,
-                 playlist_directory:str = None,
-                 converter_host:str = None,
-                 converter_port:int = None,
-                 buffer_size:int = None
-                 ) -> None:
-        self.environment:str = environment
+    def __init__(
+            self,
+            environment:str,
+            url:str = None,
+            quality:str = None,
+            upload_location:str = None,
+            headers: dict = None,
+            converter_host: str = None,
+            converter_port: int = None,
+            buffer_size: int = None
+        ) -> None:
+        self.environment = environment
         self.url:str = url
-        self.resolution:str = resolution
+        self.quality:str = quality
+        self.start_process:bool = True
         self.upload_location:str = upload_location
-        self.headers:dict = headers
-        self.playlist_directory:str = playlist_directory
-        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
-        self.start_process = True
-        self.video_duration = 10
-        self.segment_status = None
+        self.custom_headers:dict = headers
+        self.video_duration = 5
         self.last_sequence = None
+        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
         Loggers()
         super().__init__()
 
-    def GetPlaylistURI(self, url:str) -> str:
-        playlist_uri = None
-        logging.info(F"URL: {url}")
-
-        response = HTTPRequest("get", url, self.headers).Hit()
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = playlist['uri']
-                    break
-            logging.info("Get Playlist Success")
-        else:
-            logging.error(F"Error Get Playlist: {response.status_code}")
-        
-        return playlist_uri
-
-    def GetPlaylistEncrypted(self, selenium:None) -> str:
-        path_uri = None
-        driver = selenium.DriverSelenium()
-        driver.get(self.url)
-
-        while self.start_process:
-            try:
-                for request in driver.requests:
-                    if request.response:
-                        if self.playlist_directory in request.url:
-                            path_uri = request.url
-                            break
-                    if path_uri is not None:
-                        break
-            except KeyError:
-                logging.error("Error: KeyError")
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            except KeyboardInterrupt:
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            if path_uri is not None:
-                break
-        
-        logging.info(F"Path Playlist: {path_uri}")
-        return path_uri
-
-    def GetPlaylist(self) -> str:
-        logging.info("Setup Selenium")
-        selenium = Selenium(self.url, {
-            "headless": True,
-        })
-
-        selenium.SeleniumCapabilities()
-        logging.info("Setup Selenium Capabilities")
-
-        selenium.SeleniumOptions()
-        logging.info("Setup Selenium Options")
-
-        logging.info("Find Playlist")
-        playlist = self.GetPlaylistEncrypted(selenium)
-
-        selenium.CloseDriver()
-        logging.info("Close Selenium Driver")
-        
-        return playlist
-    
-    def GetSegments(self, playlist_uri:str) -> list:
+    def GetStreamSegment(self) -> list:
         file_segments = []
-
-        response = HTTPRequest("get", playlist_uri, self.headers).Hit()
-        
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            m3u8_data = m3u8_master.data
-
-            segments = m3u8_data["segments"]
-
-            url_host = parse.urlparse(playlist_uri).scheme + "://" + parse.urlparse(playlist_uri).netloc
-
-            for segment in segments:
-                url  = F"{url_host}/joss/134/idx/{segment['uri']}"
-                file_segments.append({
-                    "url": url,
-                    "sequence": int(segment["uri"].split("sleng_")[1].split(".ts")[0])
-                })
-            file_segments = file_segments[-5:]
-        else:
+        print(self.url)
+        try:
+            streams = streamlink.streams(self.url)
+            # print(streams)
+            stream_url = streams[self.quality]
+            # print(stream_url.ar)
+            # exit()
+            print(stream_url.to_url())
+            # exit()
+            response =HTTPRequest("get", stream_url.to_url(), headers={
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }).Hit()
+            if response.status_code == 200:
+                m3u8_obj = m3u8.loads(response.text)
+                segments = m3u8_obj.segments
+                for segment in segments:
+                    file_segments.append({
+                        "url": segment.uri,
+                        "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                    })
+                
+                file_segments = file_segments[-5:]
+            else:
+                file_segments = []
+                self.segment_status = response.status_code
+                logging.error(F"Error Get Segments: {response.status_code}")
+            
+        except ValueError as e:
             file_segments = []
-            self.segment_status = response.status_code
-            logging.error(F"Error Get Segments: {response.status_code}")
-        
+            logging.error(F"Error Get Stream Segment: {e}")
+        except streamlink.exceptions.PluginError as e:
+            file_segments = []
+            logging.error(F"Error Get Stream Segment: {e}")
+
         return file_segments
     
-    def DownloadSegment(self, segments:list) -> None:
+    def RecordStream(self, segments:list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -146,8 +96,9 @@ class IDXIndonesiaV1:
                 "storage_path": self.upload_location,
                 "method": "get",
                 "segments": segments,
-                "headers": self.headers
+                "headers": self.custom_headers
             }
+
             to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
             data_length = len(to_server)
@@ -164,7 +115,7 @@ class IDXIndonesiaV1:
                 logging.info(F"Message from Server Converter: {response['message']}")
                 self.last_sequence = response["sequence"]
                 logging.info(F"Last Sequence: {self.last_sequence}")
-            
+
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
@@ -173,102 +124,81 @@ class IDXIndonesiaV1:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 60:
+        if get_total_files >= 120:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
         return dict(status=False, data_ts=[])
 
-    def StartEngine(self) -> None:
+    def StartEngine(self):
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Playslist Encrypted")
-        playlist_encrypted = self.GetPlaylist()
-
-        logging.info("Get Playlist")
-        playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-
-        try:
+        try: 
             while self.start_process:
-                if playlist_uri is not None:
-                    logging.info("Get Segment URI")
-                    segments = self.GetSegments(playlist_uri)
 
-                    while len(segments) == 0:
-                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
-                            logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                            playlist_encrypted = self.GetPlaylist()
+                logging.info("Get Stream Segment")
+                segments = self.GetStreamSegment()
 
-                            playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-
-                        logging.info("Retry Get Segment URI")
-                        segments = self.GetSegments(playlist_uri)
-                        time.sleep(self.video_duration)
-
-                    time.sleep(self.video_duration)
-                    
-                    logging.info("Download segment")
-                    
-                    try:
-                        self.DownloadSegment(segments)
-                    except ConnectionResetError or ConnectionRefusedError:
-                        while True:
-                            try:
-                                self.DownloadSegment(segments)
-                                break
-                            except ConnectionResetError or ConnectionRefusedError:
-                                logging.error("Retry Download Segment")
-                                time.sleep(self.video_duration)
-                                continue
-                    
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
-
-                    if status_ts:
-                        now_filename = F"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                        logging.info("Request to Server Converter - Concat TS")
-                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                            s.connect((self.converter_host, self.converter_port))
-
-                            to_server = {
-                                "event": "concat",
-                                "environment": self.environment,
-                                "storage_path": self.upload_location,
-                                "mode": "w",
-                                "filename": now_filename,
-                                "optimize_video" : True,
-                            }
-                            to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
-
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
-
-                            response = s.recv(self.buffer_size)
-                            response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
-                            
-                            s.close()
-                            logging.info("Close Connection - Concat TS")
-
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
-                else:
-                    logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                    playlist_encrypted = self.GetPlaylist()
-
-                    playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+                while len(segments) == 0:
+                    logging.info("Retrying Stream Segment")
+                    segments = self.GetStreamSegment()
                     time.sleep(self.video_duration)
 
+                time.sleep(self.video_duration)
+
+                logging.info("Record Stream")
+                try:
+                    self.RecordStream(segments)
+                except ConnectionResetError or ConnectionRefusedError:
+                    while True:
+                        try:
+                            self.RecordStream(segments)
+                            break
+                        except ConnectionResetError or ConnectionRefusedError:
+                            logging.error("Retry Download Segment")
+                            time.sleep(self.video_duration)
+                            continue
+
+                check_ts = self.CheckTSFiles()
+                status_ts = check_ts["status"]
+                data_ts = check_ts["data_ts"]
+
+                if status_ts:
+                    now_filename = F"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    logging.info("Request to Server Converter - Concat TS")
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                        s.connect((self.converter_host, self.converter_port))
+
+                        to_server = {
+                            "event": "concat",
+                            "environment": self.environment,
+                            "storage_path": self.upload_location,
+                            "mode": "w",
+                            "filename": now_filename,
+                        }
+                        to_server = str(to_server).encode("utf-8")
+                        data_format = struct.Struct('I')
+                        data_length = len(to_server)
+                        s.sendall(data_format.pack(data_length))
+
+                        offset = 0
+                        while offset < data_length:
+                            sent_bytes = s.send(to_server[offset:])
+                            offset += sent_bytes
+
+                        response = s.recv(self.buffer_size)
+                        response = eval(response)
+                        logging.info(F"Message from Server Converter: {response['message']}")
+
+                        s.close()
+                        logging.info("Close Connection - Concat TS")
+
+                    logging.info("Cleanup TS")
+                    self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
@@ -277,20 +207,19 @@ class IDXIndonesiaV1:
             logging.info("Cleanup TS")
             return None
 
-
 if __name__ == "__main__":
     ENGINE_NAME = "IDXSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    idxindonesia = IDXIndonesiaV1(
+    tv_one = TVone(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URLV1"],
-        resolution=ENGINE["RESOLUTIONV1"],
+        url=ENGINE["URL"],
+        quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        playlist_directory=ENGINE["PLAYLIST_DIRECTORYV1"],
         converter_host=CONFIG.SOCKET_SERVER_IDX["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_IDX["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_IDX["BUFFER_SIZE"]
     )
-    idxindonesia.StartEngine()
+    tv_one.StartEngine()
+    

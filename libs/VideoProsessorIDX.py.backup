@@ -19,6 +19,8 @@ class VideoProsessor:
             os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
             os.remove(F"{path}/{filename}{extension}")
             os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
+            os.remove(F"{path}/{filename}.mp4")
+            os.remove(F"{path}/{filename}.mp3")
         except Exception as e:
             logging.error(F"Error Optimize Video: {e}")
 
@@ -57,28 +59,32 @@ class VideoProsessor:
             if self.environment == "dev":
                 cwd = os.getcwd()
                 path_ts = F"{cwd}/{self.storage_path}/ts"
+                # path_ts = F"{cwd}/{self.storage_path}/ts"
                 path_mp4 = F"{cwd}/{self.storage_path}"
             else:
                 path_ts = F"{self.storage_path}/ts"
+                # path_ts = F"{self.storage_path}/ts"
                 path_mp4 = F"{self.storage_path}"
 
             if not os.path.exists(path_mp4):
                 os.makedirs(path_mp4)
 
-            for file in os.listdir(path_ts):
-                if file.endswith(".ts"):
-                    ts_files.append(F"{path_ts}/{file}")
+            # for file in os.listdir(path_ts):
+            #     if file.endswith(".ts"):
+            #         ts_files.append(F"{path_ts}/{file}")
 
-            ts_files.sort()
-            with open(F"{path_ts}/{filename}.txt", mode) as file:
-                for ts in ts_files:
-                    file.write(F"file '{ts}'\n")
+            # ts_files.sort()
+            # with open(F"{path_ts}/{filename}.txt", mode) as file:
+            #     for ts in ts_files:
+            #         file.write(F"file '{ts}'\n")
 
-            os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
+            # os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
+            os.system(F"ffmpeg -i {path_ts}/{filename}.mp4 -i {path_ts}/{filename}.mp3 -c:v copy -c:a aac -strict experimental {path_mp4}/{filename}.mp4")
+
             logging.info("Success Concat TS to MP4")
 
             if optimize_video:
-                self.OptimizeVideo(path_mp4, filename)
+                self.OptimizeVideo(path_ts, filename)
                 logging.info("Success Optimize Video")
 
             return {
@@ -96,19 +102,27 @@ class VideoProsessor:
             }
 
 
-    def CleanUPTSFolder(self, list_ts:list = [], metadata:str = None) -> None:
+    def CleanUPTSFolder(self, list_ts_video:list = [],list_ts_audio:list = [], metadata:str = None) -> None:
         try:
             if self.environment == "dev":
-                path_ts = F"{os.getcwd()}/{self.storage_path}/ts"
+                path_ts_video = F"{os.getcwd()}/{self.storage_path}/video"
+                path_ts_audio = F"{os.getcwd()}/{self.storage_path}/audio"
             else:
-                path_ts = F"{self.storage_path}/ts"
+                path_ts_video = F"{self.storage_path}/video"
+                path_ts_audio = F"{self.storage_path}/audio"
             
-            for file in os.listdir(path_ts):
-                if len(list_ts) > 0:
-                    if file in list_ts or file == F"{metadata}.txt":
-                        os.remove(F"{path_ts}/{file}")
+            for file in os.listdir(path_ts_video):
+                if len(list_ts_video) > 0:
+                    if file in list_ts_video or file == F"{metadata}.txt":
+                        os.remove(F"{path_ts_video}/{file}")
                 else:
-                    if file.endswith(".txt") or file.endswith(".ts") : os.remove(F"{path_ts}/{file}")
+                    if file.endswith(".txt") or file.endswith(".ts") : os.remove(F"{path_ts_video}/{file}")
+            for file in os.listdir(path_ts_audio):
+                if len(list_ts_audio) > 0:
+                    if file in list_ts_audio or file == F"{metadata}.txt":
+                        os.remove(F"{path_ts_audio}/{file}")
+                else:
+                    if file.endswith(".txt") or file.endswith(".ts") : os.remove(F"{path_ts_audio}/{file}")
                 
             logging.info("Success Cleanup TS")
         except Exception as e:

@@ -13,7 +13,7 @@ class VideoProsessor:
         self.storage_path:str = storage_path
         super().__init__()
 
-    def OptimizeVideo(self, path, filename, extension = ".mp4"):
+    def OptimizeVideo(self, path, filename, extension = ".mp3"):
         try:
             convert_name = "_converted"
             os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
@@ -56,11 +56,11 @@ class VideoProsessor:
             ts_files = list()
             if self.environment == "dev":
                 cwd = os.getcwd()
-                path_ts = F"{cwd}/{self.storage_path}/ts"
-                path_mp4 = F"{cwd}/{self.storage_path}"
+                path_ts = F"{cwd}/{self.storage_path}/audio"
+                path_mp4 = F"{cwd}/{self.storage_path}/ts"
             else:
-                path_ts = F"{self.storage_path}/ts"
-                path_mp4 = F"{self.storage_path}"
+                path_ts = F"{self.storage_path}/audio"
+                path_mp4 = F"{self.storage_path}/ts"
 
             if not os.path.exists(path_mp4):
                 os.makedirs(path_mp4)
@@ -74,8 +74,9 @@ class VideoProsessor:
                 for ts in ts_files:
                     file.write(F"file '{ts}'\n")
 
-            os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp4")
-            logging.info("Success Concat TS to MP4")
+            # os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -c copy {path_mp4}/{filename}.mp3")
+            os.system(F"ffmpeg -f concat -safe 0 -i {path_ts}/{filename}.txt -codec:a libmp3lame -q:a 2 {path_mp4}/{filename}.mp3")
+            logging.info("Success Concat TS to MP3")
 
             if optimize_video:
                 self.OptimizeVideo(path_mp4, filename)
@@ -83,8 +84,8 @@ class VideoProsessor:
 
             return {
                 "status": True,
-                "message": "Success Concat TS to MP4",
-                "path": F"{path_mp4}/{filename}.mp4"
+                "message": "Success Concat TS to MP3",
+                "path": F"{path_mp4}/{filename}.mp3"
             }
         
         except Exception as e:

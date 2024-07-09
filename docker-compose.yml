@@ -104,6 +104,76 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX}
 
+  engine_server_converter_idx_video:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_idx_video
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_IDX_VIDEO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.37
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_IDX_VIDEO}
+
+  engine_server_converter_idx_audio:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_idx_audio
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_IDX_AUDIO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.38
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_IDX_AUDIO}
+
   engine_server_converter_trans:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_trans

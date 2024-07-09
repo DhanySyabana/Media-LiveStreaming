@@ -105,33 +105,33 @@ class Ops:
                 elif channel == "TVONESTREAMING":
                     logging.info(F"Start : {str(channel)}")
                     # # nama container yang mau di restart
-                    # containers_to_restart = ["engine_server_converter_tvone", "engine_tvone_v1"]
+                    containers_to_restart = ["engine_server_converter_tvone", "engine_tvone_v1"]
 
-                    # for name_containers in containers_to_restart:
-                    #     try:
-                    #         # Membuat koneksi dengan Docker daemon
-                    #         # Menentukan URL Docker API
-                    #         docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+                    for name_containers in containers_to_restart:
+                         try:
+                             # Membuat koneksi dengan Docker daemon
+                             # Menentukan URL Docker API
+                             docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
 
-                    #         # Membuat objek klien Docker dengan URL yang ditentukan
-                    #         client = docker.DockerClient(base_url=docker_api_url)
+                             # Membuat objek klien Docker dengan URL yang ditentukan
+                             client = docker.DockerClient(base_url=docker_api_url)
 
-                    #         # Mengambil objek container berdasarkan nama atau ID
-                    #         container = client.containers.get(name_containers)
+                             # Mengambil objek container berdasarkan nama atau ID
+                             container = client.containers.get(name_containers)
 
-                    #         # Memulai ulang (restart) container
-                    #         container.restart()
+                             # Memulai ulang (restart) container
+                             container.restart()
 
-                    #         logging.info(f"Container '{name_containers}' berhasil di-restart.")
-                    #     except docker.errors.NotFound as e:
-                    #         logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
-                    #         continue
-                    #     except docker.errors.APIError as e:
-                    #         logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
-                    #         continue
-                    #     except Exception as e:
-                    #         logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
-                    #         continue
+                             logging.info(f"Container '{name_containers}' berhasil di-restart.")
+                         except docker.errors.NotFound as e:
+                             logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
+                             continue
+                         except docker.errors.APIError as e:
+                             logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
+                             continue
+                         except Exception as e:
+                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+                             continue
                 elif channel == "BERITASATUSTREAMING":
                     # nama container yang mau di restart
                     containers_to_restart = ["engine_server_converter_beritasatu", "engine_beritasatu_v1"]
@@ -162,11 +162,34 @@ class Ops:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
                 elif channel == "TVRISTREAMING":
-                    try:
-                        print('tvri')
-                    except Exception as e:
-                        print(str(e))
-                        logging.error(F"Error : {str(e)}")
+                    # nama container yang mau di restart
+                    containers_to_restart = ["engine_server_converter_v1", "engine_tvri_v1"]
+
+                    for name_containers in containers_to_restart:
+                        try:
+                            # Membuat koneksi dengan Docker daemon
+                            # Menentukan URL Docker API
+                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+
+                            # Membuat objek klien Docker dengan URL yang ditentukan
+                            client = docker.DockerClient(base_url=docker_api_url)
+
+                            # Mengambil objek container berdasarkan nama atau ID
+                            container = client.containers.get(name_containers)
+
+                            # Memulai ulang (restart) container
+                            container.restart()
+
+                            logging.info(f"Container '{name_containers}' berhasil di-restart.")
+                        except docker.errors.NotFound as e:
+                            logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
+                            continue
+                        except docker.errors.APIError as e:
+                            logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
+                            continue
+                        except Exception as e:
+                            logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+                            continue
                 elif channel == "RCTISTREAMING":
                     containers_to_restart = ["engine_server_converter_rcti","engine_rcti_v1"]
 
@@ -339,7 +362,7 @@ class Ops:
             
             if data[key_data[key]]["total_video_last_hour"] < 3:
                 if channel == "METROTVSTREAMING":
-                    containers_to_restart = ["engine_server_converter_metro", "engine_mero_v1"]
+                    containers_to_restart = ["engine_server_converter_metro", "engine_metro_v1"]
 
                     for name_containers in containers_to_restart:
                         try:
@@ -450,9 +473,9 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-            if data[key_data[key]]["total_video_last_hour"] < 1:
+            if data[key_data[key]]["total_video_last_hour"] < 2:
                 if channel == "IDXSTREAMING":
-                    containers_to_restart = ["engine_server_converter_idx", "engine_idx_v1"]
+                    containers_to_restart = ["engine_server_converter_idx","engine_server_converter_idx_audio","engine_server_converter_idx_video"]
 
                     for name_containers in containers_to_restart:
                         try:

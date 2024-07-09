@@ -4,13 +4,6 @@ import socket
 import struct
 import logging
 import datetime
-import requests
-import json
-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-
 from urllib import parse
 from libs.Loggers import Loggers
 from libs.Selenium import Selenium
@@ -18,65 +11,109 @@ from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorSeaToday import VideoProsessor
 
-class INewsV1:
+class IDXIndonesiaV1:
 
-    def __init__(
-                self,
-                environment:str,
-                url:str,
-                host_directory:str = None,
-                search_ext:str = ".m3u8",
-                resolution:str = None,
-                upload_location = None,
-                custom_headers:dict = None,
-                converter_host: str = None,
-                converter_port: int = None,
-                buffer_size: int = None,
-            ) -> None:
-        self.environment = environment
-        self.url = url
-        self.host_directory = host_directory
-        self.query = None
-        self.search_ext = search_ext
-        self.resolution = resolution
-        self.upload_location = upload_location
-        self.video_duration = 7
-        self.custom_headers = custom_headers
-        self.last_sequence = None
-        self.start_process = True
-        self.segment_status = None
+    def __init__(self, 
+                 environment:str = None,
+                 url:str = None,
+                 resolution:str = None,
+                 upload_location:str = None,
+                 headers:dict = None,
+                 playlist_directory:str = None,
+                 path_url:str = None,
+                 converter_host:str = None,
+                 converter_port:int = None,
+                 buffer_size:int = None
+                 ) -> None:
+        self.environment:str = environment
+        self.url:str = url
+        self.resolution:str = resolution
+        self.upload_location:str = upload_location
+        self.headers:dict = headers
+        self.playlist_directory:str = playlist_directory
+        self.path_url:str = path_url
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
+        self.start_process = True
+        self.video_duration = 7
+        self.segment_status = None
+        self.last_sequence = None
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
         Loggers()
         super().__init__()
 
-    def GetPlaylist(self, token:str) -> str:
+    def GetPlaylistURI(self, url:str) -> str:
         playlist_uri = None
-        url = F"{self.host_directory}?auth="+token['auth']+"&trace_id="+token['trace_id']
         logging.info(F"URL: {url}")
-        response = HTTPRequest("get", url, self.custom_headers).Hit()
+
+        response = HTTPRequest("get", url, self.headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{playlist['uri']}"
-                    self.query = playlist['uri']
-                    response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
+                    playlist_uri = self.path_url +playlist['uri']
                     break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
         
         return playlist_uri
+
+    def GetPlaylistEncrypted(self, selenium:None) -> str:
+        path_uri = None
+        driver = selenium.DriverSelenium()
+        driver.get(self.url)
+
+        while self.start_process:
+            try:
+                for request in driver.requests:
+                    if request.response:
+                        if self.playlist_directory in request.url:
+                            path_uri = request.url
+                            break
+                    if path_uri is not None:
+                        break
+            except KeyError:
+                logging.error("Error: KeyError")
+                self.start_process = False
+                selenium.CloseDriver()
+                break
+            except KeyboardInterrupt:
+                self.start_process = False
+                selenium.CloseDriver()
+                break
+            if path_uri is not None:
+                break
+        
+        logging.info(F"Path Playlist: {path_uri}")
+        return path_uri
+
+    def GetPlaylist(self) -> str:
+        logging.info("Setup Selenium")
+        selenium = Selenium(self.url, {
+            "headless": True,
+        })
+
+        selenium.SeleniumCapabilities()
+        logging.info("Setup Selenium Capabilities")
+
+        selenium.SeleniumOptions()
+        logging.info("Setup Selenium Options")
+
+        logging.info("Find Playlist")
+        playlist = self.GetPlaylistEncrypted(selenium)
+
+        selenium.CloseDriver()
+        logging.info("Close Selenium Driver")
+        
+        return playlist
     
     def GetSegments(self, playlist_uri:str) -> list:
         file_segments = []
-
-        response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
-        
+        logging.info(F"{playlist_uri}")
+        response = HTTPRequest("get", playlist_uri, self.headers).Hit()
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
@@ -87,7 +124,6 @@ class INewsV1:
                     "url": F"{playlist_uri}/{segment['uri']}",
                     "sequence": int(segment["uri"].split(".ts")[0])
                 })
-
             file_segments = file_segments[-5:]
         else:
             file_segments = []
@@ -107,7 +143,7 @@ class INewsV1:
                 "storage_path": self.upload_location,
                 "method": "get",
                 "segments": segments,
-                "headers": self.custom_headers
+                "headers": self.headers
             }
             to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
@@ -130,22 +166,6 @@ class INewsV1:
             logging.info("Close Connection - Download Segment")
         return None
     
-    def GetToken(self) -> str:
-        token = None
-        session = requests.session()
-        token = session.post('https://www.vidio.com/live/7687/tokens', self.custom_headers)
-        cookies = session.cookies.get_dict()
-
-        page = json.loads(token.text)
-        
-        token ={
-            'auth':page['token'].partition('&trace_id=')[0].replace('auth=',''),
-            'trace_id':page['token'].partition('&trace_id=')[2]
-        }
-
-        return token
-    
-
     def CheckTSFiles(self) -> dict:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
@@ -155,7 +175,6 @@ class INewsV1:
             return dict(status=True, data_ts=list_files)
         
         return dict(status=False, data_ts=[])
-        
 
     def StartEngine(self) -> None:
         logging.info("Start Engine")
@@ -163,12 +182,12 @@ class INewsV1:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Token")
-        token = self.GetToken()
+        logging.info("Get Playslist Encrypted")
+        playlist_encrypted = self.GetPlaylist()
 
-        logging.info("Get Playlist URI")
-        playlist_uri = self.GetPlaylist(token)
-        
+        logging.info("Get Playlist")
+        playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+
         try:
             while self.start_process:
                 if playlist_uri is not None:
@@ -176,19 +195,11 @@ class INewsV1:
                     segments = self.GetSegments(playlist_uri)
 
                     while len(segments) == 0:
-                        if self.segment_status == 403:
-                            logging.info("Retry Get Token SDI")
-                            token = self.GetToken()
+                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
+                            logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
+                            playlist_encrypted = self.GetPlaylist()
 
-                            logging.info("Retry Get Playlist URI")
-                            playlist_uri = self.GetPlaylist(token)
-
-                        if self.segment_status == 404:
-                            logging.info("Retry Get Token SDI")
-                            token = self.GetToken()
-
-                            logging.info("Retry Get Playlist URI")
-                            playlist_uri = self.GetPlaylist(token)
+                            playlist_uri = self.GetPlaylistURI(playlist_encrypted)
 
                         logging.info("Retry Get Segment URI")
                         segments = self.GetSegments(playlist_uri)
@@ -226,6 +237,7 @@ class INewsV1:
                                 "storage_path": self.upload_location,
                                 "mode": "w",
                                 "filename": now_filename,
+                                "optimize_video" : True,
                             }
                             to_server = str(to_server).encode("utf-8")
                             data_format = struct.Struct('I')
@@ -248,8 +260,10 @@ class INewsV1:
                         self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
                 else:
-                    logging.info("Retry Get Playlist URI")
-                    playlist_uri = self.GetPlaylist(token)
+                    logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
+                    playlist_encrypted = self.GetPlaylist()
+
+                    playlist_uri = self.GetPlaylistURI(playlist_encrypted)
                     time.sleep(self.video_duration)
 
         except KeyboardInterrupt:
@@ -260,19 +274,22 @@ class INewsV1:
             logging.info("Cleanup TS")
             return None
 
+
 if __name__ == "__main__":
     ENGINE_NAME = "SEATODAYSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    inews = INewsV1(
+    idxindonesia = IDXIndonesiaV1(
         environment=ENGINE["ENVIRONMENT"],
         url=ENGINE["URL"],
-        host_directory=ENGINE["HOST_DIRECTORY"],
+        # host_directory=ENGINE["HOST_DIRECTORY"],
+        playlist_directory=ENGINE["HOST_DIRECTORY"],
+        path_url=ENGINE["PATH_URL"],
         resolution=ENGINE["RESOLUTION"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
-        custom_headers=ENGINE["HEADERS"],
+        headers=ENGINE["HEADERS"],
         converter_host=CONFIG.SOCKET_SERVER_SEATODAY["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_SEATODAY["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_SEATODAY["BUFFER_SIZE"],
     )
-    inews.StartEngine()   
+    idxindonesia.StartEngine()
