@@ -274,8 +274,8 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-                elif channel == "RTVSTREAMING":
-                    containers_to_restart = ["engine_server_converter_rtv", "engine_rtv_v1"]
+                elif channel == "NUSANTARATVSTREAMING":
+                    containers_to_restart = ["engine_server_converter_nusantara", "engine_nusantara_v1"]
 
                     for name_containers in containers_to_restart:
                         try:

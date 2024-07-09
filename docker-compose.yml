@@ -23,7 +23,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc 
       - ${HOST_SEATODAY}:/app/storage/seatoday     
     environment:
@@ -57,7 +57,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc 
       - ${HOST_SEATODAY}:/app/storage/seatoday   
 
@@ -92,7 +92,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc    
       - ${HOST_SEATODAY}:/app/storage/seatoday 
     environment:
@@ -126,7 +126,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc  
       - ${HOST_SEATODAY}:/app/storage/seatoday
 
@@ -161,7 +161,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc  
       - ${HOST_SEATODAY}:/app/storage/seatoday
 
@@ -173,6 +173,7 @@ services:
         ipv4_address: 10.10.10.38
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX_AUDIO}
+
 
   engine_server_converter_trans:
     image: media_livestreaming_engine:latest
@@ -196,7 +197,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc   
       - ${HOST_SEATODAY}:/app/storage/seatoday  
     environment:
@@ -230,7 +231,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc   
       - ${HOST_SEATODAY}:/app/storage/seatoday  
     environment:
@@ -264,7 +265,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc  
       - ${HOST_SEATODAY}:/app/storage/seatoday   
     environment:
@@ -298,7 +299,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc    
       - ${HOST_SEATODAY}:/app/storage/seatoday 
     environment:
@@ -332,7 +333,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc 
       - ${HOST_SEATODAY}:/app/storage/seatoday    
     environment:
@@ -366,7 +367,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc    
       - ${HOST_SEATODAY}:/app/storage/seatoday 
     environment:
@@ -400,7 +401,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv
-        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
         - ${HOST_MNC}:/app/storage/mnc  
         - ${HOST_SEATODAY}:/app/storage/seatoday 
       environment:
@@ -434,7 +435,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv
-        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
         - ${HOST_MNC}:/app/storage/mnc  
         - ${HOST_SEATODAY}:/app/storage/seatoday 
       environment:
@@ -446,14 +447,14 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_CNN}
 
-  engine_server_converter_rtv:
+  engine_server_converter_nusantara:
       image: media_livestreaming_engine:latest
-      container_name: engine_server_converter_rtv
+      container_name: engine_server_converter_nusantara
       build: 
         context: .
         dockerfile: Dockerfile
         args:
-          - ENGINE=${ENGINE_CONVERTER_RTV}
+          - ENGINE=${ENGINE_CONVERTER_NUSANTARA}
       volumes:
         - ./:/app
         - ${HOST_INEWS}:/app/storage/inews
@@ -468,7 +469,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv 
-        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
         - ${HOST_MNC}:/app/storage/mnc  
         - ${HOST_SEATODAY}:/app/storage/seatoday 
       environment:
@@ -478,7 +479,7 @@ services:
         default:
           ipv4_address: 10.10.10.29
       restart: unless-stopped
-      command: python ${ENGINE_CONVERTER_RTV}
+      command: python ${ENGINE_CONVERTER_NUSANTARA}
 
   engine_server_converter_mnc:
       image: media_livestreaming_engine:latest
@@ -502,7 +503,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv 
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv   
         - ${HOST_MNC}:/app/storage/mnc   
         - ${HOST_SEATODAY}:/app/storage/seatoday 
       environment:
@@ -536,7 +537,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv 
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv   
         - ${HOST_MNC}:/app/storage/mnc   
         - ${HOST_SEATODAY}:/app/storage/seatoday 
       environment:
@@ -570,7 +571,7 @@ services:
         - ${HOST_RCTI}:/app/storage/rcti
         - ${HOST_TRANS7}:/app/storage/trans7   
         - ${HOST_TRANSTV}:/app/storage/transtv 
-        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_NUSANTARATV}:/app/storage/nusantaratv   
         - ${HOST_MNC}:/app/storage/mnc 
         - ${HOST_SEATODAY}:/app/storage/seatoday 
 
@@ -824,17 +825,17 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_TRANSTV}
 
-  engine_rtv_v1:
+  engine_nusantara_v1:
     image: media_livestreaming_engine:latest
-    container_name: engine_rtv_v1
+    container_name: engine_nusantara_v1
     build: 
       context: .
       dockerfile: Dockerfile
       args:
-        - ENGINE=${ENGINE_RTV}
+        - ENGINE=${ENGINE_NUSANTARATV}
     volumes:
       - ./:/app
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -842,7 +843,7 @@ services:
       default:
         ipv4_address: 10.10.10.28
     restart: unless-stopped
-    command: python ${ENGINE_RTV}
+    command: python ${ENGINE_NUSANTARATV}
 
   engine_mnc_v1:
     image: media_livestreaming_engine:latest
@@ -906,7 +907,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti  
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc 
       - ${HOST_SEATODAY}:/app/storage/seatoday  
     environment:
@@ -942,7 +943,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti 
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv
       - ${HOST_MNC}:/app/storage/mnc   
       - ${HOST_SEATODAY}:/app/storage/seatoday  
     environment:
@@ -979,7 +980,7 @@ services:
       - ${HOST_RCTI}:/app/storage/rcti 
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv
-      - ${HOST_RTV}:/app/storage/rtv    
+      - ${HOST_NUSANTARATV}:/app/storage/nusantaratv    
       - ${HOST_MNC}:/app/storage/mnc 
       - ${HOST_SEATODAY}:/app/storage/seatoday    
     environment:

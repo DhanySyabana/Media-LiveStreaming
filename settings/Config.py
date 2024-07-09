@@ -363,17 +363,40 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
-        RTVSTREAMING = dict(
+        # RTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.vidio.com/live/1561/tokens",
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "B1News_320x240.m3u8",
+        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/1561/master.m3u8",
+        #     UPLOAD_LOCATION = "storage/rtv",
+        #     HEADERS = {
+        #         'origin': 'https://www.vidio.com',
+        #         'referer': 'https://www.vidio.com/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
+        NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.vidio.com/live/1561/tokens",
-            RESOLUTION = "640x360",
-            PLAYLIST = "B1News_320x240.m3u8",
-            HOST_DIRECTORY = "https://etslive-app.vidio.com/live/1561/master.m3u8",
-            UPLOAD_LOCATION = "storage/rtv",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://v5.siar.us/nusantaratv/live/",
+            RESOLUTION = "320x240",
+            PLAYLIST = "chunks.m3u8",
+            HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
+            UPLOAD_LOCATION = "storage/nusantaratv",
             HEADERS = {
-                'origin': 'https://www.vidio.com',
-                'referer': 'https://www.vidio.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'origin': 'https://nusantaratv.com',
+                'referer': 'https://nusantaratv.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
@@ -473,9 +496,9 @@ class Config(object):
             ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
+            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
@@ -601,7 +624,7 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_RTV = dict(
+    SOCKET_SERVER_NUSANTARA = dict(
         HOST = "10.10.10.29",
         PORT = 7777,
         MAX_CONNECTION = 4,
@@ -654,7 +677,7 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_RTV = dict(
+    # SOCKET_SERVER_NUSANTARA = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7012,
     #     MAX_CONNECTION = 4,
