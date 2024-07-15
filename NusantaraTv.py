@@ -4,10 +4,11 @@ import socket
 import struct
 import logging
 import datetime
+import threading
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorBeritsasatu import VideoProsessor
+from libs.VideoProsessorNusantara import VideoProsessor
 
 class Nusantaratv:
 
@@ -84,7 +85,7 @@ class Nusantaratv:
             while offset < data_length:
                 sent_bytes = s.send(to_server[offset:])
                 offset += sent_bytes
-
+    
             response = s.recv(self.buffer_size)
             response = eval(response)
             
@@ -204,7 +205,17 @@ class Nusantaratv:
                             logging.info("Close Connection - Concat TS")
 
                         logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                        # self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                        cleanup_thread = threading.Thread(target=self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename))
+                        compress_thread = threading.Thread(target=self.video_prosessor.CompressVideo(now_filename))
+                        
+                        cleanup_thread.start()
+                        compress_thread.start()
+
+                        # Tunggu sampai kedua thread selesai
+                        cleanup_thread.join()
+                        # compress_thread.join()
+                        
 
                 else:
                     logging.info("Retry Get Playlist URI")

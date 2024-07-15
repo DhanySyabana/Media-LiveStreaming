@@ -53,7 +53,15 @@ class VideoProsessor:
             }
 
 
-    def CompressVideo(self, input_path: str):
+    def CompressVideo(self, filename: str):
+        if self.environment == "dev":
+            cwd = os.getcwd()
+            path_ts = F"{cwd}/{self.storage_path}/ts"
+            path_mp4 = F"{cwd}/{self.storage_path}"
+        else:
+            path_ts = F"{self.storage_path}/ts"
+            path_mp4 = F"{self.storage_path}"
+        input_path =F"{path_mp4}/{filename}.mp4"
         try:
             temp_output_path = F"{input_path}.temp.mp4"
             scale_option = "-vf scale=854:480"
@@ -95,7 +103,7 @@ class VideoProsessor:
             # self.OptimizeVideo(path_mp4, filename)
             # logging.info("Success Optimize Video")
 
-            self.CompressVideo(F"{path_mp4}/{filename}.mp4")
+            # self.CompressVideo(F"{path_mp4}/{filename}.mp4")
             logging.info("Success Compress MP4")
 
             return {
