@@ -30,7 +30,7 @@ class Config(object):
             URLV1 = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
             HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #NEW
-	    RESOLUTION = "640x360",
+            RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
             HEADERS = {
@@ -139,7 +139,7 @@ class Config(object):
         #    URLV1 = "https://www.indihometv.com/livetv/idx",
         #    RESOLUTIONV1 = "640x360",
             #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8",
-	    #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/HLS-10s/idx/playlist.m3u8",
+            # #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/HLS-10s/idx/playlist.m3u8",
             #PLAYLIST_DIRECTORYV1 = "https://cdn10jtedge.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
         #    PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
         #    HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
@@ -161,7 +161,7 @@ class Config(object):
         #),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=q9XElPs-0xE",
+            URL = "https://www.youtube.com/watch?v=WokAzcgVCyc",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
@@ -351,10 +351,10 @@ class Config(object):
         TRANSTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://video.detik.com/transtv/smil:transtv.smil",
-	    #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
+            #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
             # https://pullstream.transtv.co.id/livettv/
             #PLAYLIST = "livestreamttv.m3u8",
-   	    PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
+            PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/transtv",
             HEADERS = {
@@ -388,10 +388,13 @@ class Config(object):
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://v5.siar.us/nusantaratv/live/",
+            # URLV1 = "https://v5.siar.us/nusantaratv/live/",
+            URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
             RESOLUTION = "320x240",
-            PLAYLIST = "chunks.m3u8",
-            HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
+            PLAYLIST = "playlist.m3u8",
+            # PLAYLIST = "playlist.m3u8",
+            # HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
+            HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
             UPLOAD_LOCATION = "storage/nusantaratv",
             HEADERS = {
                 'origin': 'https://nusantaratv.com',
@@ -413,9 +416,9 @@ class Config(object):
             URLV1 = "https://www.indihometv.com/livetv/mncnews",
             RESOLUTIONV1 = "640x360",
             #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
-            #PLAYLIST_DIRECTORYV1 = "ttps://streaming.indihometv.com/atm/HLS-10s/mncnews/playlist.m3u8",
-	    PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8",
-	    HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
+            #PLAYLIST_DIRECTORYV1 = "ttps://streaming.indihometv.com/atm/HLS-10s/mncnews/playlist.m3u8", 
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8", 
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
                 'origin': 'https://www.indihometv.com',
@@ -439,7 +442,7 @@ class Config(object):
             PLAYLIST = "B1News_320x240.m3u8",
             #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
             #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
-	    HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
+            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
             UPLOAD_LOCATION = "storage/seatoday",
             HEADERS = {
@@ -624,12 +627,12 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_NUSANTARA = dict(
-        HOST = "10.10.10.29",
-        PORT = 7777,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_NUSANTARA = dict(
+    #     HOST = "10.10.10.29",
+    #     PORT = 7777,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     SOCKET_SERVER_MNC = dict(
         HOST = "10.10.10.32",
@@ -677,12 +680,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_NUSANTARA = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7012,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_NUSANTARA = dict(
+        HOST = "127.0.0.1",
+        PORT = 7012,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
     
     # SOCKET_SERVER_CNN = dict(
     #     HOST = "127.0.0.1",
