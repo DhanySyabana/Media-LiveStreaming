@@ -627,12 +627,12 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    # SOCKET_SERVER_NUSANTARA = dict(
-    #     HOST = "10.10.10.29",
-    #     PORT = 7777,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_NUSANTARA = dict(
+        HOST = "10.10.10.29",
+        PORT = 7777,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     SOCKET_SERVER_MNC = dict(
         HOST = "10.10.10.32",
@@ -680,12 +680,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    SOCKET_SERVER_NUSANTARA = dict(
-        HOST = "127.0.0.1",
-        PORT = 7012,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_NUSANTARA = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7012,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
     
     # SOCKET_SERVER_CNN = dict(
     #     HOST = "127.0.0.1",
