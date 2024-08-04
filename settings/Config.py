@@ -71,7 +71,7 @@ class Config(object):
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            URL = "https://www.youtube.com/watch?v=c54pb_wqNCA",
+            URL = "https://www.youtube.com/watch?v=1DASMwDLrME",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/metro",
             HEADERS = {
