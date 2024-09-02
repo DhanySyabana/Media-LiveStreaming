@@ -457,15 +457,15 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
-        MNCSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=mPfD52n-zdE",
-            QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/mnc",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
+        # MNCSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.youtube.com/watch?v=mPfD52n-zdE",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/mnc",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         SEATODAYSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/7687-sea-today",
