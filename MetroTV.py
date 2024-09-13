@@ -35,7 +35,14 @@ class KompasTV:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        self.cookie = 'pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1'
+        self.cookies = {
+                "__Secure-3PAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
+                "__Secure-1PAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
+                "SAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
+                "HSID": "AUDvag204WShBQnji",
+                "SID": "g.a000oAi-3CHWHcjnnU_dipGlbj1fhd6FTWr-AwrfV_pZp5-LHPXb3YA5AmJiR9bxPamjPXC_XAACgYKAVESARUSFQHGX2MiimvElFDDhXq9SRTvErNdthoVAUF8yKouE__NhB00ozFLbfLCN1CL0076",
+                "SSID": "A4OXeLiW9Zfe9XhBp"
+            }
         Loggers()
         super().__init__()
 
@@ -46,7 +53,7 @@ class KompasTV:
         try:
             session = streamlink.Streamlink()
             # Tambahkan cookie autentikasi
-            session.set_option("http-cookies", {"__Secure-3PAPISID": self.cookie})
+            session.set_option("http-cookies", self.cookies)
             # streams = streamlink.streams(self.url)
             streams = session.streams(self.url)
             stream_url = streams[self.quality]
