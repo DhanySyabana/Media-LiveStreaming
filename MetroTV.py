@@ -35,13 +35,15 @@ class KompasTV:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        self.cookies = {
-                "__Secure-3PAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
-                "__Secure-1PAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
-                "SAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
+        self.cookies =  {
+                "APISID": "j1x4MqaL_L-FGJUK/ArH3LiOKNwpPmF8Ac",
                 "HSID": "AUDvag204WShBQnji",
+                "LOGIN_INFO": "AFmmF2swRQIhAMKBDiRe4rN7_ncHPzVkdJg7Mtu8Hwe58gF3WFLzUkkNAiAh2RJ5CvRK2WRhKbP_uWaOnFyKoaReb-uZfLeihJbHsQ:QUQ3MjNmeXlpaVlKZ0l5dTd5eEs0dU9hZHEtZFlaUF9ad0hacDM4VHdReWQzU2NNR2F5NGN1YWwxWFNvMU5rZ29FNGcwTDREYUNKUGQ3U01QRnhlSXBLMXpRWkg1NUpaSGhXNWRpWGd1cDJBMUprbnJtdmg0bWVzQVg2emxlRW5kSEwwVmlBeDlCRExIQVkySExKNEg4MjRPVmdXZlAzbnRn",
+                "NID": "517=4KR8sJ2RUF-efusAhIxZfs7RchiGeX8AiXzAcbUFVHB70ApQnzb2GqntFt4-vFLKjXsnMObOdAq_X7eHXHbbMbtVu1b0tRns6WJFdQoG1NtcfeE3CxJpnEz5EYVbkdRVv2zEyMj_mltJ1bZu3WeUFKcKUj9X3UUGVZHCSgXp6nUku4Qdw8rCCImkxn5c7q3tRu4Q57GLhaSlMEWU4hFlfzB4z6hCD6DbX-HJ7Qc_Fp34fEzt7L5Yny3-",
+                "PREF": "f4=4000000&f6=40000000&tz=Asia.Jakarta",
+                "SAPISID": "pObbQDAgEcYxvEy7/AkNH8dY7pLQJwC0m1",
                 "SID": "g.a000oAi-3CHWHcjnnU_dipGlbj1fhd6FTWr-AwrfV_pZp5-LHPXb3YA5AmJiR9bxPamjPXC_XAACgYKAVESARUSFQHGX2MiimvElFDDhXq9SRTvErNdthoVAUF8yKouE__NhB00ozFLbfLCN1CL0076",
-                "SSID": "A4OXeLiW9Zfe9XhBp"
+                "SSID": "A4OXeLiW9Zfe9XhBp"  # Dari .youtube.com
             }
         Loggers()
         super().__init__()
@@ -57,9 +59,8 @@ class KompasTV:
             # streams = streamlink.streams(self.url)
             streams = session.streams(self.url)
             stream_url = streams[self.quality]
-            # print(streams)
+            print(stream_url.args['url'])
             # exit()
-
             m3u8_obj = m3u8.load(stream_url.args['url'])
 
             segments = m3u8_obj.segments
