@@ -47,7 +47,7 @@ class KompasTV:
             session = streamlink.Streamlink()
             proxy_url = "socks5://trkcytfh:xtfqu68rlqwr@207.228.7.241:7423"
             # Tambahkan cookie autentikasi
-            session.set_option("http-cookies", self.cookies)
+            # session.set_option("http-cookies", self.cookies)
             session.set_option("http-proxy", proxy_url)
             # streams = streamlink.streams(self.url)
             streams = session.streams(self.url)
