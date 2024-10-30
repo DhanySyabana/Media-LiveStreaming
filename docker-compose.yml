@@ -618,7 +618,7 @@ services:
         default:
           ipv4_address: 10.10.10.39
       restart: unless-stopped
-      command: python ${ENGINE_CONVERTER_SEATODAY}
+      command: python ${ENGINE_CONVERTER_SCTV}
 
 
   engine_inews_v1:
