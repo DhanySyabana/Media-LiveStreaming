@@ -451,6 +451,27 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        SCTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://op-group1-swiftservehd-1.dens.tv/h/h217", 
+            RESOLUTION = "640x360",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h217",
+            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+            UPLOAD_LOCATION = "storage/sctv",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -642,6 +663,13 @@ class Config(object):
     SOCKET_SERVER_SEATODAY = dict(
         HOST = "10.10.10.35",
         PORT = 7474,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_SCTV = dict(
+        HOST = "10.10.10.39",
+        PORT = 7171,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
