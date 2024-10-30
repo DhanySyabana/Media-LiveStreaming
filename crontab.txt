@@ -1,0 +1,15 @@
+30 23 * * * find /home/kabayan/video_list/KOMPASSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/METROTVSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/INEWSSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/CNNSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/CNBCSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/TVONESTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/BERITASATUSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/RCTISTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/TRANS7STREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/TRANSTVSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/RCTISTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/RTVSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/SEATODAYSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/TVRISTREAMING/ -type f -name "*.mp4" -mtime +5 -delete
+30 23 * * * find /home/kabayan/video_list/IDXSTREAMING/ -type f -name "*.mp4" -mtime +5 -delete

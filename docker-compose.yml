@@ -1,0 +1,1021 @@
+version: '3'
+
+services:
+  engine_server_converter_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday     
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.8
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER}
+
+  engine_server_converter_beritasatu:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_beritasatu
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_BERITASATU}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday   
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.13
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_BERITASATU}
+
+  engine_server_converter_idx:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_idx
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_IDX}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.15
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_IDX}
+
+  engine_server_converter_idx_video:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_idx_video
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_IDX_VIDEO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.37
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_IDX_VIDEO}
+
+  engine_server_converter_idx_audio:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_idx_audio
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_IDX_AUDIO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.38
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_IDX_AUDIO}
+
+
+  engine_server_converter_trans:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_trans
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_TRANS}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc   
+      - ${HOST_SEATODAY}:/app/storage/seatoday  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.18
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_TRANS}
+
+  engine_server_converter_cnbc:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_cnbc
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_CNBC}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc   
+      - ${HOST_SEATODAY}:/app/storage/seatoday  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.19
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_CNBC}
+
+  engine_server_converter_kompas:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_kompas
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_KOMPAS}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc  
+      - ${HOST_SEATODAY}:/app/storage/seatoday   
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.31
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_KOMPAS}
+
+  engine_server_converter_tvone:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_tvone
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_TVONE}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.21
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_TVONE}
+
+  engine_server_converter_rcti:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_rcti
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_RCTI}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday    
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.22
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_RCTI}
+
+  engine_server_converter_metro:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_metro
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_METRO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc    
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.24
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_METRO}
+
+  engine_server_converter_transtv:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_transtv
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_TRANSTV}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.26
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_TRANSTV}
+
+  engine_server_converter_cnn:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_cnn
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_CNN}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.27
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_CNN}
+
+  engine_server_converter_rtv:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_rtv
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_RTV}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv
+        - ${HOST_MNC}:/app/storage/mnc  
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.29
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_RTV}
+
+  engine_server_converter_mnc:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_mnc
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_MNC}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc   
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.32
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_MNC}
+
+  engine_server_converter_inews:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_inews
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_INEWS}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc   
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.34
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_INEWS}
+
+  engine_server_converter_seatoday:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_seatoday
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_SEATODAY}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc 
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 10.10.10.35
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_SEATODAY}
+
+
+  engine_inews_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_inews_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_INEWS}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.2
+    restart: unless-stopped
+    command: python ${ENGINE_INEWS}
+
+  engine_cnn_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_cnn_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CNN}
+    volumes:
+      - ./:/app
+      - ${HOST_CNN}:/app/storage/cnn
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.3
+    restart: unless-stopped
+    command: python ${ENGINE_CNN}
+
+  engine_kompas_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_kompas_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_KOMPAS}
+    volumes:
+      - ./:/app
+      - ${HOST_KOMPAS}:/app/storage/kompas
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.30
+    restart: unless-stopped
+    command: python ${ENGINE_KOMPAS}
+
+  engine_metro_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_metro_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_METRO}
+    volumes:
+      - ./:/app
+      - ${HOST_METRO}:/app/storage/metro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.5
+    restart: unless-stopped
+    command: python ${ENGINE_METRO}
+
+  engine_cnbc_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_cnbc_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CNBC}
+    volumes:
+      - ./:/app
+      - ${HOST_CNBC}:/app/storage/cnbc
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.6
+    restart: unless-stopped
+    command: python ${ENGINE_CNBC}
+
+  engine_idx_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_idx_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_IDX}
+    volumes:
+      - ./:/app
+      - ${HOST_IDX}:/app/storage/idx
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.7
+    restart: unless-stopped
+    command: python ${ENGINE_IDX}
+
+  engine_tvone_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvone_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVONE}
+    volumes:
+      - ./:/app
+      - ${HOST_TVONE}:/app/storage/tvone
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.10
+    restart: unless-stopped
+    command: python ${ENGINE_TVONE}
+
+  engine_beritasatu_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_beritasatu_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_BERITASATU}
+    volumes:
+      - ./:/app
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.11
+    restart: unless-stopped
+    command: python ${ENGINE_BERITASATU}
+
+  engine_tvri_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvri_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRI}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRI}:/app/storage/tvri
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.12
+    restart: unless-stopped
+    command: python ${ENGINE_TVRI}
+
+  engine_rcti_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_rcti_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_RCTI}
+    volumes:
+      - ./:/app
+      - ${HOST_RCTI}:/app/storage/rcti
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.16
+    restart: unless-stopped
+    command: python ${ENGINE_RCTI}
+
+  engine_trans7_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_trans7_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TRANS7}
+    volumes:
+      - ./:/app
+      - ${HOST_TRANS7}:/app/storage/trans7
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.17
+    restart: unless-stopped
+    command: python ${ENGINE_TRANS7}
+
+  engine_transtv_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_transtv_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TRANSTV}
+    volumes:
+      - ./:/app
+      - ${HOST_TRANSTV}:/app/storage/transtv
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.25
+    restart: unless-stopped
+    command: python ${ENGINE_TRANSTV}
+
+  engine_rtv_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_rtv_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_RTV}
+    volumes:
+      - ./:/app
+      - ${HOST_RTV}:/app/storage/rtv
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.28
+    restart: unless-stopped
+    command: python ${ENGINE_RTV}
+
+  engine_mnc_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_mnc_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_MNC}
+    volumes:
+      - ./:/app
+      - ${HOST_MNC}:/app/storage/mnc
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.33
+    restart: unless-stopped
+    command: python ${ENGINE_MNC}
+
+  engine_seatoday_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_seatoday_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_SEATODAY}
+    volumes:
+      - ./:/app
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 10.10.10.36
+    restart: unless-stopped
+    command: python ${ENGINE_SEATODAY}
+
+  engine_ops_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_ops_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_OPS}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti  
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: 10.10.10.9
+    restart: unless-stopped
+    command: python ${ENGINE_OPS}
+
+  engine_ops_v2:
+    image: media_livestreaming_engine:latest
+    container_name: engine_ops_v2
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_OPS_V2}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti 
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc   
+      - ${HOST_SEATODAY}:/app/storage/seatoday  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: 10.10.10.14
+    restart: unless-stopped
+    command: python ${ENGINE_OPS_V2}
+
+  engine_ops_v3:
+    image: media_livestreaming_engine:latest
+    container_name: engine_ops_v3
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_OPS_V3}
+    volumes:
+      - ./:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_RCTI}:/app/storage/rcti 
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv    
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday    
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: 10.10.10.23
+    restart: unless-stopped
+    command: python ${ENGINE_OPS_V3}
+
+  # engine_server_notification_v1:
+  #   image: media_livestreaming_engine:latest
+  #   container_name: engine_server_notification_v1
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - ENGINE=${ENGINE_NOTIFICATION}
+  #   volumes:
+  #     - ./:/app
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #     - TZ=Asia/Jakarta
+  #   networks:
+  #     default:
+  #       ipv4_address: 10.10.10.10
+  #   ports:
+  #     - 0.0.0.0:8888:8888
+  #   restart: unless-stopped
+  #   command: python ${ENGINE_NOTIFICATION}
+
+networks:
+  default:
+    name: livestream_net
+    external: true

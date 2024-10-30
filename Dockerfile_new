@@ -1,0 +1,46 @@
+FROM python:3.10.11
+
+ENV DEBIAN_FRONTEND=noninteractive
+ARG ENGINE
+WORKDIR /app
+
+# Mengganti mirror Debian agar lebih stabil
+RUN sed -i 's|http://ftp.us.debian.org/debian|http://deb.debian.org/debian|g' /etc/apt/sources.list
+
+# Menambahkan kunci penandatanganan Google Chrome dengan curl dan timeout
+RUN curl -fsSL --connect-timeout 10 https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+
+# Menambahkan repositori Google Chrome
+RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+
+# Memperbarui daftar paket
+RUN apt-get update
+
+# Instalasi dependensi dengan --fix-missing dan retry loop
+RUN until apt-get install -y --fix-missing \
+    apt-utils \
+    libjpeg-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libopenjp2-7 \
+    libtiff5 \
+    google-chrome-stable \
+    ffmpeg; do \
+    echo "Retrying..."; \
+    sleep 2; \
+    done
+
+# Menyalin dan menginstal dependensi Python dengan retry loop dan timeout
+COPY requirements.txt ./
+RUN until pip install --upgrade pip --default-timeout=100 && \
+    pip install -r requirements.txt --default-timeout=100; do \
+    echo "Retrying pip install..."; \
+    sleep 2; \
+    done
+
+# Menyalin seluruh isi proyek ke dalam container
+COPY . .
+
+# Menentukan perintah default untuk menjalankan aplikasi
+CMD ["python", "${ENGINE}"]
