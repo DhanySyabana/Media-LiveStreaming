@@ -4,6 +4,7 @@ import socket
 import struct
 import logging
 import datetime
+import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -44,7 +45,9 @@ class BeritaSatu:
     def GetSegment(self) -> list:
         file_segments = []
 
-        response = HTTPRequest("get", F"{self.host_directory}/{self.playlist}", self.custom_headers).Hit()
+        # response = HTTPRequest("get", F"{self.host_directory}/{self.playlist}", self.custom_headers).Hit()
+        
+        response = requests.get(url =F"{self.host_directory}/{self.playlist}", headers=self.custom_headers, verify=False)
 
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -114,7 +117,8 @@ class BeritaSatu:
         url = F"{self.host_directory}/{self.playlist}"
         logging.info(F"URL: {url}")
 
-        response = HTTPRequest("get", url, self.custom_headers).Hit()
+        # response = HTTPRequest("get", url, self.custom_headers).Hit()
+        response = requests.get(url, verify=False, headers=self.custom_headers)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             playlists = m3u8_master.data["segments"]

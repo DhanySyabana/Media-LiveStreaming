@@ -172,7 +172,7 @@ class Config(object):
         #),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=e42z4BozW2U",
+            URL = "https://www.youtube.com/watch?v=sNmcQz3Mjoo",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
@@ -237,7 +237,7 @@ class Config(object):
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
             URLV1 = "https://beritasatu.tv/",
             RESOLUTION = "320x240",
-            PLAYLIST = "B1News_320x240.m3u8",
+            PLAYLIST = "B1News_960x540.m3u8",
             HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
@@ -277,20 +277,44 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #TVRISTREAMING = dict(
+        #    ENVIRONMENT = "dev",
+        #    URLV1 = "http://klik.tvri.go.id/",
+        #    RESOLUTION = "640x360",
+            # RESOLUTION = "480x270", #OLD
+        #    PLAYLIST = "index.m3u8",
+        #    HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
+        #    HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
+        #    UPLOAD_LOCATION = "storage/tvri",
+        #    HEADERS = {
+        #        'origin': 'http://klik.tvri.go.id',
+        #        'referer': 'http://klik.tvri.go.id/',
+        #       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #        'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+        #        'sec-ch-ua-mobile': '?0',
+        #        'sec-ch-ua-platform': '"Windows"',
+        #        'sec-fetch-dest': 'empty',
+        #        'sec-fetch-mode': 'cors',
+        #        'sec-fetch-site': 'cross-site',
+        #        'accept': '*/*',
+        #        'accept-encoding': 'gzip, deflate, br',
+        #        'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+        #   }
+        #),
+             
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "http://klik.tvri.go.id/",
+            URL = "https://www.vidio.com/live/6441-tvri", 
             RESOLUTION = "640x360",
-            # RESOLUTION = "480x270", #OLD
-            PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
-            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
+            PLAYLIST = "B1News_320x240.m3u8",
+            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/6441/master.m3u8",
+            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
             UPLOAD_LOCATION = "storage/tvri",
             HEADERS = {
-                'origin': 'http://klik.tvri.go.id',
-                'referer': 'http://klik.tvri.go.id/',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/live/6441-tvri',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
                 'sec-fetch-dest': 'empty',
@@ -298,31 +322,10 @@ class Config(object):
                 'sec-fetch-site': 'cross-site',
                 'accept': '*/*',
                 'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
-        # TVRISTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/6441/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "index.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/6441/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/tvri",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
+ 
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
