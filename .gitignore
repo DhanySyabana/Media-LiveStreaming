@@ -1,0 +1,8 @@
+storage
+backup
+virtualenv
+TODO
+__pycache__/
+libs/__pycache__
+static
+.venv
