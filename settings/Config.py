@@ -61,13 +61,34 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
+        # KOMPASSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.youtube.com/watch?v=DOOrIxw5xOw",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/kompas",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         KOMPASSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=DOOrIxw5xOw",
-            QUALITY = "360p",
+            URL = "https://op-group1-swiftservehd-1.dens.tv/s/s104", 
+            # RESOLUTION = "640x360",
+            RESOLUTION = "640x480",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/s/s104",
             UPLOAD_LOCATION = "storage/kompas",
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         # METROTVSTREAMING = dict(
