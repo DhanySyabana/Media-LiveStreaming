@@ -43,8 +43,9 @@ class TVone:
         file_segments = []
         print(self.url)
         try:
+            
             session = streamlink.Streamlink()
-            proxy_list = list({'trkcytfh:xtfqu68rlqwr@207.228.7.241:7423','trkcytfh:xtfqu68rlqwr@156.238.176.136:6818','trkcytfh:xtfqu68rlqwr@63.246.137.248:5877'}) 
+            proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
             proxy_list = random.choice(proxy_list)
             proxy_url = "socks5://" + proxy_list
             # Tambahkan cookie autentikasi
