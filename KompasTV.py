@@ -50,6 +50,7 @@ class KompasTV:
             # Tambahkan cookie autentikasi
             # session.set_option("http-cookies", self.cookies)
             session.set_option("http-proxy", proxy_url)
+            streams = session.streams(self.url)
             stream_url = streams[self.quality]
 
             m3u8_obj = m3u8.load(stream_url.args['url'])
