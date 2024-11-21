@@ -5,6 +5,7 @@ import struct
 import logging
 import datetime
 import streamlink
+import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -42,7 +43,15 @@ class TVone:
         file_segments = []
         print(self.url)
         try:
-            streams = streamlink.streams(self.url)
+            session = streamlink.Streamlink()
+            proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            proxy_list = random.choice(proxy_list)
+            proxy_url = "socks5://" + proxy_list
+            # Tambahkan cookie autentikasi
+            # session.set_option("http-cookies", self.cookies)
+            session.set_option("http-proxy", proxy_url)
+            # streams = streamlink.streams(self.url)
+            streams = session.streams(self.url)
             # print(streams)
             stream_url = streams[self.quality]
             # print(stream_url.ar)
