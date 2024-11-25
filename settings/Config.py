@@ -57,8 +57,7 @@ class Config(object):
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/cnn",
             HEADERS = {
-                'referer': 'https://www.cnnindonesia.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0'
             }
         ),
         # KOMPASSTREAMING = dict(
@@ -163,9 +162,7 @@ class Config(object):
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/cnbc",
             HEADERS = {
-                'referer': 'https://www.cnbcindonesia.com/',
-                'origin': 'https://www.cnbcindonesia.com',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0'
             }
         ),
         # IDXSTREAMING = dict(
