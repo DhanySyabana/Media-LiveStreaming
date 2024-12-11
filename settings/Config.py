@@ -346,9 +346,9 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id",
+            # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id",
             # HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
-            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
+            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
             RESOLUTION = "426x240",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/rcti",
@@ -768,7 +768,7 @@ class Config(object):
 
     # SOCKET_SERVER_RCTI = dict(
     #     HOST = "127.0.0.1",
-    #     PORT = 7009,
+    #     PORT = 7010,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
