@@ -102,8 +102,8 @@ class INewsV1:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{playlist['uri']}"
-                    # playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    # playlist_uri = F"{playlist['uri']}"
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
                     # self.query = playlist['uri'].split('/')[0]
                     # auth = self.query.partition('?auth_key=')[2]
                     headers={
@@ -131,9 +131,10 @@ class INewsV1:
     
     def GetSegments(self, playlist_uri:str) -> list:
         file_segments = []
-
+        print(playlist_uri)
         response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
         self.host_directory = playlist_uri.partition('/inews-sdi')[0]
+        print(self.host_directory)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
