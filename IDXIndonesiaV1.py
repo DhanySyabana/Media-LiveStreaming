@@ -45,12 +45,12 @@ class TVone:
         try:
             
             session = streamlink.Streamlink()
-            proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-            proxy_list = random.choice(proxy_list)
-            proxy_url = "socks5://" + proxy_list
-            # Tambahkan cookie autentikasi
+            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            # proxy_list = random.choice(proxy_list)
+            # proxy_url = "socks5://" + proxy_list
+            # # Tambahkan cookie autentikasi
             # session.set_option("http-cookies", self.cookies)
-            session.set_option("http-proxy", proxy_url)
+            # session.set_option("http-proxy", proxy_url)
             # streams = streamlink.streams(self.url)
             streams = session.streams(self.url)
     
