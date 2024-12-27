@@ -5,8 +5,10 @@ import struct
 import logging
 import datetime
 import streamlink
+
 from libs.Loggers import Loggers
 from settings.Config import Config
+from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorKompas import VideoProsessor
 
 class MetroTV:
@@ -39,21 +41,50 @@ class MetroTV:
 
     def GetStreamSegment(self) -> list:
         file_segments = []
-
+        print(self.url)
         try:
-            streams = streamlink.streams(self.url)
+            session = streamlink.Streamlink()
+            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            # proxy_list = random.choice(proxy_list)
+            # proxy_url = "socks5://" + proxy_list
+            # Tambahkan cookie autentikasi
+            # session.set_option("http-cookies", self.cookies)
+            # session.set_option("http-proxy", proxy_url)
+            # streams = streamlink.streams(self.url)
+            streams = session.streams(self.url)
+            # print(streams)
             stream_url = streams[self.quality]
-
-            m3u8_obj = m3u8.load(stream_url.args['url'])
+            # print(stream_url.ar)
+            # exit()
+            print(stream_url.to_url())
+            # exit()
+            response =HTTPRequest("get", stream_url.to_url(), headers={
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }).Hit()
+            if response.status_code == 200:
+                m3u8_obj = m3u8.loads(response.text)
+                segments = m3u8_obj.segments
+                for segment in segments:
+                    file_segments.append({
+                        "url": segment.uri,
+                        "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                    })
+                
+                file_segments = file_segments[-5:]
+            else:
+                file_segments = []
+                self.segment_status = response.status_code
+                logging.error(F"Error Get Segments: {response.status_code}")
             
-            segments = m3u8_obj.segments
-            for segment in segments:
-                file_segments.append({
-                    "url": segment.uri,
-                    "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
-                })
-            
-            file_segments = file_segments[-5:]
         except ValueError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
