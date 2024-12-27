@@ -104,7 +104,7 @@ class Config(object):
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
+            URL = "https://www.youtube.com/watch?v=kz33DnpD1Po",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/metro",
             HEADERS = {
@@ -192,7 +192,7 @@ class Config(object):
         # ),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=jT0JZIvHrmg",
+            URL = "https://www.youtube.com/watch?v=qsNX7jhr5r4",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
