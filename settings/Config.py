@@ -192,10 +192,10 @@ class Config(object):
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://beritasatu.tv/",
-            RESOLUTION = "320x240",
-            PLAYLIST = "B1News_960x540.m3u8",
-            HOST_DIRECTORY = "https://b1news.beritasatumedia.com/Beritasatu",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
+            RESOLUTION = "640x360",
+            PLAYLIST = "01.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
                 'origin': 'https://beritasatu.tv',

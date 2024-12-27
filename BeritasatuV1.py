@@ -30,7 +30,7 @@ class BeritaSatu:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 4
+        self.video_duration = 6
         self.last_sequence = None
         self.segment_status = None
         self.converter_host = converter_host
@@ -106,7 +106,7 @@ class BeritaSatu:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 150:
+        if get_total_files >= 100:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
