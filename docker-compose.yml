@@ -965,7 +965,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.51
+        ipv4_address: 10.10.10.50
     restart: unless-stopped
     command: python ${ENGINE_GARUDA}
 
