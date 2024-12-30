@@ -650,8 +650,8 @@ class Config(object):
     )
     
     SOCKET_SERVER_GARUDA = dict(
-        HOST = "10.10.10.40",
-        PORT = 7171,
+        HOST = "10.10.10.51",
+        PORT = 5151,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
