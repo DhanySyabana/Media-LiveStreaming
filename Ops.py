@@ -65,7 +65,7 @@ class Ops:
         # Create a figure and GridSpec object
         fig = plt.figure(figsize=(23, 10))
         gs = GridSpec(nrows=4, ncols=5, figure=fig)
-        fig.suptitle("SERVER MEDIA STREAMING 1", weight='bold', fontsize=16)
+        fig.suptitle("SERVER MEDIA STREAMING 2", weight='bold', fontsize=16)
         # update margin 
         plt.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.1, hspace=0.1)
 
