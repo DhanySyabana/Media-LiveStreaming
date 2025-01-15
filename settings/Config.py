@@ -145,40 +145,42 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
-        #IDXSTREAMING = dict(
-        #    ENVIRONMENT = "dev",
-        #    URLV1 = "https://www.indihometv.com/livetv/idx",
-        #    RESOLUTIONV1 = "640x360",
-            #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8",
-            # #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/HLS-10s/idx/playlist.m3u8",
-            #PLAYLIST_DIRECTORYV1 = "https://cdn10jtedge.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
-        #    PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
-        #    HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
-        #    UPLOAD_LOCATION = "storage/idx",
-        #    HEADERS = {
-        #        'origin': 'https://www.indihometv.com',
-        #        'referer': 'https://www.indihometv.com/',
-        #        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #        'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-        #        'sec-ch-ua-mobile': '?0',
-        #        'sec-ch-ua-platform': '"Windows"',
-        #        'sec-fetch-dest': 'empty',
-        #        'sec-fetch-mode': 'cors',
-        #        'sec-fetch-site': 'cross-site',
-        #        'accept': '*/*',
-        #        'accept-encoding': 'gzip, deflate, br',
-        #        'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-        #    }
-        #),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=4g6TIjb3Xv4",
-            QUALITY = "360p",
+            URLV1 = "https://www.indihometv.com/livetv/idx",
+            RESOLUTIONV1 = "640x360",
+            # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8", #old
+            # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/HLS-10s/idx/playlist.m3u8", #old
+            # PLAYLIST_DIRECTORYV1 = "https://cdn10jtedge.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
+            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
+            
+            
+            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'origin': 'https://www.indihometv.com',
+                'referer': 'https://www.indihometvf.com/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        # IDXSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.youtube.com/watch?v=4g6TIjb3Xv4",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/idx",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         TVONESTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
