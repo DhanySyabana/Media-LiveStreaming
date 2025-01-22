@@ -81,16 +81,16 @@ class Ops:
                         try:
                             # Membuat koneksi dengan Docker daemon
                             # Menentukan URL Docker API
-                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+                            # docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
 
-                            # Membuat objek klien Docker dengan URL yang ditentukan
-                            client = docker.DockerClient(base_url=docker_api_url)
+                            # # Membuat objek klien Docker dengan URL yang ditentukan
+                            # client = docker.DockerClient(base_url=docker_api_url)
 
-                            # Mengambil objek container berdasarkan nama atau ID
-                            container = client.containers.get(name_containers)
+                            # # Mengambil objek container berdasarkan nama atau ID
+                            # container = client.containers.get(name_containers)
 
-                            # Memulai ulang (restart) container
-                            container.restart()
+                            # # Memulai ulang (restart) container
+                            # container.restart()
 
                             logging.info(f"Container '{name_containers}' berhasil di-restart.")
                         except docker.errors.NotFound as e:
@@ -301,34 +301,34 @@ class Ops:
                 #         except Exception as e:
                 #             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                 #             continue
-                elif channel == "MNCSTREAMING":
-                    containers_to_restart = ["engine_server_converter_mnc", "engine_mnc_v1"]
+                # elif channel == "MNCSTREAMING":
+                #     containers_to_restart = ["engine_server_converter_mnc", "engine_mnc_v1"]
 
-                    for name_containers in containers_to_restart:
-                        try:
-                            # Membuat koneksi dengan Docker daemon
-                            # Menentukan URL Docker API
-                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+                #     for name_containers in containers_to_restart:
+                #         try:
+                #             # Membuat koneksi dengan Docker daemon
+                #             # Menentukan URL Docker API
+                #             docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
 
-                            # Membuat objek klien Docker dengan URL yang ditentukan
-                            client = docker.DockerClient(base_url=docker_api_url)
+                #             # Membuat objek klien Docker dengan URL yang ditentukan
+                #             client = docker.DockerClient(base_url=docker_api_url)
 
-                            # Mengambil objek container berdasarkan nama atau ID
-                            container = client.containers.get(name_containers)
+                #             # Mengambil objek container berdasarkan nama atau ID
+                #             container = client.containers.get(name_containers)
 
-                            # Memulai ulang (restart) container
-                            container.restart()
+                #             # Memulai ulang (restart) container
+                #             container.restart()
 
-                            logging.info(f"Container '{name_containers}' berhasil di-restart.")
-                        except docker.errors.NotFound as e:
-                            logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
-                            continue
-                        except docker.errors.APIError as e:
-                            logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
-                            continue
-                        except Exception as e:
-                            logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
-                            continue
+                #             logging.info(f"Container '{name_containers}' berhasil di-restart.")
+                #         except docker.errors.NotFound as e:
+                #             logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
+                #             continue
+                #         except docker.errors.APIError as e:
+                #             logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
+                #             continue
+                #         except Exception as e:
+                #             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+                #             continue
                 elif channel == "SEATODAYSTREAMING":
                     containers_to_restart = ["engine_server_converter_seatoday", "engine_seatoday_v1"]
 
@@ -357,35 +357,35 @@ class Ops:
                         except Exception as e:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
-                elif channel == "IDXSTREAMING":
-                    containers_to_restart = ["engine_server_converter_idx","engine_server_converter_idx_audio","engine_server_converter_idx_video", "engine_idx_v1"]
+                # elif channel == "IDXSTREAMING":
+                #     containers_to_restart = ["engine_server_converter_idx","engine_server_converter_idx_audio","engine_server_converter_idx_video", "engine_idx_v1"]
 
 
-                    for name_containers in containers_to_restart:
-                        try:
-                            # Membuat koneksi dengan Docker daemon
-                            # Menentukan URL Docker API
-                            docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
+                #     for name_containers in containers_to_restart:
+                #         try:
+                #             # Membuat koneksi dengan Docker daemon
+                #             # Menentukan URL Docker API
+                #             docker_api_url = 'unix://var/run/docker.sock'  # Ganti dengan URL yang sesuai
 
-                            # Membuat objek klien Docker dengan URL yang ditentukan
-                            client = docker.DockerClient(base_url=docker_api_url)
+                #             # Membuat objek klien Docker dengan URL yang ditentukan
+                #             client = docker.DockerClient(base_url=docker_api_url)
 
-                            # Mengambil objek container berdasarkan nama atau ID
-                            container = client.containers.get(name_containers)
+                #             # Mengambil objek container berdasarkan nama atau ID
+                #             container = client.containers.get(name_containers)
 
-                            # Memulai ulang (restart) container
-                            container.restart()
+                #             # Memulai ulang (restart) container
+                #             container.restart()
 
-                            logging.info(f"Container '{name_containers}' berhasil di-restart.")
-                        except docker.errors.NotFound as e:
-                            logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
-                            continue
-                        except docker.errors.APIError as e:
-                            logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
-                            continue
-                        except Exception as e:
-                            logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
-                            continue
+                #             logging.info(f"Container '{name_containers}' berhasil di-restart.")
+                #         except docker.errors.NotFound as e:
+                #             logging.error(f"Error: Container '{name_containers}' tidak ditemukan.")
+                #             continue
+                #         except docker.errors.APIError as e:
+                #             logging.error(f"Error: Terjadi kesalahan API Docker - {e}")
+                #             continue
+                #         except Exception as e:
+                #             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
+                #             continue
                 else:
                     print('tidak ada')
                 
