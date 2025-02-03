@@ -5,6 +5,7 @@ import struct
 import logging
 import datetime
 import random
+import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -44,7 +45,8 @@ class CNNIndonesia:
     def GetSegment(self) -> list:
         file_segments = []
         print(self.url_segment)
-        response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
+        # response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
+        response = requests.get(self.url_segment, verify=False, headers=self.custom_headers)  
         
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -116,7 +118,8 @@ class CNNIndonesia:
         url = F"{self.host_directory}/{self.playlist}"
         logging.info(F"URL: {url}")
 
-        response = HTTPRequest("get", url, self.custom_headers).Hit()
+        # response = HTTPRequest("get", url, self.custom_headers).Hit()
+        response = requests.get(url, verify=False, headers=self.custom_headers)   
         print(response.text)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
