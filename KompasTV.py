@@ -50,6 +50,10 @@ class KompasTV:
             # Tambahkan cookie autentikasi
             # session.set_option("http-cookies", self.cookies)
             # session.set_option("http-proxy", proxy_url)
+            with open('cookies-kompas.txt', 'r') as file:
+                cookies = file.read().strip()
+            session.set_option("http-cookies", cookies)
+            # session.set_option("http-proxy", proxy_url)
             streams = session.streams(self.url)
             stream_url = streams[self.quality]
 
