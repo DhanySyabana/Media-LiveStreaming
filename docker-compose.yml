@@ -31,7 +31,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.8
+        ipv4_address: 12.12.12.8
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER}
     
@@ -67,7 +67,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.13
+        ipv4_address: 12.12.12.13
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_BERITASATU}
     
@@ -103,7 +103,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.15
+        ipv4_address: 12.12.12.15
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX}
     
@@ -139,7 +139,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.37
+        ipv4_address: 12.12.12.37
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX_VIDEO}
     
@@ -175,7 +175,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.38
+        ipv4_address: 12.12.12.38
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX_AUDIO}
     
@@ -210,7 +210,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.18
+        ipv4_address: 12.12.12.18
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_TRANS}
     
@@ -245,7 +245,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.19
+        ipv4_address: 12.12.12.19
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_CNBC}
 
@@ -279,7 +279,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.31
+        ipv4_address: 12.12.12.31
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_KOMPAS}
     
@@ -314,7 +314,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.21
+        ipv4_address: 12.12.12.21
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_TVONE}
     
@@ -349,7 +349,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.22
+        ipv4_address: 12.12.12.22
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_RCTI}
     
@@ -384,7 +384,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.24
+        ipv4_address: 12.12.12.24
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_METRO}
     
@@ -419,7 +419,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.26
+          ipv4_address: 12.12.12.26
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_TRANSTV}
       
@@ -454,7 +454,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.27
+          ipv4_address: 12.12.12.27
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_CNN}
       
@@ -489,7 +489,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.29
+          ipv4_address: 12.12.12.29
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_RTV}
       
@@ -524,7 +524,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.32
+          ipv4_address: 12.12.12.32
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_MNC}
       
@@ -559,7 +559,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.34
+          ipv4_address: 12.12.12.34
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_INEWS}
       
@@ -594,7 +594,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.35
+          ipv4_address: 12.12.12.35
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_SEATODAY}
 
@@ -629,7 +629,7 @@ services:
         - TZ=Asia/Jakarta
       networks:
         default:
-          ipv4_address: 10.10.10.51
+          ipv4_address: 12.12.12.51
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_GARUDA}
       
@@ -651,7 +651,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.2
+        ipv4_address: 12.12.12.2
     restart: unless-stopped
     command: python ${ENGINE_INEWS}
     
@@ -672,7 +672,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.3
+        ipv4_address: 12.12.12.3
     restart: unless-stopped
     command: python ${ENGINE_CNN}
     
@@ -693,7 +693,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.30
+        ipv4_address: 12.12.12.30
     restart: unless-stopped
     command: python ${ENGINE_KOMPAS}
     
@@ -714,7 +714,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.5
+        ipv4_address: 12.12.12.5
     restart: unless-stopped
     command: python ${ENGINE_METRO}
     
@@ -735,7 +735,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.6
+        ipv4_address: 12.12.12.6
     restart: unless-stopped
     command: python ${ENGINE_CNBC}
     
@@ -756,7 +756,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.7
+        ipv4_address: 12.12.12.7
     restart: unless-stopped
     command: python ${ENGINE_IDX}
     
@@ -777,7 +777,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.10
+        ipv4_address: 12.12.12.10
     restart: unless-stopped
     command: python ${ENGINE_TVONE}
     
@@ -798,7 +798,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.11
+        ipv4_address: 12.12.12.11
     restart: unless-stopped
     command: python ${ENGINE_BERITASATU}
     
@@ -819,7 +819,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.12
+        ipv4_address: 12.12.12.12
     restart: unless-stopped
     command: python ${ENGINE_TVRI}
     
@@ -840,7 +840,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.16
+        ipv4_address: 12.12.12.16
     restart: unless-stopped
     command: python ${ENGINE_RCTI}
     
@@ -861,7 +861,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.17
+        ipv4_address: 12.12.12.17
     restart: unless-stopped
     command: python ${ENGINE_TRANS7}
     
@@ -882,7 +882,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.25
+        ipv4_address: 12.12.12.25
     restart: unless-stopped
     command: python ${ENGINE_TRANSTV}
     
@@ -903,7 +903,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.28
+        ipv4_address: 12.12.12.28
     restart: unless-stopped
     command: python ${ENGINE_RTV}
     
@@ -924,7 +924,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.33
+        ipv4_address: 12.12.12.33
     restart: unless-stopped
     command: python ${ENGINE_MNC}
     
@@ -945,7 +945,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.36
+        ipv4_address: 12.12.12.36
     restart: unless-stopped
     command: python ${ENGINE_SEATODAY}
     
@@ -965,7 +965,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 10.10.10.50
+        ipv4_address: 12.12.12.50
     restart: unless-stopped
     command: python ${ENGINE_GARUDA}
 
@@ -1002,7 +1002,7 @@ services:
     tty: true
     networks:
       default:
-        ipv4_address: 10.10.10.9
+        ipv4_address: 12.12.12.9
     restart: unless-stopped
     command: python ${ENGINE_OPS}
     
@@ -1040,7 +1040,7 @@ services:
     tty: true
     networks:
       default:
-        ipv4_address: 10.10.10.14
+        ipv4_address: 12.12.12.14
     restart: unless-stopped
     command: python ${ENGINE_OPS_V2}
     
@@ -1079,7 +1079,7 @@ services:
     tty: true
     networks:
       default:
-        ipv4_address: 10.10.10.23
+        ipv4_address: 12.12.12.23
     restart: unless-stopped
     command: python ${ENGINE_OPS_V3}
     
@@ -1099,7 +1099,7 @@ services:
   #     - TZ=Asia/Jakarta
   #   networks:
   #     default:
-  #       ipv4_address: 10.10.10.10
+  #       ipv4_address: 12.12.12.10
   #   ports:
   #     - 0.0.0.0:8888:8888
   #   restart: unless-stopped
