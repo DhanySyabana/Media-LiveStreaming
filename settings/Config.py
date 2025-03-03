@@ -1,6 +1,5 @@
-from settings.Connector import get_channel_data
+# from settings.Connector import get_channel_data
 class Config(object):
-
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -49,7 +48,16 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
-        KOMPASSTREAMING = get_channel_data('KOMPASSTREAMING'),
+        KOMPASSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URL = get_channel_data('KOMPASSTREAMING')[0].get('url', ''),
+            # QUALITY = get_channel_data('KOMPASSTREAMING')[0].get('resolusi', ''),
+            UPLOAD_LOCATION = "storage/kompas",
+            # COOKIES = get_channel_data('KOMPASSTREAMING')[0].get('cookies', ''),
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         # KOMPASSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL ='https://www.youtube.com/watch?v=J9J1jJ1J1J1',
@@ -69,7 +77,16 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
         #     }
         # ),
-        METROTVSTREAMING = get_channel_data('METROTVSTREAMING'),
+        METROTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URL = get_channel_data('METROTVSTREAMING')[0].get('url', ''),
+            # QUALITY = get_channel_data('METROTVSTREAMING')[0].get('resolusi', ''),
+            UPLOAD_LOCATION = "storage/metro",
+            # COOKIES = get_channel_data('METROTVSTREAMING')[0].get('cookies', ''),
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
@@ -150,16 +167,16 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
-        TVONESTREAMING = get_channel_data('TVONESTREAMING'),
-        # TVONESTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg",
-        #     QUALITY = "360p",
-        #     UPLOAD_LOCATION = "storage/tvone",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        #     }
-        # ),
+        TVONESTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
+            # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
+            UPLOAD_LOCATION = "storage/tvone",
+            # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         # TVONESTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL = "https://www.vidio.com/live/783/tokens",

@@ -10,6 +10,8 @@ from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorKompas import VideoProsessor
 
+from settings.Connector import get_channel_data
+
 class KompasTV:
 
     def __init__(
@@ -229,11 +231,11 @@ if __name__ == "__main__":
     print(ENGINE['COOKIES'])
     kompas_tv = KompasTV(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URL"],
-        quality=ENGINE["QUALITY"],
+        url=get_channel_data(ENGINE_NAME)[0]['url'],
+        quality=get_channel_data(ENGINE_NAME)[0]['resolusi'],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        cookies=ENGINE["COOKIES"],
+        cookies=get_channel_data(ENGINE_NAME)[0]['cookies'],
         converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"]
