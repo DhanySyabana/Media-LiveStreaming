@@ -1,3 +1,4 @@
+from settings.Connector import get_channel_data
 class Config(object):
 
     ENGINE = dict(
@@ -48,61 +49,16 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
-        # import mysql.connector
-
-        # def get_streaming_data():
-        #     db_config = {
-        #         'host': '172.22.0.2',
-        #         'user': 'root',
-        #         'password': '1Teung@Kabayan123',
-        #         'database': 'log_livestream'
+        KOMPASSTREAMING = get_channel_data('KOMPASSTREAMING'),
+        # KOMPASSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL ='https://www.youtube.com/watch?v=J9J1jJ1J1J1',
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/kompas",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
-
-        #     query = "SELECT * FROM streaming_data WHERE name IN ('CNNSTREAMING', 'KOMPASSTREAMING')"
-
-        #     connection = mysql.connector.connect(**db_config)
-        #     cursor = connection.cursor(dictionary=True)
-        #     cursor.execute(query)
-        #     results = cursor.fetchall()
-        #     cursor.close()
-        #     connection.close()
-
-        #     return results
-
-        # streaming_data = get_streaming_data()
-
-        # for data in streaming_data:
-        #     if data['name'] == 'CNNSTREAMING':
-        #         CNNSTREAMING = dict(
-        #             ENVIRONMENT=data['environment'],
-        #             HOST_DIRECTORY=data['host_directory'],
-        #             PLAYLIST=data['playlist'],
-        #             RESOLUTION=data['resolution'],
-        #             UPLOAD_LOCATION=data['upload_location'],
-        #             HEADERS={
-        #                 'referer': data['referer'],
-        #                 'user-agent': data['user_agent']
-        #             }
-        #         )
-        #     elif data['name'] == 'KOMPASSTREAMING':
-        #         KOMPASSTREAMING = dict(
-        #             ENVIRONMENT=data['environment'],
-        #             URL=data['url'],
-        #             QUALITY=data['quality'],
-        #             UPLOAD_LOCATION=data['upload_location'],
-        #             HEADERS={
-        #                 'user-agent': data['user_agent']
-        #             }
-        #         )
-        KOMPASSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URL ="https://www.youtube.com/watch?v=DOOrIxw5xOw",
-            QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/kompas",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
+        # ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
@@ -113,16 +69,17 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
         #     }
         # ),
-        METROTVSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
-            QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/metro",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
+        METROTVSTREAMING = get_channel_data('METROTVSTREAMING'),
+        # METROTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
+        #     URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/metro",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL = "https://www.vidio.com/live/777/tokens",
