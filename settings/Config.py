@@ -119,6 +119,17 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        CNNSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = "640x360",
+            UPLOAD_LOCATION = "storage/cnn",
+            HEADERS = {
+                'referer': 'https://www.cnnindonesia.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+            }
+        ),
         CNBCSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",

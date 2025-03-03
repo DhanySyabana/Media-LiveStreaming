@@ -9,7 +9,7 @@ def get_channel_data(channel_name):
     :return: List of rows matching the channel_name.
     """
     db_config = {
-        'host': 'localhost',
+        'host': '192.168.1.100',
         'user': 'root',
         'password': 'Bismillahkabayan123!',
         'database': 'produksi_tv'
@@ -45,7 +45,7 @@ def get_channel_data(channel_name):
             #     'user-agent': result[0].get('user_agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36')
             # }
             # )
-            # print(formatted_result[0]['url'])
+            print(formatted_result[0]['url'])
             return formatted_result
         else:
             print(f"No data found for channel: {channel_name}")

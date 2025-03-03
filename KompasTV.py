@@ -228,7 +228,6 @@ if __name__ == "__main__":
     ENGINE_NAME = "KOMPASSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    print(ENGINE['COOKIES'])
     kompas_tv = KompasTV(
         environment=ENGINE["ENVIRONMENT"],
         url=get_channel_data(ENGINE_NAME)[0]['url'],
