@@ -150,15 +150,16 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
-        TVONESTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg",
-            QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/tvone",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
+        TVONESTREAMING = get_channel_data('TVONESTREAMING'),
+        # TVONESTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/tvone",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         # TVONESTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL = "https://www.vidio.com/live/783/tokens",
