@@ -9,7 +9,7 @@ def get_channel_data(channel_name):
     :return: List of rows matching the channel_name.
     """
     db_config = {
-        'host': '192.168.1.100',
+        'host': '10.10.10.1',
         'user': 'root',
         'password': 'Bismillahkabayan123!',
         'database': 'produksi_tv'
