@@ -17,5 +17,5 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--container", type=str, nargs='+', help='The names of the containers to restart')
     args = parser.parse_args()
 
-    for container_name in args.container_names:
+    for container_name in args.container:
         restart_container(container_name)
