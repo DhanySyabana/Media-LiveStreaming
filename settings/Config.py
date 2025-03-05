@@ -609,126 +609,126 @@ class Config(object):
     
     ### Server ###
     SOCKET_SERVER = dict(
-        HOST = "10.10.10.8",
+        HOST = "12.12.12.8",
         PORT = 6969,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_BERITASATU = dict(
-        HOST = "10.10.10.13",
+        HOST = "12.12.12.13",
         PORT = 6868,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_IDX = dict(
-        HOST = "10.10.10.15",
+        HOST = "12.12.12.15",
         PORT = 6767,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
     
     SOCKET_SERVER_IDX_VIDEO = dict(
-        HOST = "10.10.10.37",
+        HOST = "12.12.12.37",
         PORT = 7373,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
     
     SOCKET_SERVER_IDX_AUDIO = dict(
-        HOST = "10.10.10.38",
+        HOST = "12.12.12.38",
         PORT = 7272,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_TRANS = dict(
-        HOST = "10.10.10.18",
+        HOST = "12.12.12.18",
         PORT = 6565,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_CNBC = dict(
-        HOST = "10.10.10.19",
+        HOST = "12.12.12.19",
         PORT = 6464,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_KOMPAS = dict(
-        HOST = "10.10.10.31",
+        HOST = "12.12.12.31",
         PORT = 5353,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_TVONE = dict(
-        HOST = "10.10.10.21",
+        HOST = "12.12.12.21",
         PORT = 6262,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_RCTI = dict(
-        HOST = "10.10.10.22",
+        HOST = "12.12.12.22",
         PORT = 6161,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_METRO = dict(
-        HOST = "10.10.10.24",
+        HOST = "12.12.12.24",
         PORT = 6060,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_TRANSTV = dict(
-        HOST = "10.10.10.26",
+        HOST = "12.12.12.26",
         PORT = 7979,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_CNN = dict(
-        HOST = "10.10.10.27",
+        HOST = "12.12.12.27",
         PORT = 7878,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_RTV = dict(
-        HOST = "10.10.10.29",
+        HOST = "12.12.12.29",
         PORT = 7777,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_MNC = dict(
-        HOST = "10.10.10.32",
+        HOST = "12.12.12.32",
         PORT = 7676,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_INEWS = dict(
-        HOST = "10.10.10.34",
+        HOST = "12.12.12.34",
         PORT = 7575,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_SEATODAY = dict(
-        HOST = "10.10.10.35",
+        HOST = "12.12.12.35",
         PORT = 7474,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
     
     SOCKET_SERVER_SCTV = dict(
-        HOST = "10.10.10.39",
+        HOST = "12.12.12.39",
         PORT = 7171,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
