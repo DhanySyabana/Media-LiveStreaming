@@ -398,11 +398,11 @@ class Config(object):
         ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.indihometv.com/livetv/mncnews",
-            RESOLUTIONV1 = "640x360",
+            # URLV1 = "https://www.indihometv.com/livetv/mncnews",
+            # RESOLUTIONV1 = "640x360",
             # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
-            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8",
-            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
+            # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8",
+            # HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
                 'origin': 'https://www.indihometv.com',
