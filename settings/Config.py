@@ -450,39 +450,39 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
-        MNCSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URLV1 = "https://www.indihometv.com/livetv/mncnews",
-            RESOLUTIONV1 = "640x360",
-            #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
-            #PLAYLIST_DIRECTORYV1 = "ttps://streaming.indihometv.com/atm/HLS-10s/mncnews/playlist.m3u8", 
-            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8", 
-            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
-            UPLOAD_LOCATION = "storage/mnc",
-            HEADERS = {
-                'origin': 'https://www.indihometv.com',
-                'referer': 'https://www.indihometv.com/',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-            }
-        ),
         # MNCSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     URL = "https://www.youtube.com/watch?v=mPfD52n-zdE",
-        #     QUALITY = "360p",
+        #     URLV1 = "https://www.indihometv.com/livetv/mncnews",
+        #     RESOLUTIONV1 = "640x360",
+        #     #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
+        #     #PLAYLIST_DIRECTORYV1 = "ttps://streaming.indihometv.com/atm/HLS-10s/mncnews/playlist.m3u8", 
+        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8", 
+        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
         #     UPLOAD_LOCATION = "storage/mnc",
         #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #         'origin': 'https://www.indihometv.com',
+        #         'referer': 'https://www.indihometv.com/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
         #     }
         # ),
+        MNCSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://www.youtube.com/watch?v=Tk0yuRdU8ng",
+            QUALITY = "360p",
+            UPLOAD_LOCATION = "storage/mnc",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         SEATODAYSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/7687-sea-today",

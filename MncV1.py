@@ -5,12 +5,13 @@ import struct
 import logging
 import datetime
 import streamlink
+import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorKompas import VideoProsessor
+from libs.VideoProsessorMnc import VideoProsessor
 
-class KompasTV:
+class MNC:
 
     def __init__(
             self,
@@ -42,7 +43,18 @@ class KompasTV:
         file_segments = []
 
         try:
-            streams = streamlink.streams(self.url)
+            session = streamlink.Streamlink()
+            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            # proxy_list = random.choice(proxy_list)
+            # proxy_url = "socks5://" + proxy_list
+            # Tambahkan cookie autentikasi
+            # session.set_option("http-cookies", self.cookies)
+            # session.set_option("http-proxy", proxy_url)
+            with open('cookies-mnc.txt', 'r') as file:
+                cookies = file.read().strip()
+            session.set_option("http-cookies", cookies)
+            # session.set_option("http-proxy", proxy_url)
+            streams = session.streams(self.url)
             stream_url = streams[self.quality]
 
             m3u8_obj = m3u8.load(stream_url.args['url'])
@@ -189,15 +201,15 @@ if __name__ == "__main__":
     ENGINE_NAME = "MNCSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    kompas_tv = KompasTV(
+    kompas_tv = MNC(
         environment=ENGINE["ENVIRONMENT"],
         url=ENGINE["URL"],
         quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_MNC["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_MNC["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_MNC["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"]
     )
     kompas_tv.StartEngine()
     
