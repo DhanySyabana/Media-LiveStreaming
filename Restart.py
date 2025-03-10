@@ -14,8 +14,12 @@ def restart_container(container_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Restart Docker containers.')
-    parser.add_argument("-c", "--container", type=str, nargs='+', help='The names of the containers to restart')
-    args = parser.parse_args()
+    # parser.add_argument("-c", "--container", type=str, nargs='+', help='The names of the containers to restart')
+    parser.add_argument("-c", "--container", type=str, help='The names of the containers to restart')
+    args = parser.parse_args().container
+    # print(args)
+    containers = ["engine_server_converter_"+str(args), "engine_"+str(args)+"_v1"]
 
-    for container_name in args.container:
-        restart_container(container_name)
+    for container_name in containers:
+        print(f"Restarting container '{container_name}'...")
+        # restart_container(container_name)
