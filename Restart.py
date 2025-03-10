@@ -21,5 +21,5 @@ if __name__ == "__main__":
     containers = ["engine_server_converter_"+str(args), "engine_"+str(args)+"_v1"]
 
     for container_name in containers:
-        print(f"Restarting container '{container_name}'...")
-        # restart_container(container_name)
+        # print(f"Restarting container '{container_name}'...")
+        restart_container(container_name)
