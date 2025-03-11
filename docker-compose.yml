@@ -25,7 +25,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday     
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali     
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -60,7 +61,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc   
-      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
 
     environment:
       - PYTHONUNBUFFERED=1
@@ -96,7 +98,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
 
     environment:
       - PYTHONUNBUFFERED=1
@@ -132,7 +135,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
 
     environment:
       - PYTHONUNBUFFERED=1
@@ -168,7 +172,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
 
     environment:
       - PYTHONUNBUFFERED=1
@@ -204,7 +209,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -239,7 +245,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -273,7 +280,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -308,7 +316,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -343,7 +352,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -378,7 +388,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
@@ -413,7 +424,8 @@ services:
         - ${HOST_TRANSTV}:/app/storage/transtv
         - ${HOST_RTV}:/app/storage/rtv
         - ${HOST_MNC}:/app/storage/mnc  
-        - ${HOST_SEATODAY}:/app/storage/seatoday
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -448,7 +460,8 @@ services:
         - ${HOST_TRANSTV}:/app/storage/transtv
         - ${HOST_RTV}:/app/storage/rtv
         - ${HOST_MNC}:/app/storage/mnc  
-        - ${HOST_SEATODAY}:/app/storage/seatoday
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -483,7 +496,8 @@ services:
         - ${HOST_TRANSTV}:/app/storage/transtv 
         - ${HOST_RTV}:/app/storage/rtv
         - ${HOST_MNC}:/app/storage/mnc  
-        - ${HOST_SEATODAY}:/app/storage/seatoday
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -519,6 +533,7 @@ services:
         - ${HOST_RTV}:/app/storage/rtv   
         - ${HOST_MNC}:/app/storage/mnc  
         - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali 
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -554,6 +569,7 @@ services:
         - ${HOST_RTV}:/app/storage/rtv   
         - ${HOST_MNC}:/app/storage/mnc  
         - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali 
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -588,7 +604,8 @@ services:
         - ${HOST_TRANSTV}:/app/storage/transtv 
         - ${HOST_RTV}:/app/storage/rtv   
         - ${HOST_MNC}:/app/storage/mnc   
-        - ${HOST_SEATODAY}:/app/storage/seatoday   
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali   
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -1049,7 +1066,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
       - ${HOST_GARUDA}:/app/storage/garuda
     environment:
       - PYTHONUNBUFFERED=1
@@ -1087,7 +1105,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
       - ${HOST_GARUDA}:/app/storage/garuda  
     environment:
       - PYTHONUNBUFFERED=1
@@ -1126,7 +1145,8 @@ services:
       - ${HOST_TRANSTV}:/app/storage/transtv
       - ${HOST_RTV}:/app/storage/rtv    
       - ${HOST_MNC}:/app/storage/mnc  
-      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_SEATODAY}:/app/storage/seatoday 
+      - ${HOST_TVRIBALI}:/app/storage/tvribali  
       - ${HOST_GARUDA}:/app/storage/garuda  
     environment:
       - PYTHONUNBUFFERED=1
