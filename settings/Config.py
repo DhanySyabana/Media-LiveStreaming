@@ -699,6 +699,13 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+    
+    SOCKET_SERVER_TVRIBALI = dict(
+        HOST = "12.12.12.42",
+        PORT = 5251,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end Server ###
 
