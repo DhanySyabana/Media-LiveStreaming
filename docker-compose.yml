@@ -1088,7 +1088,7 @@ services:
         - ENGINE=${ENGINE_TVRIJATIM}
     volumes:
       - ./:/app
-      - ${HOST_TVRIBALI}:/app/storage/tvrijatim
+      - ${HOST_TVRIJATIM}:/app/storage/tvrijatim
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
