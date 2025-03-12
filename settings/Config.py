@@ -762,23 +762,23 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
     
-    # SOCKET_SERVER_TVRIKALBAR = dict(
-    #     HOST = "12.12.12.45",
-    #     PORT = 5451,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_TVRIKALBAR = dict(
+        HOST = "12.12.12.45",
+        PORT = 5451,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end Server ###
 
     ### Local ###
 
-    SOCKET_SERVER_TVRIKALBAR = dict(
-        HOST = "127.0.0.1",
-        PORT = 7014,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_TVRIKALBAR = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7014,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
     
     # SOCKET_SERVER_TVRIJATIM = dict(
     #     HOST = "127.0.0.1",
