@@ -6,3 +6,5 @@ __pycache__/
 libs/__pycache__
 static
 .venv
+.DS_Store
+*.pyc
