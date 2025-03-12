@@ -1269,7 +1269,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 12.12.12.50
+        ipv4_address: 12.12.12.53
     restart: unless-stopped
     command: python ${ENGINE_TVRISULSEL}
 
