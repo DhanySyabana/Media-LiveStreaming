@@ -570,6 +570,30 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        TVRISULSELSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sulsel",
+            UPLOAD_LOCATION = "storage/tvrisulsel",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -799,11 +823,25 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+    
+    SOCKET_SERVER_TVRISULSEL = dict(
+        HOST = "12.12.12.49",
+        PORT = 5651,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end Server ###
 
     ### Local ###
 
+    # SOCKET_SERVER_TVRISULSEL = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7014,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+    
     # SOCKET_SERVER_TVRILAMPUNG = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7014,
