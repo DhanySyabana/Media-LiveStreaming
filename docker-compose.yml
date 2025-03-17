@@ -878,7 +878,7 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_JAKTV}
 
-  engine_server_converter_bantetv:
+  engine_server_converter_bantentv:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_bantentv
       build: 
