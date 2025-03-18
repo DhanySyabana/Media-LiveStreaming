@@ -666,6 +666,30 @@ class Config(object):
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9'
             }
+        ),  
+        DHOHOSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://dhohotv.siar.us/dhohotv/live",
+            
+            RESOLUTION = "1280x720",
+            PLAYLIST = "playlist.m3u8",
+            HOST_DIRECTORY = "https://dhohotv.siar.us/dhohotv/live",
+            UPLOAD_LOCATION = "storage/dhoho",
+            HEADERS = {
+                'origin': 'https://cdn.siar.us',
+                'referer': 'https://cdn.siar.us/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
         ),
     )
 
@@ -915,12 +939,19 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+    
+    SOCKET_SERVER_DHOHOTV = dict(
+        HOST = "12.12.12.57",
+        PORT = 5951,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end Server ###
 
     ### Local ###
 
-    # SOCKET_SERVER_BANTENTV = dict(
+    # SOCKET_SERVER_DHOHOTV = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7014,
     #     MAX_CONNECTION = 4,
