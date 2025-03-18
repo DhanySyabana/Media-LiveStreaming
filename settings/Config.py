@@ -3,27 +3,37 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.indihometv.com/livetv/inews",
-            RESOLUTIONV1 = "640x360",
-            # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/inews/playlist.m3u8",
-            PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/inews/playlist.m3u8",
-            HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/inews",
+            # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
+            # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
             UPLOAD_LOCATION = "storage/inews",
+            # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
             HEADERS = {
-                'origin': 'https://www.indihometv.com',
-                'referer': 'https://www.indihometv.com/',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
+        # INEWSSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URLV1 = "https://www.indihometv.com/livetv/inews",
+        #     RESOLUTIONV1 = "640x360",
+        #     # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/inews/playlist.m3u8",
+        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/inews/playlist.m3u8",
+        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/inews",
+        #     UPLOAD_LOCATION = "storage/inews",
+        #     HEADERS = {
+        #         'origin': 'https://www.indihometv.com',
+        #         'referer': 'https://www.indihometv.com/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+        #     }
+        # ),
         # INEWSSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URLV1 = "https://embed.rctiplus.com/live/inews/inewsid",
