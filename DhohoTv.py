@@ -172,49 +172,49 @@ class BeritaSatu:
                             time.sleep(self.video_duration)
                             continue
                     
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
+                check_ts = self.CheckTSFiles()
+                status_ts = check_ts["status"]
+                data_ts = check_ts["data_ts"]
 
-                    if status_ts:
-                        now_filename = F"DHOHOSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                if status_ts:
+                    now_filename = F"DHOHOSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
 
-                        logging.info("Request to Server Converter - Concat TS")
-                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                            s.connect((self.converter_host, self.converter_port))
+                    logging.info("Request to Server Converter - Concat TS")
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                        s.connect((self.converter_host, self.converter_port))
 
-                            to_server = {
-                                "event": "concat",
-                                "environment": self.environment,
-                                "storage_path": self.upload_location,
-                                "mode": "w",
-                                "filename": now_filename,
-                            }
+                        to_server = {
+                            "event": "concat",
+                            "environment": self.environment,
+                            "storage_path": self.upload_location,
+                            "mode": "w",
+                            "filename": now_filename,
+                        }
 
-                            to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
+                        to_server = str(to_server).encode("utf-8")
+                        data_format = struct.Struct('I')
+                        data_length = len(to_server)
+                        s.sendall(data_format.pack(data_length))
 
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
+                        offset = 0
+                        while offset < data_length:
+                            sent_bytes = s.send(to_server[offset:])
+                            offset += sent_bytes
 
-                            response = s.recv(self.buffer_size)
-                            response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
+                        response = s.recv(self.buffer_size)
+                        response = eval(response)
+                        logging.info(F"Message from Server Converter: {response['message']}")
 
-                            s.close()
-                            logging.info("Close Connection - Concat TS")
+                        s.close()
+                        logging.info("Close Connection - Concat TS")
 
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
+                    logging.info("Cleanup TS")
+                    self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
 
-                else:
-                    logging.info("Retry Get Playlist URI")
-                    playlist_uri = self.GetPlaylist()
-                    time.sleep(self.video_duration)
+                # else:
+                #     logging.info("Retry Get Playlist URI")
+                #     playlist_uri = self.GetPlaylist()
+                #     time.sleep(self.video_duration)
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
