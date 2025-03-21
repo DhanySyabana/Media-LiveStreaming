@@ -556,6 +556,27 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        GARUDASTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+            RESOLUTION = "640x360",
+            PLAYLIST = "01.m3u8",
+            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
+            UPLOAD_LOCATION = "storage/garuda",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
     )
 
     ENGINE_KEYS = list(ENGINE.keys())
@@ -761,6 +782,12 @@ class Config(object):
     SOCKET_SERVER_TVRIBALI = dict(
         HOST = "12.12.12.42",
         PORT = 7172,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKET_SERVER_GARUDA = dict(
+        HOST = "12.12.12.51",
+        PORT = 5151,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
