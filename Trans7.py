@@ -34,7 +34,7 @@ class IDXIndonesiaV1:
         self.path_url:str = path_url
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.start_process = True
-        self.video_duration = 7
+        self.video_duration = 3
         self.segment_status = None
         self.last_sequence = None
         self.converter_host = converter_host
@@ -170,7 +170,7 @@ class IDXIndonesiaV1:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 88:
+        if get_total_files >= 200:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
