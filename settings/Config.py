@@ -606,8 +606,9 @@ class Config(object):
 
     ### Notif channel mati ###
     OPSV2 = dict(
-        TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
-        TELE_CHAT_ID = "-897317690",
+        TELE_TOKEN = "5821659123:AAF_QR8ur3dptVNHSH5MPykGUVgsfRPD82w",
+        TELE_CHAT_ID = "-1002147735635",
+        TELEGRAM_MESSAGE_THREAD_ID = 3042,
         SEND_TIME = 60 * 60,
         STORAGE_PATH = {
             ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
