@@ -15,9 +15,10 @@ from matplotlib.gridspec import GridSpec
 
 class Ops:
 
-    def __init__(self, TOKEN:str, CHAT_ID:str, delay_proses:int, storage_path_mp4:dict) -> None:
+    def __init__(self, TOKEN:str, TOPIC:str,CHAT_ID:str, delay_proses:int, storage_path_mp4:dict) -> None:
         self.TOKEN:str= TOKEN
         self.CHAT_ID:str = CHAT_ID
+        self.TOPIC_ID:str = TOPIC
         self.start_time = 0
         self.start_proses = True
         self.delay_proses:int = delay_proses
@@ -61,8 +62,8 @@ class Ops:
     
     def generate_send_chart(self, data:dict) -> None:
         key_data = list(data.keys())
-        text ="⚠️  ⚠️  ⚠️   ⚠️  ⚠️ ⚠️  ⚠️"
-        text += "\n List Channel Streaming OFF :\n"
+        text ="⚠️  ⚠️  ⚠️ SERVER SIPUTRI  ⚠️  ⚠️ ⚠️  ⚠️"
+        text += "\n List Channel Streaming OFF  :\n"
         no = 0
         for key, channel in enumerate(key_data):
             if data[key_data[key]]["total_video_last_hour"] < 3:
@@ -73,13 +74,16 @@ class Ops:
         if no > 0:
             apiToken = self.TOKEN
             chatID = self.CHAT_ID
+            topicID = self.TOPIC_ID
             apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
 
             try:
-                response = requests.post(apiURL, json={'chat_id': chatID, 'text': text})
-            except Exception as e:
-                print(e)
-            print(response.text)
+                response = requests.post(apiURL, json={'chat_id': chatID, 'message_thread_id': topicID, 'text': text})
+                response.raise_for_status()  # Raise an exception for HTTP errors
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Failed to send message to Telegram: {e}")
+            else:
+                logging.info(f"Message sent successfully: {response.text}")
         else:
             print("Tidak ada Channel yang mati")
 
@@ -125,6 +129,7 @@ if __name__ == "__main__":
     ops = Ops(
         TOKEN=CONFIG["TELE_TOKEN"],
         CHAT_ID=CONFIG["TELE_CHAT_ID"],
+        TOPIC=CONFIG["TELEGRAM_MESSAGE_THREAD_ID"],
         delay_proses=CONFIG["SEND_TIME"],
         storage_path_mp4=CONFIG["STORAGE_PATH"],
     )
