@@ -485,6 +485,28 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        # MNCSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     # https://d43tg978oium5.cloudfront.net/out/v1/65c9a0ca766c4f6a9deef31e8b67ec07/index_4.m3u
+        #     URLV1 = "https://d43tg978oium5.cloudfront.net/out/v1/65c9a0ca766c4f6a9deef31e8b67ec07",
+        #     RESOLUTION = "320x240",
+        #     PLAYLIST = "index_4.m3u8",
+        #     HOST_DIRECTORY = "https://d43tg978oium5.cloudfront.net/out/v1/65c9a0ca766c4f6a9deef31e8b67ec07",
+        #     UPLOAD_LOCATION = "storage/mnc",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
         SEATODAYSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/7687-sea-today",
@@ -751,12 +773,12 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_MNC = dict(
-        HOST = "12.12.12.32",
-        PORT = 7676,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_MNC = dict(
+    #     HOST = "12.12.12.32",
+    #     PORT = 7676,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
 
     SOCKET_SERVER_INEWS = dict(
         HOST = "12.12.12.34",
@@ -817,12 +839,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_MNC = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7013,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_MNC = dict(
+        HOST = "127.0.0.1",
+        PORT = 7013,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     # SOCKET_SERVER_RTV = dict(
     #     HOST = "127.0.0.1",
