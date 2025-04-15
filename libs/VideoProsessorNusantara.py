@@ -20,7 +20,10 @@ class VideoProsessor:
             # os.remove(F"{path}/{filename}{extension}")
             # os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
             convert_name = "_converted"
-            os.system(f"ffmpeg -hwaccel cuda -i {path}/{filename}{extension} -c:v h264_nvenc -preset fast -c:a aac -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
+            os.system(f"ffmpeg -hwaccel cuda -i {path}/{filename}{extension} "
+                    f"-c:v h264_nvenc -preset fast -pix_fmt yuv420p "
+                    f"-c:a aac -b:a 98k -ar 44100 -movflags faststart -f mp4 "
+                    f"{path}/{filename.split('.')[0]}{convert_name}{extension}")
             os.remove(f"{path}/{filename}{extension}")
             os.rename(f"{path}/{filename}{convert_name}{extension}", f"{path}/{filename}{extension}")
 
