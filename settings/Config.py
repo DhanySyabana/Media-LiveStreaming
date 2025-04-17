@@ -501,7 +501,7 @@ class Config(object):
         # ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=B9dEq-lU4yU",
+            URL = "https://www.youtube.com/watch?v=CglVsh1qHFk",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
