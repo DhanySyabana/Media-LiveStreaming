@@ -42,12 +42,13 @@ class BeritaSatu:
         Loggers()
         super().__init__()
 
-    def GetSegment(self) -> list:
+    def GetSegment(self, playlist_uri) -> list:
         file_segments = []
 
         # response = HTTPRequest("get", F"{self.host_directory}/{self.playlist}", self.custom_headers).Hit()
-        
-        response = requests.get(url =F"{self.host_directory}/{self.playlist}", headers=self.custom_headers, verify=False)
+        logging.info(F"URL: {playlist_uri}")
+
+        response = requests.get(url =playlist_uri, headers=self.custom_headers)
 
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -118,13 +119,14 @@ class BeritaSatu:
         logging.info(F"URL: {url}")
 
         # response = HTTPRequest("get", url, self.custom_headers).Hit()
-        response = requests.get(url, verify=False, headers=self.custom_headers)
+        response = requests.get(url, headers=self.custom_headers)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["segments"]
+            playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
-                playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                break
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
@@ -144,7 +146,7 @@ class BeritaSatu:
             while self.start_process:
                 if playlist_uri is not None:
                     logging.info("Get Segment URI")
-                    segments = self.GetSegment()
+                    segments = self.GetSegment(playlist_uri)
 
                     while len(segments) == 0:
                         if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404 or self.segment_status == 503:
@@ -153,7 +155,7 @@ class BeritaSatu:
                             time.sleep(self.video_duration)
 
                         logging.info("Retry Get Segment URI")
-                        segments = self.GetSegment()
+                        segments = self.GetSegment(playlist_uri)
                         time.sleep(self.video_duration)
 
                     time.sleep(self.video_duration)
@@ -240,3 +242,4 @@ if __name__ == "__main__":
         resolution=ENGINE["RESOLUTION"],
     )
     BeritaSatu.StartEngine()
+
