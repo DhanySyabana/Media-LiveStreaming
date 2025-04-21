@@ -236,18 +236,12 @@ class Config(object):
         # ),
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            # https://b1world.beritasatumedia.com/Beritasatu/B1World_manifest.m3u8
-            # URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            URLV1 = "https://b1world.beritasatumedia.com/Beritasatu",
-            RESOLUTION = "960x540",
-            PLAYLIST = "B1World_manifest.m3u8",
-            # HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            HOST_DIRECTORY = "https://b1world.beritasatumedia.com/Beritasatu",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            RESOLUTION = "1024x576",
+            PLAYLIST = "index2.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
-                'origin': 'https://beritasatu.tv',
-                'referer': 'https://beritasatu.tv/',
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
