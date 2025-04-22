@@ -176,6 +176,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
             QUALITY = "360p",
+            ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -500,6 +501,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=B9dEq-lU4yU",
             QUALITY = "360p",
+            ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'

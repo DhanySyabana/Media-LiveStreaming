@@ -10,6 +10,7 @@ from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorMnc import VideoProsessor
+from libs.Youtube import get_youtube
 
 class MNC:
 
@@ -22,7 +23,8 @@ class MNC:
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
-            buffer_size: int = None
+            buffer_size: int = None,
+            id_channel: str = None
         ) -> None:
         self.environment = environment
         self.url:str = url
@@ -36,6 +38,7 @@ class MNC:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
+        self.id_channel = id_channel
         Loggers()
         super().__init__()
 
@@ -43,29 +46,39 @@ class MNC:
         file_segments = []
 
         try:
-            session = streamlink.Streamlink()
-            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-            # proxy_list = random.choice(proxy_list)
-            # proxy_url = "socks5://" + proxy_list
-            # Tambahkan cookie autentikasi
-            # session.set_option("http-cookies", self.cookies)
-            # session.set_option("http-proxy", proxy_url)
-            with open('cookies-mnc.txt', 'r') as file:
-                cookies = file.read().strip()
-            session.set_option("http-cookies", cookies)
-            # session.set_option("http-proxy", proxy_url)
-            streams = session.streams(self.url)
-            stream_url = streams[self.quality]
+            while True:
+                session = streamlink.Streamlink()
+                logging.info(F"Get URL: {self.url}")
+                # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+                # proxy_list = random.choice(proxy_list)
+                # proxy_url = "socks5://" + proxy_list
+                # Tambahkan cookie autentikasi
+                # session.set_option("http-cookies", self.cookies)
+                # session.set_option("http-proxy", proxy_url)
+                with open('cookies-mnc.txt', 'r') as file:
+                    cookies = file.read().strip()
+                session.set_option("http-cookies", cookies)
+                # session.set_option("http-proxy", proxy_url)
+                streams = session.streams(self.url)
+                
+                if self.quality not in str(streams):
+                    logging.error("No streams found")
+                    self.url=get_youtube(self.id_channel)
+                    # logging.info(F"Get URL: {self.url}")
+                    continue
+                
+                stream_url = streams[self.quality]
 
-            m3u8_obj = m3u8.load(stream_url.args['url'])
+                m3u8_obj = m3u8.load(stream_url.args['url'])
 
-            segments = m3u8_obj.segments
-            for segment in segments:
-                file_segments.append({
-                    "url": segment.uri,
-                    "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
-                })
-            file_segments = file_segments[-5:]
+                segments = m3u8_obj.segments
+                for segment in segments:
+                    file_segments.append({
+                        "url": segment.uri,
+                        "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                    })
+                file_segments = file_segments[-5:]
+                break
         except ValueError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
@@ -125,7 +138,9 @@ class MNC:
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
-
+        logging.info("Get Live URL Youtube")
+        self.url=get_youtube(self.id_channel)
+        logging.info(F"End ")
         try: 
             while self.start_process:
 
@@ -207,9 +222,10 @@ if __name__ == "__main__":
         quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"]
+        id_channel=ENGINE["ID_CHANNEL"],
+        converter_host=CONFIG.SOCKET_SERVER_MNC["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_MNC["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_MNC["BUFFER_SIZE"]
     )
     kompas_tv.StartEngine()
     
