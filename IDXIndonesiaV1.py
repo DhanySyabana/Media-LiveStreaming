@@ -91,7 +91,7 @@ class TVone:
                     file_segments = []
                     self.segment_status = response.status_code
                     logging.error(F"Error Get Segments: {response.status_code}")
-            
+                break
         except ValueError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
