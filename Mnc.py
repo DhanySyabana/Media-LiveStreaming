@@ -44,7 +44,7 @@ class MNC:
 
     def GetStreamSegment(self) -> list:
         file_segments = []
-
+        break_point = 0
         try:
             while True:
                 session = streamlink.Streamlink()
@@ -64,7 +64,10 @@ class MNC:
                 if self.quality not in str(streams):
                     logging.error("No streams found")
                     self.url=get_youtube(self.id_channel)
-                    # logging.info(F"Get URL: {self.url}")
+                    break_point += 1
+                    if break_point >= 5:    
+                        logging.error("Gagal Get URL")
+                        break
                     continue
                 
                 stream_url = streams[self.quality]
