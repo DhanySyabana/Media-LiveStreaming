@@ -1,10 +1,14 @@
 import yt_dlp
-import os, sys
+import os, sys, random
 
 
 def get_youtube(data):
-   
-    proxy_url = "socks5://trkcytfh:xtfqu68rlqwr@130.180.228.85:6369"
+    proxy_list = list({
+        'socks5://trkcytfh:xtfqu68rlqwr@130.180.228.85:6369',
+        'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183',
+        'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183'
+        })
+    proxy_url = random.choice(proxy_list)
     # Konfigurasi yt_dlp
     ydl_opts = {
         'quiet': True,
