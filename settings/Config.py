@@ -387,7 +387,7 @@ class Config(object):
         # ),
         TRANS7STREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.transtv.co.id/live/trans7",
+            URL = "https://sevenhub.id/live",
             RESOLUTION = "848x477",
             PLAYLIST = "x8qckyq.m3u8",
             #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
