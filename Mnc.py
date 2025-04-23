@@ -67,6 +67,7 @@ class MNC:
                     break_point += 1
                     if break_point >= 5:    
                         logging.error("Gagal Get URL")
+                        exit()
                         break
                     continue
                 
