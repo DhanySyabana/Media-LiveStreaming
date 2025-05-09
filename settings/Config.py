@@ -277,11 +277,11 @@ class Config(object):
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
             # https://b1world.beritasatumedia.com/Beritasatu/B1World_manifest.m3u8
             # URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            URLV1 = "https://b1world.beritasatumedia.com/Beritasatu",
-            RESOLUTION = "960x540",
-            PLAYLIST = "B1World_manifest.m3u8",
+            URLV1 = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
+            RESOLUTION = "640x360",
+            PLAYLIST = "manifest.m3u8",
             # HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            HOST_DIRECTORY = "https://b1world.beritasatumedia.com/Beritasatu",
+            HOST_DIRECTORY = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
                 'origin': 'https://beritasatu.tv',
