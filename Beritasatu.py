@@ -5,12 +5,13 @@ import struct
 import logging
 import datetime
 import requests
+import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorBeritsasatu import VideoProsessor
 
-class BeritaSatu:
+class BERITASATU:
 
     def __init__(
             self,
@@ -30,7 +31,7 @@ class BeritaSatu:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 6
+        self.video_duration = 4
         self.last_sequence = None
         self.segment_status = None
         self.converter_host = converter_host
@@ -42,13 +43,11 @@ class BeritaSatu:
         Loggers()
         super().__init__()
 
-    def GetSegment(self, playlist_uri) -> list:
+    def GetSegment(self, playlist_uri: list) -> list:
         file_segments = []
-
+        
         # response = HTTPRequest("get", F"{self.host_directory}/{self.playlist}", self.custom_headers).Hit()
-        logging.info(F"URL: {playlist_uri}")
-
-        response = requests.get(url =playlist_uri, headers=self.custom_headers)
+        response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
 
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -56,6 +55,7 @@ class BeritaSatu:
 
             segments = m3u8_data["segments"]
             for segment in segments:
+                print(F"{self.host_directory}/{segment['uri']}")
                 file_segments.append({
                     "url": F"{self.host_directory}/{segment['uri']}",
                     "sequence": str(segment["uri"]).replace('.ts','')
@@ -107,7 +107,7 @@ class BeritaSatu:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 100:
+        if get_total_files >= 150:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -119,9 +119,10 @@ class BeritaSatu:
         logging.info(F"URL: {url}")
 
         # response = HTTPRequest("get", url, self.custom_headers).Hit()
-        response = requests.get(url, headers=self.custom_headers)
+        response = requests.get(url, headers=self.custom_headers, verify=False)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
+            # playlists = m3u8_master.data
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
@@ -155,7 +156,7 @@ class BeritaSatu:
                             time.sleep(self.video_duration)
 
                         logging.info("Retry Get Segment URI")
-                        segments = self.GetSegment(playlist_uri)
+                        segments = self.GetSegment()
                         time.sleep(self.video_duration)
 
                     time.sleep(self.video_duration)
@@ -230,7 +231,7 @@ if __name__ == "__main__":
     ENGINE_NAME = "BERITASATUSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    BeritaSatu = BeritaSatu(
+    BERITASATU = BERITASATU(
         environment=ENGINE["ENVIRONMENT"],
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
@@ -241,5 +242,4 @@ if __name__ == "__main__":
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )
-    BeritaSatu.StartEngine()
-
+    BERITASATU.StartEngine()

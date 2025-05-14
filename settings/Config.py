@@ -222,18 +222,12 @@ class Config(object):
         # ),
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            # https://b1world.beritasatumedia.com/Beritasatu/B1World_manifest.m3u8
-            # URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            URLV1 = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
-            RESOLUTION = "640x360",
-            PLAYLIST = "manifest.m3u8",
-            # HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
-            HOST_DIRECTORY = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            RESOLUTION = "1024x576",
+            PLAYLIST = "index2.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
-                'origin': 'https://beritasatu.tv',
-                'referer': 'https://beritasatu.tv/',
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
@@ -246,6 +240,32 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        # BERITASATUSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     # https://b1world.beritasatumedia.com/Beritasatu/B1World_manifest.m3u8
+        #     # URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
+        #     URLV1 = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "manifest.m3u8",
+        #     # HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h210",
+        #     HOST_DIRECTORY = "https://beritasatu-poc.secureswiftcontent.com/han/lineardemo/rtmp10008hls/srtoutput",
+        #     UPLOAD_LOCATION = "storage/beritasatu",
+        #     HEADERS = {
+        #         'origin': 'https://beritasatu.tv',
+        #         'referer': 'https://beritasatu.tv/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
         # BERITASATUSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL = "https://www.vidio.com/live/6165/tokens",
