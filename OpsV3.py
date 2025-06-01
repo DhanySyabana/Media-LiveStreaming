@@ -162,7 +162,7 @@ class Ops:
                             logging.error(f"Error: Terjadi kesalahan yang tidak terduga - {e}")
                             continue
                 elif channel == "TVRISTREAMING":
-                    containers_to_restart = ["engine_server_converter","engine_tvri_v1"]
+                    containers_to_restart = ["engine_server_converter_v1","engine_tvri_v1"]
 
                     for name_containers in containers_to_restart:
                         try:
