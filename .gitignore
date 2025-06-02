@@ -9,3 +9,4 @@ static/
 .venv
 .DS_Store
 *.pyc
+myenv

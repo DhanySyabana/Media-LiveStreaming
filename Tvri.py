@@ -54,8 +54,8 @@ class BeritaSatu:
             for segment in segments:
                 file_segments.append({
                     "url": F"{self.host_directory_ts}/{segment['uri'].replace('../','')}",
-                    "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
-                    # "sequence": str(segment["uri"]).replace('.ts','').replace('/segment','').replace('(','-').replace(')','')
+                    # "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
+                    "sequence": str(segment["uri"]).replace('.ts','').replace('/segment','').replace('(','-').replace(')','')
                 })
             file_segments = file_segments[-5:]
         else:
@@ -103,7 +103,7 @@ class BeritaSatu:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 88:
+        if get_total_files >= 100:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -120,7 +120,7 @@ class BeritaSatu:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{self.host_directory.replace('/Nasional.m3u8','')}/{playlist['uri']}"
+                    playlist_uri = F"{self.host_directory.replace('/index.m3u8','')}/{playlist['uri']}"
                     break
             logging.info("Get Playlist Success")
         else:
