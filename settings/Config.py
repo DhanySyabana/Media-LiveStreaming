@@ -68,27 +68,29 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        METROTVSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
-            # HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:mgnch.smil",
-            PLAYLIST = "playlist.m3u8",
-            RESOLUTION = "426x240",
-            UPLOAD_LOCATION = "storage/metro",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-            }
-        ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-        #     URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
-        #     QUALITY = "360p",
+        #     HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
+        #     # HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:mgnch.smil",
+        #     PLAYLIST = "playlist.m3u8",
+        #     RESOLUTION = "426x240",
         #     UPLOAD_LOCATION = "storage/metro",
         #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
         #     }
         # ),
+        METROTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
+            # URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
+            URL = "https://www.youtube.com/watch?v=-CwtcKDaaLA",
+            ID_CHANNEL = "UCzl0OrB3-ehunyotIQvK77A",
+            QUALITY = "360p",
+            UPLOAD_LOCATION = "storage/metro",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URLV1 = "https://www.indihometv.com/livetv/metrotv",

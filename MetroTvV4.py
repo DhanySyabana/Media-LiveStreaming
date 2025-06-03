@@ -1,112 +1,73 @@
-import time
 import m3u8
+import time
 import socket
 import struct
 import logging
 import datetime
-import streamlink
 import random
+import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorTvone import VideoProsessor
-from libs.Youtube import get_youtube
+from libs.VideoProsessorMetro import VideoProsessor
 
-class MetroTV:
+class CNNIndonesia:
 
     def __init__(
             self,
             environment:str,
-            url:str = None,
-            quality:str = None,
+            host_directory:str = None,
             upload_location:str = None,
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
             buffer_size: int = None,
-            id_channel: str = None
+            playlist: str = None,
+            resolution: str = None
         ) -> None:
         self.environment = environment
-        self.url:str = url
-        self.quality:str = quality
-        self.start_process:bool = True
-        self.upload_location:str = upload_location
-        self.custom_headers:dict = headers
-        self.video_duration = 5
+        self.host_directory = host_directory
+        self.url_segment = None
+        self.upload_location = upload_location
+        self.custom_headers = headers
+        self.start_process = True
+        self.video_duration = 10
         self.last_sequence = None
-        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        self.id_channel = id_channel
+        self.playlist = playlist
+        self.resolution = resolution
+        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         Loggers()
         super().__init__()
 
-    def GetStreamSegment(self) -> list:
+    def GetSegment(self) -> list:
         file_segments = []
-        break_point = 0
-        print(self.url)
-        try:
-            while True:
-                logging.info(F"Get URL: {self.url}")
-                session = streamlink.Streamlink()
-                # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-                # proxy_list = random.choice(proxy_list)
-                # proxy_url = "socks5://" + proxy_list
-                # Tambahkan cookie autentikasi
-                with open('cookies.txt', 'r') as file:
-                    cookies = file.read().strip()
-                session.set_option("http-cookies", cookies)
-                # session.set_option("http-proxy", proxy_url)
-                # streams = streamlink.streams(self.url)
-                streams = session.streams(self.url)
-                if self.quality not in str(streams):
-                    logging.error("No streams found")
-                    self.url=get_youtube(self.id_channel)
-                    break_point += 1
-                    if break_point >= 5:    
-                        logging.error("Gagal Get URL")
-                        break
-                    # logging.info(F"Get URL: {self.url}")
-                    continue
-                stream_url = streams[self.quality]
-                response =HTTPRequest("get", stream_url.to_url(), headers={
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-                }).Hit()
-                if response.status_code == 200:
-                    m3u8_obj = m3u8.loads(response.text)
-                    segments = m3u8_obj.segments
-                    for segment in segments:
-                        file_segments.append({
-                            "url": segment.uri,
-                            "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
-                        })
-                    
-                    file_segments = file_segments[-5:]
-                else:
-                    file_segments = []
-                    self.segment_status = response.status_code
-                    logging.error(F"Error Get Segments: {response.status_code}")
-                break
-        except ValueError as e:
-            file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
-        except streamlink.exceptions.PluginError as e:
-            file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+        print(self.url_segment)
+        # response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
+        response = requests.get(self.url_segment, verify=False, headers=self.custom_headers)  
+        
+        if response.status_code == 200:
+            m3u8_master = m3u8.loads(response.text)
+            m3u8_data = m3u8_master.data
 
+            segments = m3u8_data["segments"]
+            for segment in segments:
+                # print(F"{self.host_directory}/{segment['uri']}")
+                # exit()
+                file_segments.append({
+                    "url": F"{self.host_directory}/{segment['uri']}",
+                    "sequence": str(segment["uri"].split(".ts")[0])
+                })
+            file_segments = file_segments[-5:]
+        else:
+            file_segments = []
+            logging.error(F"Error Get Segments: {response.status_code}")
+            
         return file_segments
-    
-    def RecordStream(self, segments:list) -> None:
+
+    def DownloadSegment(self, segments: list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -119,7 +80,6 @@ class MetroTV:
                 "segments": segments,
                 "headers": self.custom_headers
             }
-
             to_server = str(to_server).encode("utf-8")
             data_format = struct.Struct('I')
             data_length = len(to_server)
@@ -132,6 +92,7 @@ class MetroTV:
 
             response = s.recv(self.buffer_size)
             response = eval(response)
+            
             if response:
                 logging.info(F"Message from Server Converter: {response['message']}")
                 self.last_sequence = response["sequence"]
@@ -143,55 +104,80 @@ class MetroTV:
     
     def CheckTSFiles(self) -> dict:
         last_ts = F"{self.last_sequence}.ts"
+        logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 120:
+        if get_total_files >= 60:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
-            return dict(status=True, data_ts=list_files)
+            return dict(status=True, data_ts=list_files)    
         
         return dict(status=False, data_ts=[])
+    
+    def GetPlaylist(self) -> str:
+        playlist_uri = None
+        url = F"{self.host_directory}/{self.playlist}"
+        logging.info(F"URL: {url}")
 
-    def StartEngine(self):
+        # response = HTTPRequest("get", url, self.custom_headers).Hit()
+        response = requests.get(url, verify=False, headers=self.custom_headers)   
+        print(response.text)
+        if response.status_code == 200:
+            m3u8_master = m3u8.loads(response.text)
+            playlists = m3u8_master.data["playlists"]
+            print(playlists)
+            # exit()
+            for playlist in playlists:
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    break
+            logging.info("Get Playlist Success")
+        else:
+            logging.error(F"Error Get Playlist: {response.status_code}")
+        
+        return playlist_uri
+    
+    def StartEngine(self) -> None:
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
-        logging.info("Get Live URL Youtube")
-        self.url=get_youtube(self.id_channel)
-        logging.info(F"End ")
 
-        try: 
+        logging.info("Get Playlist URI")
+        self.url_segment = self.GetPlaylist()
+
+        try:
             while self.start_process:
-
-                logging.info("Get Stream Segment")
-                segments = self.GetStreamSegment()
+                logging.info("Get Segment URI")
+                segments = self.GetSegment()
 
                 while len(segments) == 0:
-                    logging.info("Retrying Stream Segment")
-                    segments = self.GetStreamSegment()
+                    logging.info("Retry Get Segment URI")
+                    segments = self.GetSegment()
                     time.sleep(self.video_duration)
 
                 time.sleep(self.video_duration)
 
-                logging.info("Record Stream")
+                logging.info("Download segment")
+
                 try:
-                    self.RecordStream(segments)
+                    self.DownloadSegment(segments)
                 except ConnectionResetError or ConnectionRefusedError:
                     while True:
                         try:
-                            self.RecordStream(segments)
+                            self.DownloadSegment(segments)
                             break
                         except ConnectionResetError or ConnectionRefusedError:
                             logging.error("Retry Download Segment")
                             time.sleep(self.video_duration)
                             continue
-
+                
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]
                 data_ts = check_ts["data_ts"]
 
                 if status_ts:
                     now_filename = F"METROTVSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+
                     logging.info("Request to Server Converter - Concat TS")
                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         s.connect((self.converter_host, self.converter_port))
@@ -203,6 +189,7 @@ class MetroTV:
                             "mode": "w",
                             "filename": now_filename,
                         }
+
                         to_server = str(to_server).encode("utf-8")
                         data_format = struct.Struct('I')
                         data_length = len(to_server)
@@ -222,7 +209,7 @@ class MetroTV:
 
                     logging.info("Cleanup TS")
                     self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-                
+
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
@@ -231,20 +218,20 @@ class MetroTV:
             logging.info("Cleanup TS")
             return None
 
+
 if __name__ == "__main__":
     ENGINE_NAME = "METROTVSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    metro_tv = MetroTV(
+    cnnindonesia = CNNIndonesia(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URL"],
-        quality=ENGINE["QUALITY"],
+        host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        id_channel=ENGINE["ID_CHANNEL"],
         converter_host=CONFIG.SOCKET_SERVER_METRO["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_METRO["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_METRO["BUFFER_SIZE"]
+        buffer_size=CONFIG.SOCKET_SERVER_METRO["BUFFER_SIZE"],
+        playlist=ENGINE["PLAYLIST"],
+        resolution=ENGINE["RESOLUTION"],
     )
-    metro_tv.StartEngine()
-    
+    cnnindonesia.StartEngine()
