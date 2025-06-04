@@ -449,30 +449,40 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        # NUSANTARATVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     # URLV1 = "https://v5.siar.us/nusantaratv/live/",
+        #     URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
+        #     RESOLUTION = "320x240",
+        #     PLAYLIST = "playlist.m3u8",
+        #     # PLAYLIST = "playlist.m3u8",
+        #     # HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
+        #     HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
+        #     UPLOAD_LOCATION = "storage/nusantaratv",
+        #     HEADERS = {
+        #         'origin': 'https://nusantaratv.com',
+        #         'referer': 'https://nusantaratv.com/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            # URLV1 = "https://v5.siar.us/nusantaratv/live/",
-            URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
-            RESOLUTION = "320x240",
-            PLAYLIST = "playlist.m3u8",
-            # PLAYLIST = "playlist.m3u8",
-            # HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
-            HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
+            URL = "https://www.youtube.com/watch?v=1TeWDeIVRJc",
+            ID_CHANNEL = "UCAMpZJJNQPZ6q7ZYKJV1igQ",
+            QUALITY = "360p",
             UPLOAD_LOCATION = "storage/nusantaratv",
             HEADERS = {
-                'origin': 'https://nusantaratv.com',
-                'referer': 'https://nusantaratv.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
         # MNCSTREAMING = dict(

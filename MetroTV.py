@@ -9,7 +9,7 @@ import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorTvone import VideoProsessor
+from libs.VideoProsessorMetro import VideoProsessor
 from libs.Youtube import get_youtube
 
 class MetroTV:
