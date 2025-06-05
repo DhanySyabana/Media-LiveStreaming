@@ -9,7 +9,7 @@ import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorNusantara import VideoProsessor
+from libs.VideoProsessorBeritsasatu import VideoProsessor
 from libs.Youtube import get_youtube
 
 class MetroTV:
@@ -242,9 +242,9 @@ if __name__ == "__main__":
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         id_channel=ENGINE["ID_CHANNEL"],
-        converter_host=CONFIG.SOCKET_SERVER_NUSANTARA["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_NUSANTARA["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_NUSANTARA["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_BERITASATU["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_BERITASATU["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_BERITASATU["BUFFER_SIZE"]
     )
     metro_tv.StartEngine()
     
