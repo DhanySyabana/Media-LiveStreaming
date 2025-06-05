@@ -15,7 +15,7 @@ def get_youtube(data):
         'skip_download': True,
         'force_generic_extractor': False,
         'extract_flat': True,
-        'proxy': proxy_url,
+        # 'proxy': proxy_url,
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:

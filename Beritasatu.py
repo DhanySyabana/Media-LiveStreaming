@@ -54,7 +54,7 @@ class MetroTV:
                 # proxy_list = random.choice(proxy_list)
                 # proxy_url = "socks5://" + proxy_list
                 # Tambahkan cookie autentikasi
-                with open('cookies.txt', 'r') as file:
+                with open('cookies_beritasatu.txt', 'r') as file:
                     cookies = file.read().strip()
                 session.set_option("http-cookies", cookies)
                 # session.set_option("http-proxy", proxy_url)
