@@ -3,19 +3,19 @@ import os, sys, random
 
 
 def get_youtube(data):
-    proxy_list = list({
-        'socks5://trkcytfh:xtfqu68rlqwr@130.180.228.85:6369',
-        'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183',
-        'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183'
-        })
-    proxy_url = random.choice(proxy_list)
+    # proxy_list = list({
+    #     'socks5://trkcytfh:xtfqu68rlqwr@130.180.228.85:6369',
+    #     'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183',
+    #     'socks5://trkcytfh:xtfqu68rlqwr@46.203.43.196:6183'
+    #     })
+    # proxy_url = random.choice(proxy_list)
     # Konfigurasi yt_dlp
     ydl_opts = {
         'quiet': True,
         'skip_download': True,
         'force_generic_extractor': False,
         'extract_flat': True,
-        'proxy': proxy_url,
+        # 'proxy': proxy_url,
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
