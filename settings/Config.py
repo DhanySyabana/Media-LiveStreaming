@@ -475,14 +475,35 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        # NUSANTARATVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.youtube.com/watch?v=1TeWDeIVRJc",
+        #     ID_CHANNEL = "UCAMpZJJNQPZ6q7ZYKJV1igQ",
+        #     QUALITY = "360p",
+        #     UPLOAD_LOCATION = "storage/nusantaratv",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=1TeWDeIVRJc",
-            ID_CHANNEL = "UCAMpZJJNQPZ6q7ZYKJV1igQ",
-            QUALITY = "360p",
+            URL = "https://op-group1-swiftservehd-1.dens.tv/h/h37", 
+            RESOLUTION = "480x360",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
+            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
             UPLOAD_LOCATION = "storage/nusantaratv",
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         # MNCSTREAMING = dict(
