@@ -27,7 +27,7 @@ def get_channel_data(channel_name):
         cursor = connection.cursor(dictionary=True)
 
         # Query to fetch data where channel field matches the given channel_name
-        query = "SELECT * FROM live_streaming WHERE channel = %s"
+        query = "SELECT * FROM live_streaming WHERE channel = %s AND sumber_data = Siputri"
         cursor.execute(query, (channel_name,))
 
         # Fetch all matching rows
