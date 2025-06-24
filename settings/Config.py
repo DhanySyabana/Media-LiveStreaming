@@ -279,44 +279,20 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
-        #TVRISTREAMING = dict(
-        #    ENVIRONMENT = "dev",
-        #    URLV1 = "http://klik.tvri.go.id/",
-        #    RESOLUTION = "640x360",
-            # RESOLUTION = "480x270", #OLD
-        #    PLAYLIST = "index.m3u8",
-        #    HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
-        #    HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
-        #    UPLOAD_LOCATION = "storage/tvri",
-        #    HEADERS = {
-        #        'origin': 'http://klik.tvri.go.id',
-        #        'referer': 'http://klik.tvri.go.id/',
-        #       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #        'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-        #        'sec-ch-ua-mobile': '?0',
-        #        'sec-ch-ua-platform': '"Windows"',
-        #        'sec-fetch-dest': 'empty',
-        #        'sec-fetch-mode': 'cors',
-        #        'sec-fetch-site': 'cross-site',
-        #        'accept': '*/*',
-        #        'accept-encoding': 'gzip, deflate, br',
-        #        'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-        #   }
-        #),
-             
-        TVRISTREAMING = dict(
+        TVRIBALISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.vidio.com/live/6441-tvri", 
+            URLV1 = "http://klik.tvri.go.id/",
             RESOLUTION = "640x360",
-            PLAYLIST = "B1News_320x240.m3u8",
-            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/6441/master.m3u8",
-            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = "storage/tvri",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Bali/hls/Bali.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Bali",
+            UPLOAD_LOCATION = "storage/tvribali",
             HEADERS = {
-                'origin': 'https://www.vidio.com',
-                'referer': 'https://www.vidio.com/live/6441-tvri',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
                 'sec-fetch-dest': 'empty',
@@ -324,9 +300,32 @@ class Config(object):
                 'sec-fetch-site': 'cross-site',
                 'accept': '*/*',
                 'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        # TVRISTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://www.vidio.com/live/6441-tvri", 
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "B1News_320x240.m3u8",
+        #     HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/6441/master.m3u8",
+        #     PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+        #     UPLOAD_LOCATION = "storage/tvri",
+        #     HEADERS = {
+        #         'origin': 'https://www.vidio.com',
+        #         'referer': 'https://www.vidio.com/live/6441-tvri',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
  
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
