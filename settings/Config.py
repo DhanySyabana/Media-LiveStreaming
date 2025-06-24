@@ -501,7 +501,8 @@ class Config(object):
             PLAYLIST = "B1News_320x240.m3u8",
             #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
             #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
-            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
+            # HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
+            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/stream/7687/file/live/7687/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
             UPLOAD_LOCATION = "storage/seatoday",
             HEADERS = {
