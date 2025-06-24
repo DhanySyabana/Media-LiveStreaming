@@ -279,15 +279,15 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
-        TVRIBALISTREAMING = dict(
+        TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
             RESOLUTION = "640x360",
             # RESOLUTION = "480x240", #OLD
             PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Bali/hls/Bali.m3u8",
-            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Bali",
-            UPLOAD_LOCATION = "storage/tvribali",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
+            UPLOAD_LOCATION = "storage/tvri",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
