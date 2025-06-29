@@ -520,16 +520,42 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        # GARUDASTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "01.m3u8",
+        #     HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
+        #     UPLOAD_LOCATION = "storage/garuda",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
         GARUDASTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+            URL = "https://www.vidio.com/live/18162-garuda-tv",
             RESOLUTION = "640x360",
-            PLAYLIST = "01.m3u8",
-            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
+            PLAYLIST = "B1News_320x240.m3u8",
+            #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
+            #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
+            # HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
+            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/stream/18162/file/live/18162/master.m3u8",
+            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
             UPLOAD_LOCATION = "storage/garuda",
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/live/18162-garuda-tv',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
@@ -1028,7 +1054,7 @@ class Config(object):
 
     ### Local ###
 
-    # SOCKET_SERVER_DHOHOTV = dict(
+    # SOCKET_SERVER_GARUDA = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7014,
     #     MAX_CONNECTION = 4,
