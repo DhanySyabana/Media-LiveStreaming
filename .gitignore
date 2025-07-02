@@ -5,6 +5,8 @@ TODO
 __pycache__/
 libs/__pycache__
 static
-venv/core
+.venv
 .DS_Store
 *.pyc
+myenv
+venv
