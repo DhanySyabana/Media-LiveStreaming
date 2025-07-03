@@ -4,8 +4,10 @@ import socket
 import struct
 import logging
 import datetime
+import requests
 import streamlink
 import random
+import sys
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -16,22 +18,23 @@ class MNC:
 
     def __init__(
             self,
-            environment:str,
-            url:str = None,
-            quality:str = None,
-            upload_location:str = None,
+            environment: str,
+            url: str = None,
+            quality: str = None,
+            upload_location: str = None,
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
             buffer_size: int = None,
-            id_channel: str = None
+            id_channel: str = None,
+            failure_count: int = 0
         ) -> None:
         self.environment = environment
-        self.url:str = url
-        self.quality:str = quality
-        self.start_process:bool = True
-        self.upload_location:str = upload_location
-        self.custom_headers:dict = headers
+        self.url = url
+        self.quality = quality
+        self.start_process = True
+        self.upload_location = upload_location
+        self.custom_headers = headers
         self.video_duration = 5
         self.last_sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
@@ -39,31 +42,60 @@ class MNC:
         self.converter_port = converter_port
         self.buffer_size = buffer_size
         self.id_channel = id_channel
+        self.failure_count = failure_count
         Loggers()
-        super().__init__()
+        self.session = None    
+
+
+    def SetCookies(self):
+        COOKIE_ENDPOINT = "https://siputri.onlinemonitoring.id/api/cookies/livestreaming?channel=MNCSTREAMING&source=Remote1"
+        max_retry = 5
+        for attempt in range(max_retry):
+            try:
+                resp = requests.get(COOKIE_ENDPOINT, timeout=5, allow_redirects=False)
+                logging.info(f"[DEBUG] Status Code: {resp.status_code}")
+                if resp.status_code == 200:
+                    cookies = resp.text.strip()
+                    session = streamlink.Streamlink()
+                    session.set_option("http-cookies", cookies)
+                    logging.info("[INFO] Cookies set")
+                    self.session = session  
+                    return
+                else:
+                    logging.warning(f"[WARN] Error, Status Code: {resp.status_code}, (attempt {attempt+1}/{max_retry})")
+            except requests.RequestException as e:
+                logging.warning(f"[WARN] Gagal total ambil cookies: {e} (attempt {attempt+1}/{max_retry})")
+            time.sleep(5)
+        logging.error("[ERROR] Gagal 5x dalam mengambil cookies. Exiting.")
+        sys.exit(1)
+
 
     def GetStreamSegment(self) -> list:
         file_segments = []
         break_point = 0
         try:
             while True:
-                session = streamlink.Streamlink()
-                logging.info(F"Get URL: {self.url}")
-                # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-                # proxy_list = random.choice(proxy_list)
-                # proxy_url = "socks5://" + proxy_list
-                # Tambahkan cookie autentikasi
-                # session.set_option("http-cookies", self.cookies)
-                # session.set_option("http-proxy", proxy_url)
-                with open('cookies-mnc.txt', 'r') as file:
-                    cookies = file.read().strip()
-                session.set_option("http-cookies", cookies)
-                # session.set_option("http-proxy", proxy_url)
-                streams = session.streams(self.url)
+                session = self.session
+
+                try:
+                    streams = session.streams(self.url)
+                except Exception as e:
+                    if "LOGIN_REQUIRED" in str(e):
+                        self.login_required_count += 1
+                        logging.warning(f"[WARN] LOGIN_REQUIRED ke-{self.login_required_count}/{self.LOGIN_REQUIRED_LIMIT}")
+                        if self.login_required_count >= self.LOGIN_REQUIRED_LIMIT:
+                            logging.error("[ERROR] LOGIN_REQUIRED terjadi terlalu sering. Keluar.")
+                            exit(1)
+                        logging.info("Ambil ulang cookies karena LOGIN_REQUIRED...")
+                        self.FetchCookies()
+                        continue
+                    else:
+                        logging.error(f"[ERROR] Gagal dapat stream: {e}")
+                        continue
                 
                 if self.quality not in str(streams):
                     logging.error("No streams found")
-                    self.url=get_youtube(self.id_channel)
+                    self.url = get_youtube(self.id_channel)
                     break_point += 1
                     if break_point >= 5:    
                         logging.error("Gagal Get URL")
@@ -85,14 +117,14 @@ class MNC:
                 break
         except ValueError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
         except streamlink.exceptions.PluginError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
 
         return file_segments
     
-    def RecordStream(self, segments:list) -> None:
+    def RecordStream(self, segments: list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -119,19 +151,19 @@ class MNC:
             response = s.recv(self.buffer_size)
             response = eval(response)
             if response:
-                logging.info(F"Message from Server Converter: {response['message']}")
+                logging.info(f"Message from Server Converter: {response['message']}")
                 self.last_sequence = response["sequence"]
-                logging.info(F"Last Sequence: {self.last_sequence}")
+                logging.info(f"Last Sequence: {self.last_sequence}")
 
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
     
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.last_sequence}.ts"
+        last_ts = f"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 120:
+        if get_total_files >= 10:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
@@ -143,11 +175,11 @@ class MNC:
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
         logging.info("Get Live URL Youtube")
-        self.url=get_youtube(self.id_channel)
-        logging.info(F"End ")
+        self.url = get_youtube(self.id_channel)
+        self.SetCookies()
+
         try: 
             while self.start_process:
-
                 logging.info("Get Stream Segment")
                 segments = self.GetStreamSegment()
 
@@ -176,7 +208,7 @@ class MNC:
                 data_ts = check_ts["data_ts"]
 
                 if status_ts:
-                    now_filename = F"MNCSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    now_filename = f"MNCSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
                     logging.info("Request to Server Converter - Concat TS")
                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         s.connect((self.converter_host, self.converter_port))
@@ -200,7 +232,7 @@ class MNC:
 
                         response = s.recv(self.buffer_size)
                         response = eval(response)
-                        logging.info(F"Message from Server Converter: {response['message']}")
+                        logging.info(f"Message from Server Converter: {response['message']}")
 
                         s.close()
                         logging.info("Close Connection - Concat TS")
@@ -232,4 +264,3 @@ if __name__ == "__main__":
         buffer_size=CONFIG.SOCKET_SERVER_MNC["BUFFER_SIZE"]
     )
     kompas_tv.StartEngine()
-    
