@@ -40,7 +40,7 @@ class INewsV1:
         self.search_ext = search_ext
         self.resolution = resolution
         self.upload_location = upload_location
-        self.video_duration = 8
+        self.video_duration = 2
         self.custom_headers = custom_headers
         self.last_sequence = None
         self.start_process = True
@@ -229,7 +229,7 @@ class INewsV1:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 75:
+        if get_total_files >= 300:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
