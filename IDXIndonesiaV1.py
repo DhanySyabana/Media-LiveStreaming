@@ -4,34 +4,37 @@ import socket
 import struct
 import logging
 import datetime
+import requests
 import streamlink
 import random
+import sys, json
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorTvone import VideoProsessor
+from libs.VideoProsessorIDX import VideoProsessor
 from libs.Youtube import get_youtube
 
-class TVone:
+class MNC:
 
     def __init__(
             self,
-            environment:str,
-            url:str = None,
-            quality:str = None,
-            upload_location:str = None,
+            environment: str,
+            url: str = None,
+            quality: str = None,
+            upload_location: str = None,
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
             buffer_size: int = None,
-            id_channel: str = None
+            id_channel: str = None,
+            failure_count: int = 0
         ) -> None:
         self.environment = environment
-        self.url:str = url
-        self.quality:str = quality
-        self.start_process:bool = True
-        self.upload_location:str = upload_location
-        self.custom_headers:dict = headers
+        self.url = url
+        self.quality = quality
+        self.start_process = True
+        self.upload_location = upload_location
+        self.custom_headers = headers
         self.video_duration = 5
         self.last_sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
@@ -39,74 +42,90 @@ class TVone:
         self.converter_port = converter_port
         self.buffer_size = buffer_size
         self.id_channel = id_channel
+        self.failure_count = failure_count
         Loggers()
-        super().__init__()
+        self.session = None    
+
+
+    def SetCookies(self):
+        COOKIE_ENDPOINT = "https://siputri.onlinemonitoring.id/api/cookies/livestreaming?channel=IDXSTREAMING&source=Remote1"
+        max_retry = 5
+        for attempt in range(max_retry):
+            try:
+                resp = requests.get(COOKIE_ENDPOINT, timeout=5, allow_redirects=False)
+                logging.info(f"[DEBUG] Status Code: {resp.status_code}")
+                if resp.status_code == 200:
+                    cookies = resp.text
+                    cookies = json.loads(cookies)
+                    session = streamlink.Streamlink()
+                    session.set_option("http-cookies", cookies['data']['cookies'])
+                    logging.info("[INFO] Cookies set")
+                    self.session = session  
+                    return
+                else:
+                    logging.warning(f"[WARN] Error, Status Code: {resp.status_code}, (attempt {attempt+1}/{max_retry})")
+            except requests.RequestException as e:
+                logging.warning(f"[WARN] Gagal total ambil cookies: {e} (attempt {attempt+1}/{max_retry})")
+            time.sleep(5)
+        logging.error("[ERROR] Gagal 5x dalam mengambil cookies. Exiting.")
+        sys.exit(1)
+
 
     def GetStreamSegment(self) -> list:
         file_segments = []
         break_point = 0
-        print(self.url)
         try:
             while True:
-                logging.info(F"Get URL: {self.url}")
-                session = streamlink.Streamlink()
-                # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-                # proxy_list = random.choice(proxy_list)
-                # proxy_url = "socks5://" + proxy_list
-                # Tambahkan cookie autentikasi
-                with open('cookies.txt', 'r') as file:
-                    cookies = file.read().strip()
-                session.set_option("http-cookies", cookies)
-                # session.set_option("http-proxy", proxy_url)
-                # streams = streamlink.streams(self.url)
-                streams = session.streams(self.url)
+                session = self.session
+
+                try:
+                    streams = session.streams(self.url)
+                except Exception as e:
+                    if "LOGIN_REQUIRED" in str(e):
+                        self.login_required_count += 1
+                        logging.warning(f"[WARN] LOGIN_REQUIRED ke-{self.login_required_count}/{self.LOGIN_REQUIRED_LIMIT}")
+                        if self.login_required_count >= self.LOGIN_REQUIRED_LIMIT:
+                            logging.error("[ERROR] LOGIN_REQUIRED terjadi terlalu sering. Keluar.")
+                            exit(1)
+                        logging.info("Ambil ulang cookies karena LOGIN_REQUIRED...")
+                        self.FetchCookies()
+                        continue
+                    else:
+                        logging.error(f"[ERROR] Gagal dapat stream: {e}")
+                        continue
+                
                 if self.quality not in str(streams):
                     logging.error("No streams found")
-                    self.url=get_youtube(self.id_channel)
+                    self.url = get_youtube(self.id_channel)
                     break_point += 1
                     if break_point >= 5:    
                         logging.error("Gagal Get URL")
+                        exit()
                         break
-                    # logging.info(F"Get URL: {self.url}")
                     continue
+                
                 stream_url = streams[self.quality]
-                response =HTTPRequest("get", stream_url.to_url(), headers={
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-                }).Hit()
-                if response.status_code == 200:
-                    m3u8_obj = m3u8.loads(response.text)
-                    segments = m3u8_obj.segments
-                    for segment in segments:
-                        file_segments.append({
-                            "url": segment.uri,
-                            "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
-                        })
-                    
-                    file_segments = file_segments[-5:]
-                else:
-                    file_segments = []
-                    self.segment_status = response.status_code
-                    logging.error(F"Error Get Segments: {response.status_code}")
+
+                m3u8_obj = m3u8.load(stream_url.args['url'])
+
+                segments = m3u8_obj.segments
+                for segment in segments:
+                    file_segments.append({
+                        "url": segment.uri,
+                        "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                    })
+                file_segments = file_segments[-5:]
                 break
         except ValueError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
         except streamlink.exceptions.PluginError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
 
         return file_segments
     
-    def RecordStream(self, segments:list) -> None:
+    def RecordStream(self, segments: list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -133,16 +152,16 @@ class TVone:
             response = s.recv(self.buffer_size)
             response = eval(response)
             if response:
-                logging.info(F"Message from Server Converter: {response['message']}")
+                logging.info(f"Message from Server Converter: {response['message']}")
                 self.last_sequence = response["sequence"]
-                logging.info(F"Last Sequence: {self.last_sequence}")
+                logging.info(f"Last Sequence: {self.last_sequence}")
 
             s.close()
             logging.info("Close Connection - Download Segment")
         return None
     
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.last_sequence}.ts"
+        last_ts = f"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
         if get_total_files >= 120:
@@ -151,18 +170,17 @@ class TVone:
         
         return dict(status=False, data_ts=[])
 
-    def StartEngine(self):
+    def StartEngine(self) -> None:
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
         logging.info("Get Live URL Youtube")
-        self.url=get_youtube(self.id_channel)
-        logging.info(F"End ")
+        self.url = get_youtube(self.id_channel)
+        self.SetCookies()
 
         try: 
             while self.start_process:
-
                 logging.info("Get Stream Segment")
                 segments = self.GetStreamSegment()
 
@@ -185,13 +203,13 @@ class TVone:
                             logging.error("Retry Download Segment")
                             time.sleep(self.video_duration)
                             continue
-
+                
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]
                 data_ts = check_ts["data_ts"]
 
                 if status_ts:
-                    now_filename = F"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    now_filename = f"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
                     logging.info("Request to Server Converter - Concat TS")
                     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         s.connect((self.converter_host, self.converter_port))
@@ -215,7 +233,7 @@ class TVone:
 
                         response = s.recv(self.buffer_size)
                         response = eval(response)
-                        logging.info(F"Message from Server Converter: {response['message']}")
+                        logging.info(f"Message from Server Converter: {response['message']}")
 
                         s.close()
                         logging.info("Close Connection - Concat TS")
@@ -235,7 +253,7 @@ if __name__ == "__main__":
     ENGINE_NAME = "IDXSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    tv_one = TVone(
+    kompas_tv = MNC(
         environment=ENGINE["ENVIRONMENT"],
         url=ENGINE["URL"],
         quality=ENGINE["QUALITY"],
@@ -246,5 +264,4 @@ if __name__ == "__main__":
         converter_port=CONFIG.SOCKET_SERVER_IDX["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_IDX["BUFFER_SIZE"]
     )
-    tv_one.StartEngine()
-    
+    kompas_tv.StartEngine()
