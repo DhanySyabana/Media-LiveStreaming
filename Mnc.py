@@ -7,7 +7,7 @@ import datetime
 import requests
 import streamlink
 import random
-import sys
+import sys, json
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -55,9 +55,10 @@ class MNC:
                 resp = requests.get(COOKIE_ENDPOINT, timeout=5, allow_redirects=False)
                 logging.info(f"[DEBUG] Status Code: {resp.status_code}")
                 if resp.status_code == 200:
-                    cookies = resp.text.strip()
+                    cookies = resp.text
+                    cookies = json.loads(cookies)
                     session = streamlink.Streamlink()
-                    session.set_option("http-cookies", cookies)
+                    session.set_option("http-cookies", cookies['data']['cookies'])
                     logging.info("[INFO] Cookies set")
                     self.session = session  
                     return
