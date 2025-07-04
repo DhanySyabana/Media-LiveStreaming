@@ -799,12 +799,12 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    # SOCKET_SERVER_MNC = dict(
-    #     HOST = "12.12.12.32",
-    #     PORT = 7676,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_MNC = dict(
+        HOST = "12.12.12.32",
+        PORT = 7676,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     SOCKET_SERVER_INEWS = dict(
         HOST = "12.12.12.34",
