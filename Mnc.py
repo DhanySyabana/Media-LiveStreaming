@@ -4,32 +4,33 @@ import socket
 import struct
 import logging
 import datetime
-from urllib import parse
+import streamlink
 from libs.Loggers import Loggers
 from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorMnc import VideoProsessor
 
+
 class IDXIndonesiaV1:
 
-    def __init__(self, 
-            environment:str = None,
-            url:str = None,
-            resolution:str = None,
-            upload_location:str = None,
-            headers:dict = None,
-            playlist_directory:str = None,
-            converter_host:str = None,
-            converter_port:int = None,
-            buffer_size:int = None
-            ) -> None:
-        self.environment:str = environment
-        self.url:str = url
-        self.resolution:str = resolution
-        self.upload_location:str = upload_location
-        self.headers:dict = headers
-        self.playlist_directory:str = playlist_directory
+    def __init__(self,
+                 environment: str = None,
+                 url: str = None,
+                 resolution: str = None,
+                 upload_location: str = None,
+                 headers: dict = None,
+                 playlist_directory: str = None,
+                 converter_host: str = None,
+                 converter_port: int = None,
+                 buffer_size: int = None
+                 ) -> None:
+        self.environment = environment
+        self.url = url
+        self.resolution = resolution
+        self.upload_location = upload_location
+        self.headers = headers
+        self.playlist_directory = playlist_directory
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.start_process = True
         self.video_duration = 10
@@ -38,28 +39,56 @@ class IDXIndonesiaV1:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
+        self.session = None
+        self.LOGIN_REQUIRED_LIMIT = 5
+        self.login_required_count = 0
         Loggers()
         super().__init__()
 
-    def GetPlaylistURI(self, url:str) -> str:
-        playlist_uri = None
-        logging.info(F"URL: {url}")
+    def SetCookies(self):
+        COOKIE_ENDPOINT = "https://siputri.onlinemonitoring.id/api/cookies/livestreaming?channel=MNCSTREAMING&source=Remote2"
+        max_retry = 5
+        for attempt in range(max_retry):
+            try:
+                resp = HTTPRequest("get", COOKIE_ENDPOINT, self.headers).Hit()
+                if resp.status_code == 200:
+                    cookies = resp.json()
+                    session = streamlink.Streamlink()
+                    session.set_option("http-cookies", cookies['data']['cookies'])
+                    logging.info("[INFO] Cookies berhasil di-set")
+                    self.session = session
+                    return
+                else:
+                    logging.warning(f"[WARN] Gagal ambil cookies. Status: {resp.status_code} (attempt {attempt+1}/{max_retry})")
+            except Exception as e:
+                logging.warning(f"[WARN] Error saat ambil cookies: {e} (attempt {attempt+1}/{max_retry})")
+            time.sleep(5)
 
-        response = HTTPRequest("get", url, self.headers).Hit()
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = playlist['uri']
-                    break
-            logging.info("Get Playlist Success")
-        else:
-            logging.error(F"Error Get Playlist: {response.status_code}")
-        
+        logging.error("[ERROR] Gagal 5x ambil cookies. Keluar.")
+        exit(1)
+
+    def GetPlaylistURI(self, url: str) -> str:
+        playlist_uri = None
+        logging.info(f"URL: {url}")
+
+        try:
+            response = self.session.http.get(url)
+            if response.status_code == 200:
+                m3u8_master = m3u8.loads(response.text)
+                playlists = m3u8_master.data["playlists"]
+                for playlist in playlists:
+                    if playlist["stream_info"]["resolution"] == self.resolution:
+                        playlist_uri = playlist['uri']
+                        break
+                logging.info("Get Playlist URI berhasil")
+            else:
+                logging.error(f"Error Get Playlist URI: {response.status_code}")
+        except Exception as e:
+            logging.error(f"Exception saat GetPlaylistURI: {e}")
+
         return playlist_uri
 
-    def GetPlaylistEncrypted(self, selenium:None) -> str:
+    def GetPlaylistEncrypted(self, selenium: None) -> str:
         path_uri = None
         driver = selenium.DriverSelenium()
         driver.get(self.url)
@@ -74,7 +103,7 @@ class IDXIndonesiaV1:
                     if path_uri is not None:
                         break
             except KeyError:
-                logging.error("Error: KeyError")
+                logging.error("Error: KeyError saat mengambil request Selenium")
                 self.start_process = False
                 selenium.CloseDriver()
                 break
@@ -84,60 +113,58 @@ class IDXIndonesiaV1:
                 break
             if path_uri is not None:
                 break
-        
-        logging.info(F"Path Playlist: {path_uri}")
+
+        logging.info(f"Path Playlist: {path_uri}")
         return path_uri
 
     def GetPlaylist(self) -> str:
         logging.info("Setup Selenium")
-        selenium = Selenium(self.url, {
-            "headless": True,
-        })
-
+        selenium = Selenium(self.url, {"headless": True})
         selenium.SeleniumCapabilities()
-        logging.info("Setup Selenium Capabilities")
-
         selenium.SeleniumOptions()
-        logging.info("Setup Selenium Options")
 
-        logging.info("Find Playlist")
+        logging.info("Mencari playlist...")
         playlist = self.GetPlaylistEncrypted(selenium)
 
         selenium.CloseDriver()
-        logging.info("Close Selenium Driver")
-        
+        logging.info("Tutup Selenium Driver")
+
         return playlist
-    
-    def GetSegments(self, playlist_uri:str) -> list:
+
+    def GetSegments(self, playlist_uri: str) -> list:
         file_segments = []
 
-        response = HTTPRequest("get", playlist_uri, self.headers).Hit()
-        
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            m3u8_data = m3u8_master.data
+        try:
+            response = self.session.http.get(playlist_uri)
+            if response.status_code == 200:
+                m3u8_master = m3u8.loads(response.text)
+                segments = m3u8_master.data["segments"]
 
-            segments = m3u8_data["segments"]
+                for segment in segments:
+                    file_segments.append({
+                        "url": f"{segment['uri']}",
+                        "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
+                    })
+                file_segments = file_segments[-5:]
+            else:
+                logging.error(f"[ERROR] Gagal ambil segment. Status: {response.status_code}")
+                self.segment_status = response.status_code
 
-            # url_host = parse.urlparse(playlist_uri).scheme + "://" + parse.urlparse(playlist_uri).netloc
-
-            for segment in segments:
-                # url  = F"{url_host}/joss/134/idx/{segment['uri']}"
-                file_segments.append({
-                    "url": F"{segment['uri']}",
-                    # "sequence": int(segment["uri"].split("sleng_")[1].split(".ts")[0])
-                    "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
-                    
-                })
-            file_segments = file_segments[-5:]
-        else:
+                if response.status_code == 403:
+                    self.login_required_count += 1
+                    logging.warning(f"[WARN] LOGIN_REQUIRED ke-{self.login_required_count}/{self.LOGIN_REQUIRED_LIMIT}")
+                    if self.login_required_count >= self.LOGIN_REQUIRED_LIMIT:
+                        logging.error("[ERROR] LOGIN_REQUIRED terlalu sering. Keluar.")
+                        exit(1)
+                    logging.info("Ambil ulang cookies karena 403")
+                    self.SetCookies()
+        except Exception as e:
+            logging.error(f"Exception saat ambil segments: {e}")
             file_segments = []
-            self.segment_status = response.status_code
-            logging.error(F"Error Get Segments: {response.status_code}")
-        
+
         return file_segments
-    
-    def DownloadSegment(self, segments:list) -> None:
+
+    def DownloadSegment(self, segments: list) -> None:
         logging.info("Request to Server Converter - Download Segment")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.converter_host, self.converter_port))
@@ -163,75 +190,65 @@ class IDXIndonesiaV1:
             response = s.recv(self.buffer_size)
             response = eval(response)
             if response:
-                logging.info(F"Message from Server Converter: {response['message']}")
+                logging.info(f"Server response: {response['message']}")
                 self.last_sequence = response["sequence"]
-                logging.info(F"Last Sequence: {self.last_sequence}")
-            
+
             s.close()
-            logging.info("Close Connection - Download Segment")
-        return None
-    
+            logging.info("Tutup koneksi socket")
+
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.last_sequence}.ts"
-        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
-        
-        if get_total_files >= 60:
-            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
-            return dict(status=True, data_ts=list_files)
-        
+        last_ts = f"{self.last_sequence}.ts"
+        total = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
+
+        if total >= 60:
+            files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
+            return dict(status=True, data_ts=files)
         return dict(status=False, data_ts=[])
 
     def StartEngine(self) -> None:
         logging.info("Start Engine")
 
-        logging.info("Cleanup TS")
+        logging.info("Cleanup TS Folder")
         self.video_prosessor.CleanUPTSFolder()
 
-        logging.info("Get Playslist Encrypted")
+        logging.info("Set Cookies")
+        self.SetCookies()
+
+        logging.info("Get Playlist Encrypted URL")
         playlist_encrypted = self.GetPlaylist()
 
-        logging.info("Get Playlist")
+        logging.info("Get Playlist URI")
         playlist_uri = self.GetPlaylistURI(playlist_encrypted)
 
         try:
             while self.start_process:
-                if playlist_uri is not None:
+                if playlist_uri:
                     logging.info("Get Segment URI")
                     segments = self.GetSegments(playlist_uri)
 
                     while len(segments) == 0:
-                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
-                            logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
+                        if self.segment_status in [403, 410, 404]:
                             playlist_encrypted = self.GetPlaylist()
-
                             playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-
-                        logging.info("Retry Get Segment URI")
                         segments = self.GetSegments(playlist_uri)
                         time.sleep(self.video_duration)
 
                     time.sleep(self.video_duration)
-                    
-                    logging.info("Download segment")
-                    
+
                     try:
                         self.DownloadSegment(segments)
-                    except ConnectionResetError or ConnectionRefusedError:
+                    except (ConnectionResetError, ConnectionRefusedError):
                         while True:
                             try:
                                 self.DownloadSegment(segments)
                                 break
-                            except ConnectionResetError or ConnectionRefusedError:
+                            except (ConnectionResetError, ConnectionRefusedError):
                                 logging.error("Retry Download Segment")
                                 time.sleep(self.video_duration)
-                                continue
-                    
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
 
-                    if status_ts:
-                        now_filename = F"MNCSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                    check = self.CheckTSFiles()
+                    if check["status"]:
+                        filename = f"MNCSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
                         logging.info("Request to Server Converter - Concat TS")
                         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             s.connect((self.converter_host, self.converter_port))
@@ -241,43 +258,27 @@ class IDXIndonesiaV1:
                                 "environment": self.environment,
                                 "storage_path": self.upload_location,
                                 "mode": "w",
-                                "filename": now_filename,
-                                "optimize_video" : True,
+                                "filename": filename,
+                                "optimize_video": True
                             }
                             to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
-
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
+                            s.sendall(struct.Struct('I').pack(len(to_server)))
+                            s.sendall(to_server)
 
                             response = s.recv(self.buffer_size)
                             response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
-                            
+                            logging.info(f"[INFO] Concat Result: {response['message']}")
                             s.close()
-                            logging.info("Close Connection - Concat TS")
 
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
+                        self.video_prosessor.CleanUPTSFolder(list_ts=check["data_ts"], metadata=filename)
                 else:
-                    logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
                     playlist_encrypted = self.GetPlaylist()
-
                     playlist_uri = self.GetPlaylistURI(playlist_encrypted)
                     time.sleep(self.video_duration)
-
         except KeyboardInterrupt:
             self.start_process = False
-            logging.info("Stop Engine")
-
             self.video_prosessor.CleanUPTSFolder()
-            logging.info("Cleanup TS")
-            return None
+            logging.info("Engine dihentikan")
 
 
 if __name__ == "__main__":

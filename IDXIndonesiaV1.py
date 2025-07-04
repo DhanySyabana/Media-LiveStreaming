@@ -6,10 +6,14 @@ import logging
 import datetime
 import streamlink
 import random
+import requests
+import sys
+import json
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorTvone import VideoProsessor
+from libs.Youtube import get_youtube
 
 class TVone:
 
@@ -22,7 +26,8 @@ class TVone:
             headers: dict = None,
             converter_host: str = None,
             converter_port: int = None,
-            buffer_size: int = None
+            buffer_size: int = None,
+            failure_count: int = 0
         ) -> None:
         self.environment = environment
         self.url:str = url
@@ -39,60 +44,81 @@ class TVone:
         Loggers()
         super().__init__()
 
+        self.session = None
+    def SetCookies(self):
+        COOKIE_ENDPOINT = "https://siputri.onlinemonitoring.id/api/cookies/livestreaming?channel=IDXSTREAMING&source=Remote2"
+        max_retry = 5
+        for attempt in range(max_retry):
+            try:
+                resp = requests.get(COOKIE_ENDPOINT, timeout=5, allow_redirects=False)
+                logging.info(f"[DEBUG] Status Code: {resp.status_code}")
+                if resp.status_code == 200:
+                    cookies = resp.text
+                    cookies = json.loads(cookies)
+                    session = streamlink.Streamlink()
+                    session.set_option("http-cookies", cookies['data']['cookies'])
+                    logging.info("[INFO] Cookies set")
+                    self.session = session  
+                    return
+                else:
+                    logging.warning(f"[WARN] Error, Status Code: {resp.status_code}, (attempt {attempt+1}/{max_retry})")
+            except requests.RequestException as e:
+                logging.warning(f"[WARN] Gagal total ambil cookies: {e} (attempt {attempt+1}/{max_retry})")
+            time.sleep(5)
+        logging.error("[ERROR] Gagal 5x dalam mengambil cookies. Exiting.")
+        sys.exit(1)
+
     def GetStreamSegment(self) -> list:
         file_segments = []
         print(self.url)
         try:
-            session = streamlink.Streamlink()
-            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-            # proxy_list = random.choice(proxy_list)
-            # proxy_url = "socks5://" + proxy_list
-            # Tambahkan cookie autentikasi
-            with open('cookies.txt', 'r') as file:
-                cookies = file.read().strip()
-            session.set_option("http-cookies", cookies)
-            # session.set_option("http-proxy", proxy_url)
-            # streams = streamlink.streams(self.url)
-            streams = session.streams(self.url)
-            # print(streams)
-            stream_url = streams[self.quality]
-            # print(stream_url.ar)
-            # exit()
-            print(stream_url.to_url())
-            # exit()
-            response =HTTPRequest("get", stream_url.to_url(), headers={
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-            }).Hit()
-            if response.status_code == 200:
-                m3u8_obj = m3u8.loads(response.text)
+            while True:
+                session = self.session
+
+                try:
+                    streams = session.streams(self.url)
+                except Exception as e:
+                    if "LOGIN_REQUIRED" in str(e):
+                        self.login_required_count += 1
+                        logging.warning(f"[WARN] LOGIN_REQUIRED ke-{self.login_required_count}/{self.LOGIN_REQUIRED_LIMIT}")
+                        if self.login_required_count >= self.LOGIN_REQUIRED_LIMIT:
+                            logging.error("[ERROR] LOGIN_REQUIRED terjadi terlalu sering. Keluar.")
+                            exit(1)
+                        logging.info("Ambil ulang cookies karena LOGIN_REQUIRED...")
+                        self.FetchCookies()
+                        continue
+                    else:
+                        logging.error(f"[ERROR] Gagal dapat stream: {e}")
+                        continue
+                
+                if self.quality not in str(streams):
+                    logging.error("No streams found")
+                    self.url = get_youtube(self.id_channel)
+                    break_point += 1
+                    if break_point >= 5:    
+                        logging.error("Gagal Get URL")
+                        exit()
+                        break
+                    continue
+                
+                stream_url = streams[self.quality]
+
+                m3u8_obj = m3u8.load(stream_url.args['url'])
+
                 segments = m3u8_obj.segments
                 for segment in segments:
                     file_segments.append({
                         "url": segment.uri,
                         "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
                     })
-                
                 file_segments = file_segments[-5:]
-            else:
-                file_segments = []
-                self.segment_status = response.status_code
-                logging.error(F"Error Get Segments: {response.status_code}")
-            
+                break
         except ValueError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
         except streamlink.exceptions.PluginError as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            logging.error(f"Error Get Stream Segment: {e}")
 
         return file_segments
     
@@ -146,6 +172,7 @@ class TVone:
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
+        self.SetCookies()
 
         try: 
             while self.start_process:
