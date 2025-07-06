@@ -12,7 +12,7 @@ import json
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorTvone import VideoProsessor
+from libs.VideoProsessorIDX import VideoProsessor
 from libs.Youtube import get_youtube
 
 class TVone:
@@ -55,6 +55,7 @@ class TVone:
                 if resp.status_code == 200:
                     cookies = resp.text
                     cookies = json.loads(cookies)
+                    self.url = cookies['data']['url']
                     session = streamlink.Streamlink()
                     session.set_option("http-cookies", cookies['data']['cookies'])
                     logging.info("[INFO] Cookies set")
@@ -93,7 +94,7 @@ class TVone:
                 
                 if self.quality not in str(streams):
                     logging.error("No streams found")
-                    self.url = get_youtube(self.id_channel)
+                    # self.url = get_youtube(self.id_channel)
                     break_point += 1
                     if break_point >= 5:    
                         logging.error("Gagal Get URL")
