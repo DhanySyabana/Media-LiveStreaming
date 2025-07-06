@@ -13,7 +13,7 @@ from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorIDX import VideoProsessor
-from libs.Youtube import get_youtube
+# from libs.Youtube import get_youtube
 
 class TVone:
 
