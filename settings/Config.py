@@ -413,7 +413,7 @@ class Config(object):
         # ),
         TRANS7STREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil/",
+            HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil",
             #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
             # https://pullstream.transtv.co.id/livettv/
             #PLAYLIST = "livestreamttv.m3u8",
