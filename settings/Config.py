@@ -374,6 +374,31 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #  TRANS7STREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "https://sevenhub.id/live",
+        #     RESOLUTION = "848x477",
+        #     PLAYLIST = "x8qckyq.m3u8",
+        #     #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
+        #     #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
+        #     HOST_DIRECTORY = "https://www.dailymotion.com/cdn/live/video/x8qckyq.m3u8",
+        #     PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+        #     UPLOAD_LOCATION = "storage/trans7",
+        #     HEADERS = {
+        #         'origin': 'https://geo.dailymotion.com',
+        #         'referer': 'https://geo.dailymotion.com/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
         # TRANS7STREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil",
@@ -388,27 +413,17 @@ class Config(object):
         # ),
         TRANS7STREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://sevenhub.id/live",
-            RESOLUTION = "848x477",
-            PLAYLIST = "x8qckyq.m3u8",
-            #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
-            #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
-            HOST_DIRECTORY = "https://www.dailymotion.com/cdn/live/video/x8qckyq.m3u8",
-            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+            HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil/",
+            #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
+            # https://pullstream.transtv.co.id/livettv/
+            #PLAYLIST = "livestreamttv.m3u8",
+            PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
+            RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/trans7",
             HEADERS = {
-                'origin': 'https://geo.dailymotion.com',
-                'referer': 'https://geo.dailymotion.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
+                'origin': 'https://20.detik.com',
+                'referer': 'https://20.detik.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
         TRANSTVSTREAMING = dict(
