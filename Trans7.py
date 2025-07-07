@@ -43,7 +43,7 @@ class CNNIndonesia:
 
     def GetSegment(self) -> list:
         file_segments = []
-
+        logging.info("URL Segment: %s", self.url_segment)
         response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
         
         if response.status_code == 200:
