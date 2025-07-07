@@ -260,7 +260,7 @@ if __name__ == "__main__":
         quality=ENGINE["QUALITY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        id_channel=ENGINE["ID_CHANNEL"],
+        # id_channel=ENGINE["ID_CHANNEL"],
         converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"]
