@@ -417,7 +417,7 @@ class Config(object):
             #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
             # https://pullstream.transtv.co.id/livettv/
             #PLAYLIST = "livestreamttv.m3u8",
-            PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
+            PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/trans7",
             HEADERS = {

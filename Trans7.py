@@ -116,16 +116,16 @@ class CNNIndonesia:
         logging.info(F"URL: {url}")
 
         response = HTTPRequest("get", url, self.custom_headers).Hit()
+        # print(response.text)
         if response.status_code == 200:
             playlist_uri = url
-            # m3u8_master = m3u8.loads(response.text)
-            # playlists = m3u8_master.data["playlists"]
-            # print(m3u8_master.data)
-            # exit()
-            # for playlist in playlists:
-            #     if playlist["stream_info"]["resolution"] == self.resolution:
-            #         playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-            #         break
+            # prin
+            m3u8_master = m3u8.loads(response.text)
+            playlists = m3u8_master.data["playlists"]
+            for playlist in playlists:
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
