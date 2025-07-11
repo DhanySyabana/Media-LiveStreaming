@@ -235,9 +235,9 @@ if __name__ == "__main__":
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         cookies=get_channel_data(ENGINE_NAME)[0]['cookies'],
-        converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"]
+        converter_host=CONFIG.SOCKET_SERVER_IDX["HOST"],
+        converter_port=CONFIG.SOCKET_SERVER_IDX["PORT"],
+        buffer_size=CONFIG.SOCKET_SERVER_IDX["BUFFER_SIZE"]
     )
     kompas_tv.StartEngine()
     

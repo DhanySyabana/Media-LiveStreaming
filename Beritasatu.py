@@ -5,14 +5,14 @@ import struct
 import logging
 import datetime
 import streamlink
-import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorBeritsasatu import VideoProsessor
-from libs.Youtube import get_youtube
 
-class MetroTV:
+from settings.Connector import get_channel_data
+
+class IDX:
 
     def __init__(
             self,
@@ -24,7 +24,7 @@ class MetroTV:
             converter_host: str = None,
             converter_port: int = None,
             buffer_size: int = None,
-            id_channel: str = None
+            cookies: str = None
         ) -> None:
         self.environment = environment
         self.url:str = url
@@ -34,69 +34,65 @@ class MetroTV:
         self.custom_headers:dict = headers
         self.video_duration = 5
         self.last_sequence = None
+        self.cookies = cookies
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        self.id_channel = id_channel
         Loggers()
         super().__init__()
 
     def GetStreamSegment(self) -> list:
         file_segments = []
-        break_point = 0
         print(self.url)
         try:
-            while True:
-                logging.info(F"Get URL: {self.url}")
-                session = streamlink.Streamlink()
-                # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-                # proxy_list = random.choice(proxy_list)
-                # proxy_url = "socks5://" + proxy_list
-                # Tambahkan cookie autentikasi
-                with open('cookies_beritasatu.txt', 'r') as file:
-                    cookies = file.read().strip()
-                session.set_option("http-cookies", cookies)
-                # session.set_option("http-proxy", proxy_url)
-                # streams = streamlink.streams(self.url)
-                streams = session.streams(self.url)
-                if self.quality not in str(streams):
-                    logging.error("No streams found")
-                    self.url=get_youtube(self.id_channel)
-                    break_point += 1
-                    if break_point >= 5:    
-                        logging.error("Gagal Get URL")
-                        break
-                    # logging.info(F"Get URL: {self.url}")
-                    continue
-                stream_url = streams[self.quality]
-                response =HTTPRequest("get", stream_url.to_url(), headers={
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-                }).Hit()
-                if response.status_code == 200:
-                    m3u8_obj = m3u8.loads(response.text)
-                    segments = m3u8_obj.segments
-                    for segment in segments:
-                        file_segments.append({
-                            "url": segment.uri,
-                            "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
-                        })
-                    
-                    file_segments = file_segments[-5:]
-                else:
-                    file_segments = []
-                    self.segment_status = response.status_code
-                    logging.error(F"Error Get Segments: {response.status_code}")
-                break
+            
+            session = streamlink.Streamlink()
+            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            # proxy_list = random.choice(proxy_list)
+            # proxy_url = "socks5://" + proxy_list
+            # Tambahkan cookie autentikasi
+            # with open('cookies.txt', 'r') as file:
+            
+            # print(self.cookies)
+            session.set_option("http-cookies", self.cookies)
+            # session.set_option("http-proxy", proxy_url)
+            # streams = streamlink.streams(self.url)
+            streams = session.streams(self.url)
+    
+            # print(streams)
+            stream_url = streams[self.quality]
+            # print(stream_url.ar)
+            # exit()
+            print(stream_url.to_url())
+            # exit()
+            response =HTTPRequest("get", stream_url.to_url(), headers={
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }).Hit()
+            if response.status_code == 200:
+                m3u8_obj = m3u8.loads(response.text)
+                segments = m3u8_obj.segments
+                for segment in segments:
+                    file_segments.append({
+                        "url": segment.uri,
+                        "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
+                    })
+                
+                file_segments = file_segments[-5:]
+            else:
+                file_segments = []
+                self.segment_status = response.status_code
+                logging.error(F"Error Get Segments: {response.status_code}")
+            
         except ValueError as e:
             file_segments = []
             logging.error(F"Error Get Stream Segment: {e}")
@@ -151,14 +147,11 @@ class MetroTV:
         
         return dict(status=False, data_ts=[])
 
-    def StartEngine(self):
+    def StartEngine(self) -> None:
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
-        logging.info("Get Live URL Youtube")
-        self.url=get_youtube(self.id_channel)
-        logging.info(F"End ")
 
         try: 
             while self.start_process:
@@ -185,7 +178,7 @@ class MetroTV:
                             logging.error("Retry Download Segment")
                             time.sleep(self.video_duration)
                             continue
-
+                
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]
                 data_ts = check_ts["data_ts"]
@@ -235,16 +228,16 @@ if __name__ == "__main__":
     ENGINE_NAME = "BERITASATUSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    metro_tv = MetroTV(
+    kompas_tv = IDX(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URL"],
-        quality=ENGINE["QUALITY"],
+        url=get_channel_data(ENGINE_NAME)[0]['url'],
+        quality=get_channel_data(ENGINE_NAME)[0]['resolusi'],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        id_channel=ENGINE["ID_CHANNEL"],
+        cookies=get_channel_data(ENGINE_NAME)[0]['cookies'],
         converter_host=CONFIG.SOCKET_SERVER_BERITASATU["HOST"],
         converter_port=CONFIG.SOCKET_SERVER_BERITASATU["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_BERITASATU["BUFFER_SIZE"]
     )
-    metro_tv.StartEngine()
+    kompas_tv.StartEngine()
     
