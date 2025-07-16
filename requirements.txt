@@ -60,3 +60,4 @@ zstandard==0.20.0
 docker
 cloudscraper
 yt_dlp
+browser_cookie3
