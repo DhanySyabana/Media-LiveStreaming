@@ -639,7 +639,7 @@ class Config(object):
     ENGINE_KEYS = list(ENGINE.keys())
 
     OPS = dict(
-        TELE_TOKEN = "5932299476:AAG4YmekrMEVMHaljj01xOqZX1LuBpjEyBw",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-1001921508509",
         SEND_TIME = 60 * 30,
         STORAGE_PATH = {
@@ -663,7 +663,7 @@ class Config(object):
 
     ### Notif channel mati ###
     OPSV2 = dict(
-        TELE_TOKEN = "5821659123:AAF_QR8ur3dptVNHSH5MPykGUVgsfRPD82w",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-1002147735635",
         TELEGRAM_MESSAGE_THREAD_ID = 3042,
         SEND_TIME = 60 * 60,
@@ -688,7 +688,7 @@ class Config(object):
     
     ### restart docker ###
     OPSV3 = dict(
-        TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-897317690",
         SEND_TIME = 60 * 40,
         STORAGE_PATH = {
