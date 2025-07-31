@@ -5,12 +5,15 @@ import struct
 import logging
 import datetime
 import streamlink
+import io
+import json
+import sys
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorIDX import VideoProsessor
-
 from settings.Connector import get_channel_data
+from libs.Notifier import send_telegram_alert
 
 class IDX:
 
@@ -35,6 +38,7 @@ class IDX:
         self.video_duration = 5
         self.last_sequence = None
         self.cookies = cookies
+        self.scraper_name = "IDX"
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
@@ -42,31 +46,26 @@ class IDX:
         Loggers()
         super().__init__()
 
-    def GetStreamSegment(self) -> list:
+    def GetStreamSegment(self, fallback=False) -> list:
         file_segments = []
-        print(self.url)
+        logging.info(self.url)
+
+        # Setup log capture
+        log_buffer = io.StringIO()
+        log_handler = logging.StreamHandler(log_buffer)
+        streamlink_logger = logging.getLogger("streamlink")
+        streamlink_logger.addHandler(log_handler)
+        streamlink_logger.setLevel(logging.DEBUG)
+
         try:
-            
             session = streamlink.Streamlink()
-            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
-            # proxy_list = random.choice(proxy_list)
-            # proxy_url = "socks5://" + proxy_list
-            # Tambahkan cookie autentikasi
-            # with open('cookies.txt', 'r') as file:
-            
-            # print(self.cookies)
             session.set_option("http-cookies", self.cookies)
-            # session.set_option("http-proxy", proxy_url)
-            # streams = streamlink.streams(self.url)
+
             streams = session.streams(self.url)
-    
-            # print(streams)
             stream_url = streams[self.quality]
-            # print(stream_url.ar)
-            # exit()
-            print(stream_url.to_url())
-            # exit()
-            response =HTTPRequest("get", stream_url.to_url(), headers={
+            stream_url = stream_url.to_url()
+
+            response = HTTPRequest("get", stream_url, headers={
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
                 'sec-ch-ua-mobile': '?0',
@@ -78,6 +77,7 @@ class IDX:
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }).Hit()
+
             if response.status_code == 200:
                 m3u8_obj = m3u8.loads(response.text)
                 segments = m3u8_obj.segments
@@ -86,19 +86,48 @@ class IDX:
                         "url": segment.uri,
                         "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
                     })
-                
+
                 file_segments = file_segments[-5:]
             else:
                 file_segments = []
                 self.segment_status = response.status_code
                 logging.error(F"Error Get Segments: {response.status_code}")
-            
-        except ValueError as e:
+
+        except Exception as e:
             file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
-        except streamlink.exceptions.PluginError as e:
-            file_segments = []
-            logging.error(F"Error Get Stream Segment: {e}")
+            log_contents = log_buffer.getvalue()
+             
+
+            if "UNPLAYABLE" in log_contents:
+                send_telegram_alert(
+                    token=Config.TELEGRAM["TOKEN"],
+                    chat_id=Config.TELEGRAM["CHAT_ID"],
+                    topic_id=Config.TELEGRAM["TOPIC_ID"],
+                    scraper_name= self.scraper_name,
+                    fallback_message=" Sudah Tidak Live"
+                )
+                sys.exit(2)
+
+            elif "LOGIN_REQUIRED" in log_contents or "protected" in log_contents:
+                try:
+                    with open("cookie.json", "r") as f:
+                        cookie_data = json.load(f)
+                        self.cookies = cookie_data["cookie"]
+                except Exception:
+                    send_telegram_alert(
+                        token=Config.TELEGRAM["TOKEN"],
+                        chat_id=Config.TELEGRAM["CHAT_ID"],
+                        topic_id=Config.TELEGRAM["TOPIC_ID"],
+                        scraper_name=self.scraper_name,
+                        fallback_message=" Semua Cookie Expired"
+                    )
+                    sys.exit(2)
+
+
+                # 🔁 Retry sekali lagi
+                return self.GetStreamSegment(fallback=True)
+            else:
+                logging.error(F"[STREAMLINK] Unknown Error: {e}")
 
         return file_segments
     

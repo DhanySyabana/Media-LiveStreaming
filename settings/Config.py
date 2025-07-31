@@ -786,6 +786,16 @@ class Config(object):
         ),
     )
 
+    TELEGRAM = {
+        "TOKEN":"8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
+        "CHAT_ID": "-1002147735635",
+        "TOPIC_ID":"3042",
+    }
+    # TELEGRAM = {
+    #     "TOKEN":"7490394454:AAHJKYIhpf3DBX3D6nsXJZgPovH3XBIECkk",
+    #     "CHAT_ID": "-1002874522539",
+    #     "TOPIC_ID":"7",
+    # }
     ENGINE_KEYS = list(ENGINE.keys())
 
     OPS = dict(
