@@ -31,7 +31,8 @@ class Config(object):
             RESOLUTIONV1 = "640x360",
             # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
             # HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
-            HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #NEW
+            # HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #OLD
+            HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
