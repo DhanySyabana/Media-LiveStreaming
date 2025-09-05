@@ -35,7 +35,7 @@ class MNC:
         self.start_process = True
         self.upload_location = upload_location
         self.custom_headers = headers
-        self.video_duration = 5
+        self.video_duration = 2
         self.last_sequence = None
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
@@ -165,7 +165,7 @@ class MNC:
         last_ts = f"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 120:
+        if get_total_files >= 300:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
