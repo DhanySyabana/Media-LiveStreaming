@@ -301,17 +301,13 @@ class Config(object):
         # ),
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.vidio.com/live/18280-berita-satu",
-            RESOLUTION = "640x360",
-            # 18280
-            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            PLAYLIST = "B1News_320x240.m3u8",
-            HOST_DIRECTORY = " https://etslive-v3-vidio-com-tokenized.akamaized.net/live/18280/master.m3u8",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            RESOLUTION = "1024x576",
+            PLAYLIST = "index2.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
             UPLOAD_LOCATION = "storage/beritasatu",
             HEADERS = {
-                'origin': 'https://www.vidio.com',
-                'referer': 'https://www.vidio.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
