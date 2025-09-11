@@ -101,7 +101,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 12.12.12.58
+        ipv4_address: 12.12.12.99
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_BERITASATU_VIDEO}
 
@@ -136,7 +136,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 12.12.12.59
+        ipv4_address: 12.12.12.100
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_BERITASATU_AUDIO}
 

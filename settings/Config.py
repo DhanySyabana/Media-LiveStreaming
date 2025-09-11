@@ -831,14 +831,14 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
     SOCKET_SERVER_BERITASATU_VIDEO = dict(
-        HOST = "12.12.12.58",
-        PORT = 9101,
+        HOST = "12.12.12.99",
+        PORT = 5001,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
     SOCKET_SERVER_BERITASATU_AUDIO = dict(
-        HOST = "12.12.12.59",
-        PORT = 9102,
+        HOST = "12.12.12.100",
+        PORT = 5002,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
