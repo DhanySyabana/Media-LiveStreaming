@@ -77,6 +77,29 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
+        METROTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            RESOLUTION = "480x360",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            UPLOAD_LOCATION = "storage/metro",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
+        
+        
+        
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
@@ -87,16 +110,16 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
         #     }
         # ),
-        METROTVSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            # URL = get_channel_data('METROTVSTREAMING')[0].get('url', ''),
-            # QUALITY = get_channel_data('METROTVSTREAMING')[0].get('resolusi', ''),
-            UPLOAD_LOCATION = "storage/metro",
-            # COOKIES = get_channel_data('METROTVSTREAMING')[0].get('cookies', ''),
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-            }
-        ),
+        # METROTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URL = get_channel_data('METROTVSTREAMING')[0].get('url', ''),
+        #     # QUALITY = get_channel_data('METROTVSTREAMING')[0].get('resolusi', ''),
+        #     UPLOAD_LOCATION = "storage/metro",
+        #     # COOKIES = get_channel_data('METROTVSTREAMING')[0].get('cookies', ''),
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
         # METROTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
