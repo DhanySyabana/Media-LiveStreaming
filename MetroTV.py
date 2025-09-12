@@ -5,13 +5,13 @@ import struct
 import logging
 import datetime
 import requests
+import random
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorMetro import VideoProsessor
 
-
-class BeritaSatu:
+class METRO:
 
     def __init__(
             self,
@@ -45,16 +45,17 @@ class BeritaSatu:
 
     def GetSegment(self, playlist_uri: list) -> list:
         file_segments = []
-        print(f"{playlist_uri}")
-        response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
-        # response = HTTPRequest("get", F"{playlist_uri}", self.custom_headers).Hit()
         
+        # response = HTTPRequest("get", F"{self.host_directory}/{self.playlist}", self.custom_headers).Hit()
+        response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
+
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
 
             segments = m3u8_data["segments"]
             for segment in segments:
+                print(F"{self.host_directory}/{segment['uri']}")
                 file_segments.append({
                     "url": F"{self.host_directory}/{segment['uri']}",
                     "sequence": str(segment["uri"]).replace('.ts','')
@@ -114,11 +115,14 @@ class BeritaSatu:
     
     def GetPlaylist(self) -> str:
         playlist_uri = None
-        url = f'{self.host_directory}/{self.playlist}'
+        url = F"{self.host_directory}/{self.playlist}"
         logging.info(F"URL: {url}")
+
+        # response = HTTPRequest("get", url, self.custom_headers).Hit()
         response = requests.get(url, headers=self.custom_headers, verify=False)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
+            # playlists = m3u8_master.data
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
@@ -138,6 +142,7 @@ class BeritaSatu:
 
         logging.info("Get Playlist URI")
         playlist_uri = self.GetPlaylist()
+
         try:
             while self.start_process:
                 if playlist_uri is not None:
@@ -226,7 +231,7 @@ if __name__ == "__main__":
     ENGINE_NAME = "METROTVSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    BeritaSatu = BeritaSatu(
+    METRO = METRO(
         environment=ENGINE["ENVIRONMENT"],
         host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
@@ -237,4 +242,4 @@ if __name__ == "__main__":
         playlist=ENGINE["PLAYLIST"],
         resolution=ENGINE["RESOLUTION"],
     )
-    BeritaSatu.StartEngine()
+    METRO.StartEngine()

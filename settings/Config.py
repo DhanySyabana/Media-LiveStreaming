@@ -79,10 +79,10 @@ class Config(object):
         # ),
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h12",
             RESOLUTION = "480x360",
             PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h12",
             UPLOAD_LOCATION = "storage/metro",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
