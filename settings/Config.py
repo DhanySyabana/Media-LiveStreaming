@@ -3,12 +3,28 @@ class Config(object):
     ENGINE = dict(
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
-            # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
+            URLV1 = "https://www.rctiplus.com/tv/inews",
+            RESOLUTIONV1 = "640x360",
+            # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
+            # HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
+            # HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #OLD
+            HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
+            RESOLUTION = "640x360",
+            # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
-            # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'origin': 'https://www.rctiplus.com',
+                'referer': 'https://www.rctiplus.com/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         # INEWSSTREAMING = dict(
@@ -60,12 +76,23 @@ class Config(object):
         # ),
         KOMPASSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URL = get_channel_data('KOMPASSTREAMING')[0].get('url', ''),
-            # QUALITY = get_channel_data('KOMPASSTREAMING')[0].get('resolusi', ''),
+            URL = "https://op-group1-swiftservehd-1.dens.tv/s/s104", 
+            # RESOLUTION = "640x360",
+            RESOLUTION = "640x480",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/s/s104",
             UPLOAD_LOCATION = "storage/kompas",
-            # COOKIES = get_channel_data('KOMPASSTREAMING')[0].get('cookies', ''),
             HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
             }
         ),
         # KOMPASSTREAMING = dict(
@@ -256,54 +283,33 @@ class Config(object):
         ),
 
 
-
+        
         
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "http://klik.tvri.go.id/",
-            RESOLUTION = "640x360",
-            # RESOLUTION = "480x240", #OLD
-            PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
-            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
+            URLV1 = "https://www.dens.tv/tv-local/watch/17/tvri",
+            RESOLUTION = "480x360",
+            PLAYLIST = "02.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservesd-1.dens.tv/s/s11/index.m3u8",
+            HOST_DIRECTORY_TS = "https://op-group1-swiftservesd-1.dens.tv/s/s11/",
             UPLOAD_LOCATION = "storage/tvri",
-            HEADERS = {
-                'origin': 'http://klik.tvri.go.id',
-                'referer': 'http://klik.tvri.go.id/',
+            HEADERS ={
+                'origin': 'https://www.dens.tv',
+                'referer': 'https://www.dens.tv/',
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
                 'sec-fetch-dest': 'empty',
                 'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
+                'sec-fetch-site': 'same-site',
                 'accept': '*/*',
                 'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+
             }
         ),
-        # TVRISTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/6441/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "index.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/6441/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/tvri",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
