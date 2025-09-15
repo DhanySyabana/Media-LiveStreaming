@@ -246,7 +246,6 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h40",
             UPLOAD_LOCATION = "storage/tvone",
-
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
