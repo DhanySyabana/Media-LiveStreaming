@@ -43,9 +43,7 @@ class CNNIndonesia:
 
     def GetSegment(self) -> list:
         file_segments = []
-
         response = HTTPRequest("get", self.url_segment, self.custom_headers).Hit()
-        
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
@@ -117,15 +115,12 @@ class CNNIndonesia:
 
         response = HTTPRequest("get", url, self.custom_headers).Hit()
         if response.status_code == 200:
-            playlist_uri = url
-            # m3u8_master = m3u8.loads(response.text)
-            # playlists = m3u8_master.data["playlists"]
-            # print(m3u8_master.data)
-            # exit()
-            # for playlist in playlists:
-            #     if playlist["stream_info"]["resolution"] == self.resolution:
-            #         playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-            #         break
+            m3u8_master = m3u8.loads(response.text)
+            playlists = m3u8_master.data["playlists"]
+            for playlist in playlists:
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    break
             logging.info("Get Playlist Success")
         else:
             logging.error(F"Error Get Playlist: {response.status_code}")
