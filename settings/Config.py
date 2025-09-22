@@ -188,6 +188,17 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
+        SCTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "hhttps://www.youtube.com/watch?v=OhTXCnOnvHM",
+            QUALITY = "360p",
+            ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
+            UPLOAD_LOCATION = "storage/sctv",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
+
         TVONESTREAMING = dict(
             ENVIRONMENT = "dev",
             # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
@@ -1060,6 +1071,14 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_SCTV = dict(
+        HOST = "12.12.12.59",
+        PORT = 6151,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+
     ### end Server ###
 
     ### Local ###
@@ -1134,7 +1153,15 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
+    
     # SOCKET_SERVER_METRO = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7010,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+
+    # SOCKET_SERVER_SCTV = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7010,
     #     MAX_CONNECTION = 4,
