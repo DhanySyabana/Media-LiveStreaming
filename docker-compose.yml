@@ -1500,7 +1500,7 @@ services:
         - ENGINE=${ENGINE_SCTV}
     volumes:
       - ./:/app
-      - ${HOST_sctv}:/app/storage/sctv
+      - ${HOST_SCTV}:/app/storage/sctv
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=Asia/Jakarta
