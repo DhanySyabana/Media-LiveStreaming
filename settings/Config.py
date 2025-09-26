@@ -29,7 +29,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #NEW
+            # HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #old
+            HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
@@ -184,36 +185,36 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        TVONESTREAMING = dict(
-            ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
-            RESOLUTION = "640x360",
-            PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
-            UPLOAD_LOCATION = "storage/tvone",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
-            }
-        ),
         # TVONESTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     # URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
-        #     QUALITY = "360p",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "index.m3u8",
+        #     HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
         #     UPLOAD_LOCATION = "storage/tvone",
         #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        TVONESTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
+            QUALITY = "360p",
+            UPLOAD_LOCATION = "storage/tvone",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         
         # TVONESTREAMING = dict(
         #     ENVIRONMENT = "dev",
@@ -341,8 +342,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
-            # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
+            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
+            HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
             RESOLUTION = "426x240",
             UPLOAD_LOCATION = "storage/rcti",
             HEADERS = {
@@ -639,7 +640,7 @@ class Config(object):
     ENGINE_KEYS = list(ENGINE.keys())
 
     OPS = dict(
-        TELE_TOKEN = "5932299476:AAG4YmekrMEVMHaljj01xOqZX1LuBpjEyBw",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-1001921508509",
         SEND_TIME = 60 * 30,
         STORAGE_PATH = {
@@ -663,7 +664,7 @@ class Config(object):
 
     ### Notif channel mati ###
     OPSV2 = dict(
-        TELE_TOKEN = "5821659123:AAF_QR8ur3dptVNHSH5MPykGUVgsfRPD82w",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-1002147735635",
         TELEGRAM_MESSAGE_THREAD_ID = 3042,
         SEND_TIME = 60 * 60,
@@ -688,7 +689,7 @@ class Config(object):
     
     ### restart docker ###
     OPSV3 = dict(
-        TELE_TOKEN = "5988797823:AAEPdu06BRbmL4TWCqGY9-m8gLmr-XRJtH8",
+        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
         TELE_CHAT_ID = "-897317690",
         SEND_TIME = 60 * 40,
         STORAGE_PATH = {
