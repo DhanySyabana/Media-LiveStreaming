@@ -602,27 +602,246 @@ class Config(object):
             }
         ),
         GARUDASTREAMING = dict(
-                ENVIRONMENT = "dev",
-                # URLV1 = "https://www.beritasatu.com/livestream", OLD
-                URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
-                RESOLUTION = "1024x576",
-                PLAYLIST = "01.m3u8",
-                HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
-                UPLOAD_LOCATION = "storage/garuda",
-                HEADERS = {
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9'
-                }
-            ),
-        )
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+            RESOLUTION = "1024x576",
+            PLAYLIST = "01.m3u8",
+            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
+            UPLOAD_LOCATION = "storage/garuda",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
+    
+        TVRIBALISTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Bali/hls/Bali.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Bali",
+            UPLOAD_LOCATION = "storage/tvribali",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        TVRIJATIMSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jatim/hls/Jatim.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jatim",
+            UPLOAD_LOCATION = "storage/tvrijatim",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        TVRIKALBARSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Kalbar/hls/Kalbar.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Kalbar",
+            UPLOAD_LOCATION = "storage/tvrikalbar",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        TVRILAMPUNGSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Lampung/hls/Lampung.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Lampung",
+            UPLOAD_LOCATION = "storage/tvrilampung",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        TVRISULSELSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sulsel",
+            UPLOAD_LOCATION = "storage/tvrisulsel",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        # JAKTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
+        #     URLV1 = "https://op-group1-swiftservesd-1.dens.tv/s/s123/S4",
+        #     # https://op-group1-swiftservesd-1.dens.tv/s/s123/S4/mnf.m3u8
+        #     RESOLUTION = "640x360",
+        #     PLAYLIST = "mnf.m3u8",
+        #     HOST_DIRECTORY = "https://op-group1-swiftservesd-1.dens.tv/s/s123/S4",
+        #     UPLOAD_LOCATION = "storage/jaktv",
+        #     HEADERS = {
+        #         'origin': 'https://www.dens.tv',
+        #         'referer': 'https://www.dens.tv/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
+        JAKTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL = "https://www.vidio.com/live/5415-jaktv",
+            RESOLUTION = "640x360",
+            PLAYLIST = "B1News_320x240.m3u8",
+            #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
+            #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
+            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/5415/master.m3u8",
+            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+            UPLOAD_LOCATION = "storage/jaktv",
+            HEADERS = {
+                'origin': 'https://www.vidio.com',
+                'referer': 'https://www.vidio.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
+        BANTENTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
+            
+            RESOLUTION = "1280x720",
+            PLAYLIST = "playlist.m3u8",
+            HOST_DIRECTORY = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
+            UPLOAD_LOCATION = "storage/bantentv",
+            HEADERS = {
+                'origin': 'https://wms.klikhost.com:2000',
+                'referer': 'https://wms.klikhost.com:2000/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),  
+        DHOHOSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://www.beritasatu.com/livestream", OLD
+            URLV1 = "https://dhohotv.siar.us/dhohotv/live",
+            
+            RESOLUTION = "1280x720",
+            PLAYLIST = "playlist.m3u8",
+            HOST_DIRECTORY = "https://dhohotv.siar.us/dhohotv/live",
+            UPLOAD_LOCATION = "storage/dhoho",
+            HEADERS = {
+                'origin': 'https://cdn.siar.us',
+                'referer': 'https://cdn.siar.us/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
+    )
+    
         
         
 
@@ -970,4 +1189,3 @@ class Config(object):
         PASS = "1Teung@Kabayan123",
         TABLE_NAME = "logs"
     )
-
