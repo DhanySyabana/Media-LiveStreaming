@@ -823,7 +823,7 @@ class Config(object):
     )
     
     SOCKET_SERVER_SCTV = dict(
-        HOST = "12.12.12.39",
+        HOST = "12.12.12.59",
         PORT = 7171,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
