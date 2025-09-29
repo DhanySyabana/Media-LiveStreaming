@@ -5,17 +5,14 @@ import struct
 import logging
 import datetime
 import streamlink
-import io
-import json
-import sys
 from libs.Loggers import Loggers
-from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
+from settings.Config import Config
 from libs.VideoProsessorSctv import VideoProsessor
-from settings.Connector import get_channel_data
-from libs.Notifier import send_telegram_alert
 
-class SCTV:
+from settings.Connector import get_channel_data
+
+class TVone:
 
     def __init__(
             self,
@@ -35,10 +32,9 @@ class SCTV:
         self.start_process:bool = True
         self.upload_location:str = upload_location
         self.custom_headers:dict = headers
-        self.video_duration = 5
+        self.video_duration = 2
         self.last_sequence = None
         self.cookies = cookies
-        self.scraper_name = "SCTV"
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
         self.converter_host = converter_host
         self.converter_port = converter_port
@@ -46,26 +42,31 @@ class SCTV:
         Loggers()
         super().__init__()
 
-    def GetStreamSegment(self, fallback=False) -> list:
+    def GetStreamSegment(self) -> list:
         file_segments = []
-        logging.info(self.url)
-
-        # Setup log capture
-        log_buffer = io.StringIO()
-        log_handler = logging.StreamHandler(log_buffer)
-        streamlink_logger = logging.getLogger("streamlink")
-        streamlink_logger.addHandler(log_handler)
-        streamlink_logger.setLevel(logging.DEBUG)
-
+        print(self.url)
         try:
+            
             session = streamlink.Streamlink()
+            # proxy_list = list({'trkcytfh:xtfqu68rlqwr@192.46.187.70:6648','trkcytfh:xtfqu68rlqwr@72.46.139.81:6641','trkcytfh:xtfqu68rlqwr@192.53.70.221:5935'})
+            # proxy_list = random.choice(proxy_list)
+            # proxy_url = "socks5://" + proxy_list
+            # Tambahkan cookie autentikasi
+            # with open('cookies.txt', 'r') as file:
+            
+            # print(self.cookies)
             session.set_option("http-cookies", self.cookies)
-
+            # session.set_option("http-proxy", proxy_url)
+            # streams = streamlink.streams(self.url)
             streams = session.streams(self.url)
+    
+            # print(streams)
             stream_url = streams[self.quality]
-            stream_url = stream_url.to_url()
-
-            response = HTTPRequest("get", stream_url, headers={
+            # print(stream_url.ar)
+            # exit()
+            print(stream_url.to_url())
+            # exit()
+            response =HTTPRequest("get", stream_url.to_url(), headers={
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
                 'sec-ch-ua-mobile': '?0',
@@ -77,7 +78,6 @@ class SCTV:
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }).Hit()
-
             if response.status_code == 200:
                 m3u8_obj = m3u8.loads(response.text)
                 segments = m3u8_obj.segments
@@ -86,48 +86,19 @@ class SCTV:
                         "url": segment.uri,
                         "sequence": int(segment.uri.split("sq/")[1].split("/goap")[0])
                     })
-
+                
                 file_segments = file_segments[-5:]
             else:
                 file_segments = []
                 self.segment_status = response.status_code
                 logging.error(F"Error Get Segments: {response.status_code}")
-
-        except Exception as e:
+            
+        except ValueError as e:
             file_segments = []
-            log_contents = log_buffer.getvalue()
-             
-
-            if "UNPLAYABLE" in log_contents:
-                send_telegram_alert(
-                    token=Config.TELEGRAM["TOKEN"],
-                    chat_id=Config.TELEGRAM["CHAT_ID"],
-                    topic_id=Config.TELEGRAM["TOPIC_ID"],
-                    scraper_name= self.scraper_name,
-                    fallback_message=" Sudah Tidak Live"
-                )
-                sys.exit(2)
-
-            elif "LOGIN_REQUIRED" in log_contents or "protected" in log_contents:
-                try:
-                    with open("cookie.json", "r") as f:
-                        cookie_data = json.load(f)
-                        self.cookies = cookie_data["cookie"]
-                except Exception:
-                    send_telegram_alert(
-                        token=Config.TELEGRAM["TOKEN"],
-                        chat_id=Config.TELEGRAM["CHAT_ID"],
-                        topic_id=Config.TELEGRAM["TOPIC_ID"],
-                        scraper_name=self.scraper_name,
-                        fallback_message=" Semua Cookie Expired"
-                    )
-                    sys.exit(2)
-
-
-                # 🔁 Retry sekali lagi
-                return self.GetStreamSegment(fallback=True)
-            else:
-                logging.error(F"[STREAMLINK] Unknown Error: {e}")
+            logging.error(F"Error Get Stream Segment: {e}")
+        except streamlink.exceptions.PluginError as e:
+            file_segments = []
+            logging.error(F"Error Get Stream Segment: {e}")
 
         return file_segments
     
@@ -170,13 +141,13 @@ class SCTV:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 120:
+        if get_total_files >= 300:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         
         return dict(status=False, data_ts=[])
 
-    def StartEngine(self) -> None:
+    def StartEngine(self):
         logging.info("Start Engine")
 
         logging.info("Cleanup TS")
@@ -207,7 +178,7 @@ class SCTV:
                             logging.error("Retry Download Segment")
                             time.sleep(self.video_duration)
                             continue
-                
+
                 check_ts = self.CheckTSFiles()
                 status_ts = check_ts["status"]
                 data_ts = check_ts["data_ts"]
@@ -257,9 +228,9 @@ if __name__ == "__main__":
     ENGINE_NAME = "SCTVSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    kompas_tv = SCTV(
+    tv_one = TVone(
         environment=ENGINE["ENVIRONMENT"],
-        url=get_channel_data(ENGINE_NAME)[0]['url'],
+        url= get_channel_data(ENGINE_NAME)[0]['url'],
         quality=get_channel_data(ENGINE_NAME)[0]['resolusi'],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
@@ -268,5 +239,5 @@ if __name__ == "__main__":
         converter_port=CONFIG.SOCKET_SERVER_SCTV["PORT"],
         buffer_size=CONFIG.SOCKET_SERVER_SCTV["BUFFER_SIZE"]
     )
-    kompas_tv.StartEngine()
+    tv_one.StartEngine()
     

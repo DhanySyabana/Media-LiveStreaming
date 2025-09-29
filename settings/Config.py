@@ -188,12 +188,23 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
+        # SCTVSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URL = "hhttps://www.youtube.com/watch?v=OhTXCnOnvHM",
+        #     QUALITY = "360p",
+        #     ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
+        #     UPLOAD_LOCATION = "storage/sctv",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #     }
+        # ),
+        
         SCTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "hhttps://www.youtube.com/watch?v=OhTXCnOnvHM",
-            QUALITY = "360p",
-            ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
+            # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
+            # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
             UPLOAD_LOCATION = "storage/sctv",
+            # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
