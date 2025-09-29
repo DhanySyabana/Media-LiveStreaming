@@ -1054,6 +1054,60 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+    
+    SOCKET_SERVER_TVRIBALI = dict(
+        HOST = "12.12.12.42",
+        PORT = 5251,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_TVRIJATIM = dict(
+        HOST = "12.12.12.43",
+        PORT = 5351,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_TVRIKALBAR = dict(
+        HOST = "12.12.12.45",
+        PORT = 5451,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_TVRILAMPUNG = dict(
+        HOST = "12.12.12.47",
+        PORT = 5551,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_TVRISULSEL = dict(
+        HOST = "12.12.12.49",
+        PORT = 5651,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKET_SERVER_JAKTV = dict(
+        HOST = "12.12.12.52",
+        PORT = 5751,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKET_SERVER_BANTENTV = dict(
+        HOST = "12.12.12.55",
+        PORT = 5851,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
+    SOCKET_SERVER_DHOHOTV = dict(
+        HOST = "12.12.12.57",
+        PORT = 5951,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     ### end Server ###
 
