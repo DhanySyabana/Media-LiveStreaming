@@ -25,6 +25,8 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+
+        #ENGINE_KEYS[0]
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
@@ -49,6 +51,8 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+
+        #ENGINE_KEYS[1]
         CNNSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
@@ -60,6 +64,8 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
+
+        #ENGINE_KEYS[2]
         KOMPASSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=DOOrIxw5xOw",
@@ -80,6 +86,8 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
         #     }
         # ),
+
+        #ENGINE_KEYS[3]
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
@@ -136,6 +144,8 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+
+        #ENGINE_KEYS[4]
         CNBCSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
@@ -175,6 +185,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
         #     }
         # ),
+        #ENGINE_KEYS[5]
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
@@ -206,6 +217,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #ENGINE_KEYS[6]
         TVONESTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
@@ -238,6 +250,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #ENGINE_KEYS[7]
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
@@ -290,6 +303,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #ENGINE_KEYS[8]
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -337,7 +351,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
- 
+        #ENGINE_KEYS[9]
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
@@ -422,6 +436,7 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
         #     }
         # ),
+        #ENGINE_KEYS[10]
         TRANS7STREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil",
@@ -437,6 +452,7 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
+        #ENGINE_KEYS[11]
         TRANSTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://video.detik.com/transtv/smil:transtv.smil",
@@ -510,6 +526,7 @@ class Config(object):
         #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         #     }
         # ),
+        #ENGINE_KEYS[12]
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://op-group1-swiftservehd-1.dens.tv/h/h37", 
@@ -555,6 +572,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
         #     }
         # ),
+        #ENGINE_KEYS[13]
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=B9dEq-lU4yU",
@@ -565,6 +583,7 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
+        #ENGINE_KEYS[14]
         SEATODAYSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/7687-sea-today",
@@ -591,6 +610,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        #ENGINE_KEYS[15]
         SCTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
@@ -601,6 +621,7 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
+        #ENGINE_KEYS[16]
         GARUDASTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
@@ -622,7 +643,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
-    
+        #ENGINE_KEYS[17]
         TVRIBALISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -647,6 +668,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        #ENGINE_KEYS[18]
         TVRIJATIMSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -671,6 +693,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        #ENGINE_KEYS[19]
         TVRIKALBARSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -695,6 +718,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        #ENGINE_KEYS[20]
         TVRILAMPUNGSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -719,6 +743,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        #ENGINE_KEYS[21]
         TVRISULSELSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
@@ -728,6 +753,56 @@ class Config(object):
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sulsel",
             UPLOAD_LOCATION = "storage/tvrisulsel",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        #ENGINE_KEYS[22]
+        TVRISUMUTSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sumut/hls/Sumut.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sumut",
+            UPLOAD_LOCATION = "storage/tvrisumut",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        #ENGINE_KEYS[23]
+         TVRIYOGYASTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta",
+            UPLOAD_LOCATION = "storage/tvrijogjakarta",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -767,6 +842,7 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        #ENGINE_KEYS[24]
         JAKTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/5415-jaktv",
@@ -792,6 +868,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        #ENGINE_KEYS[25]
         BANTENTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
@@ -816,6 +893,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),  
+        #ENGINE_KEYS[26]
         DHOHOSTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
@@ -1089,6 +1167,7 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+
     SOCKET_SERVER_JAKTV = dict(
         HOST = "12.12.12.52",
         PORT = 5751,
@@ -1105,6 +1184,20 @@ class Config(object):
     SOCKET_SERVER_DHOHOTV = dict(
         HOST = "12.12.12.57",
         PORT = 5951,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    SOCKET_SERVER_TVRISUMUT = dict(
+        HOST = "12.12.12.58",
+        PORT = 5752,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
+    SOCKET_SERVER_TVRIYOGYA = dict(
+        HOST = "12.12.12.59",
+        PORT = 5753,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
