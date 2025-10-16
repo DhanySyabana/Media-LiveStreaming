@@ -417,6 +417,27 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
+        JAWAPOSSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://jawapostv.siar.us/jawapostv/live/",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = None,
+            UPLOAD_LOCATION = "storage/jawapos",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
+
+        PONTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream/",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = None,
+            UPLOAD_LOCATION = "storage/pontv",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
         RTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://www.vidio.com/live/1561/tokens",
@@ -883,13 +904,7 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKET_SERVER_IDX = dict(
-        HOST = "12.12.12.15",
-        PORT = 6767,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
+
     SOCKET_SERVER_IDX_VIDEO = dict(
         HOST = "12.12.12.37",
         PORT = 7373,
@@ -1049,6 +1064,18 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKER_SERVER_JAWAPOS = dict(
+        HOST = "12.12.12.63",
+        PORT = 7171,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKER_SERVER_PONTV = dict(
+        HOST = "12.12.12.64",
+        PORT = 9191,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
     ### end Server ###
 
     ### Local ###
@@ -1165,12 +1192,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    # SOCKET_SERVER_IDX = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7002,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
+    SOCKET_SERVER_IDX = dict(
+        HOST = "127.0.0.1",
+        PORT = 7002,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
     # SOCKET_SERVER_IDX_VIDEO = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7003,
@@ -1208,6 +1235,18 @@ class Config(object):
     # SOCKET_SERVER = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7004,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+    # SOCKET_SERVER_JAWAPOS = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7001,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+    # SOCKET_SERVER_PONTV = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7002,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
