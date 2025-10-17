@@ -1211,7 +1211,7 @@ services:
     restart: unless-stopped
     command: python ${ENGINE_NUSANTARATV}
 
-    engine_jawapos:
+    engine_jawapos_v1:
       image: media_livestreaming_engine:latest
       container_name: engine_jawapos
       build: 
@@ -1231,7 +1231,7 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_JAWAPOS}
 
-    engine_pontv:
+    engine_pontv_v1:
       image: media_livestreaming_engine:latest
       container_name: engine_pontv
       build: 
