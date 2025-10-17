@@ -837,6 +837,81 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_TVRISULSEL}
 
+  engine_server_converter_yogya:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_yogya
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_TVRIYOGYA}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc 
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali
+        - ${ENGINE_TVRIYOGYA}:/app/storage/tvriyogya
+
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 12.12.12.63
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_TVRIYOGYA}
+
+  engine_server_converter_sumut:
+      image: media_livestreaming_engine:latest
+      container_name: engine_server_converter_sumut
+      build: 
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - ENGINE=${ENGINE_CONVERTER_TVRISUMUT}
+      volumes:
+        - ./:/app
+        - ${HOST_INEWS}:/app/storage/inews
+        - ${HOST_CNN}:/app/storage/cnn
+        - ${HOST_KOMPAS}:/app/storage/kompas
+        - ${HOST_METRO}:/app/storage/metro
+        - ${HOST_CNBC}:/app/storage/cnbc
+        - ${HOST_IDX}:/app/storage/idx
+        - ${HOST_TVONE}:/app/storage/tvone
+        - ${HOST_BERITASATU}:/app/storage/beritasatu
+        - ${HOST_TVRI}:/app/storage/tvri 
+        - ${HOST_RCTI}:/app/storage/rcti
+        - ${HOST_TRANS7}:/app/storage/trans7   
+        - ${HOST_TRANSTV}:/app/storage/transtv 
+        - ${HOST_RTV}:/app/storage/rtv   
+        - ${HOST_MNC}:/app/storage/mnc 
+        - ${HOST_SEATODAY}:/app/storage/seatoday 
+        - ${HOST_TVRIBALI}:/app/storage/tvribali
+        - ${ENGINE_TVRIYOGYA}:/app/storage/tvriyogya
+        - ${ENGINE_TVRISUMUT}:/app/storage/tvrisumut
+
+      environment:
+        - PYTHONUNBUFFERED=1
+        - TZ=Asia/Jakarta
+      networks:
+        default:
+          ipv4_address: 12.12.12.64
+      restart: unless-stopped
+      command: python ${ENGINE_CONVERTER_TVRISUMUT}
+
   engine_server_converter_jaktv:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_jaktv
@@ -1509,6 +1584,47 @@ services:
         ipv4_address: 12.12.12.60
     restart: unless-stopped
     command: python ${ENGINE_SCTV}
+
+  engine_tvriyogya_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvriyogya_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRIYOGYA}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRIYOGYA}:/app/storage/tvriyogya
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.61
+    restart: unless-stopped
+    command: python ${ENGINE_TVRIYOGYA}
+
+  engine_tvrisumut_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrisumut_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRISUMUT}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRISUMUT}:/app/storage/tvrisumut
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.62
+    restart: unless-stopped
+    command: python ${ENGINE_TVRISUMUT}
+
 
 
 

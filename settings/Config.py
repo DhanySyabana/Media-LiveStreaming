@@ -794,7 +794,7 @@ class Config(object):
             }
         ),
         #ENGINE_KEYS[23]
-         TVRIYOGYASTREAMING = dict(
+        TVRIYOGYASTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "http://klik.tvri.go.id/",
             RESOLUTION = "640x360",
@@ -1189,15 +1189,15 @@ class Config(object):
     )
 
     SOCKET_SERVER_TVRISUMUT = dict(
-        HOST = "12.12.12.58",
+        HOST = "12.12.12.64",
         PORT = 5752,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
 
     SOCKET_SERVER_TVRIYOGYA = dict(
-        HOST = "12.12.12.59",
-        PORT = 5753,
+        HOST = "12.12.12.63",
+        PORT = 5453,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
