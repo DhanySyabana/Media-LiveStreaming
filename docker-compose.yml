@@ -1221,7 +1221,7 @@ services:
           - ENGINE=${ENGINE_JAWAPOS}
       volumes:
         - ./:/app
-        - ${HOST_SCTV}:/app/storage/jawapos
+        - ${HOST_JAWAPOS}:/app/storage/jawapos
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
@@ -1241,7 +1241,7 @@ services:
           - ENGINE=${ENGINE_PONTV}
       volumes:
         - ./:/app
-        - ${HOST_SCTV}:/app/storage/pontv
+        - ${HOST_PONTV}:/app/storage/pontv
       environment:
         - PYTHONUNBUFFERED=1
         - TZ=Asia/Jakarta
