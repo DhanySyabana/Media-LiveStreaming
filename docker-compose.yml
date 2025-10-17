@@ -863,7 +863,7 @@ services:
         - ${HOST_MNC}:/app/storage/mnc 
         - ${HOST_SEATODAY}:/app/storage/seatoday 
         - ${HOST_TVRIBALI}:/app/storage/tvribali
-        - ${ENGINE_TVRIYOGYA}:/app/storage/tvriyogya
+        - ${HOST_TVRIYOGYA}:/app/storage/tvriyogya
 
       environment:
         - PYTHONUNBUFFERED=1
@@ -900,7 +900,7 @@ services:
         - ${HOST_MNC}:/app/storage/mnc 
         - ${HOST_SEATODAY}:/app/storage/seatoday 
         - ${HOST_TVRIBALI}:/app/storage/tvribali
-        - ${ENGINE_TVRISUMUT}:/app/storage/tvrisumut
+        - ${HOST_TVRISUMUT}:/app/storage/tvrisumut
 
       environment:
         - PYTHONUNBUFFERED=1
