@@ -900,7 +900,6 @@ services:
         - ${HOST_MNC}:/app/storage/mnc 
         - ${HOST_SEATODAY}:/app/storage/seatoday 
         - ${HOST_TVRIBALI}:/app/storage/tvribali
-        - ${ENGINE_TVRIYOGYA}:/app/storage/tvriyogya
         - ${ENGINE_TVRISUMUT}:/app/storage/tvrisumut
 
       environment:
