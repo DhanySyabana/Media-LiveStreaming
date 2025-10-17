@@ -802,7 +802,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta",
-            UPLOAD_LOCATION = "storage/tvrijogjakarta",
+            UPLOAD_LOCATION = "storage/tvriyogya",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
