@@ -837,9 +837,9 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_TVRISULSEL}
 
-  engine_server_converter_yogya:
+  engine_server_converter_tvriyogya:
       image: media_livestreaming_engine:latest
-      container_name: engine_server_converter_yogya
+      container_name: engine_server_converter_tvriyogya
       build: 
         context: .
         dockerfile: Dockerfile
@@ -874,9 +874,9 @@ services:
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_TVRIYOGYA}
 
-  engine_server_converter_sumut:
+  engine_server_converter_tvrisumut:
       image: media_livestreaming_engine:latest
-      container_name: engine_server_converter_sumut
+      container_name: engine_server_converter_tvrisumut
       build: 
         context: .
         dockerfile: Dockerfile
