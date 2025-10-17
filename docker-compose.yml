@@ -806,7 +806,7 @@ services:
         context: .
         dockerfile: Dockerfile
         args:
-          - ENGINE=${ENGINE_CONVERTER_jawapos}
+          - ENGINE=${ENGINE_CONVERTER_JAWAPOS}
       volumes:
         - ./:/app
         - ${HOST_INEWS}:/app/storage/inews
