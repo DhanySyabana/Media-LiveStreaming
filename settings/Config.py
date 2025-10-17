@@ -1064,13 +1064,13 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
-    SOCKER_SERVER_JAWAPOS = dict(
+    SOCKET_SERVER_JAWAPOS = dict(
         HOST = "12.12.12.63",
         PORT = 7171,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
-    SOCKER_SERVER_PONTV = dict(
+    SOCKET_SERVER_PONTV = dict(
         HOST = "12.12.12.64",
         PORT = 9191,
         MAX_CONNECTION = 4,
