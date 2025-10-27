@@ -519,27 +519,27 @@ class Ops:
 
 
     def StartEngine(self):
-        self.execute()
-        # progress_bar = tqdm.tqdm(total=self.delay_proses, desc="Waiting for next task")
-        # while self.start_proses:
-            # try:
+        progress_bar = tqdm.tqdm(total=self.delay_proses, desc="Waiting for next task")
+        while self.start_proses:
+            try:
 
-                # if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
-            #         progress_bar.reset()
-            #         os.system('cls' if os.name == 'nt' else 'clear')
-            #     progress_bar.update(1)
-            #     time.sleep(1)       
-            # except Exception as e:
-            #     logging.error(f"Error: {e}")
-            #     progress_bar.reset()
-            #     self.start_proses = False
-            #     break
-            # except KeyboardInterrupt:
-            #     progress_bar.reset()
-            #     logging.info("Close Ops")
-            #     self.start_proses = False
-            #     break
-        # progress_bar.close()
+                if self.start_time == 0 or time.time() - self.start_time >= self.delay_proses:
+                    self.execute()
+                    progress_bar.reset()
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                progress_bar.update(1)
+                time.sleep(1)       
+            except Exception as e:
+                logging.error(f"Error: {e}")
+                progress_bar.reset()
+                self.start_proses = False
+                break
+            except KeyboardInterrupt:
+                progress_bar.reset()
+                logging.info("Close Ops")
+                self.start_proses = False
+                break
+        progress_bar.close()
 
 
 if __name__ == "__main__":
