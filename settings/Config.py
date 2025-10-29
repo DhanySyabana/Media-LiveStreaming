@@ -325,9 +325,9 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id",
+            HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id",
             # HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
-            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
+            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
             RESOLUTION = "426x240",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/rcti",
@@ -839,7 +839,7 @@ class Config(object):
             ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
             #ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
             #ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
         }
     )
@@ -895,8 +895,13 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
-
-
+    SOCKET_SERVER_IDX = dict(
+        HOST = "12.12.12.15",
+        PORT = 6767,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
     SOCKET_SERVER_IDX_VIDEO = dict(
         HOST = "12.12.12.37",
         PORT = 7373,
@@ -1184,12 +1189,12 @@ class Config(object):
     #     BUFFER_SIZE = 1024
     # )
 
-    SOCKET_SERVER_IDX = dict(
-        HOST = "127.0.0.1",
-        PORT = 7002,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
+    # SOCKET_SERVER_IDX = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 7002,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
     # SOCKET_SERVER_IDX_VIDEO = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7003,

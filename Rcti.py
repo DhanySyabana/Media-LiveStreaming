@@ -108,7 +108,7 @@ class INewsV1:
                     playlist_uri = F"{self.host_directory}{playlist['uri']}"
                     
                     ## host_directory https://rcti-linier.rctiplus.id
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    # playlist_uri = F"{self.host_directory}/{playlist['uri']}"
                     
                     self.query = playlist['uri'].split('/')[0]
                     # auth = self.query.partition('?auth_key=')[2]
@@ -166,10 +166,10 @@ class INewsV1:
                 file_segments.append({
                     
                     ## host_directory https://rcdn.rctiplus.id
-                    # "url": F"{self.host_directory}{self.query}/{segment['uri']}",
+                    "url": F"{self.host_directory}{self.query}/{segment['uri']}",
                     
                     ## host_directory https://rcti-linier.rctiplus.id
-                    "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+                    # "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
                     
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
