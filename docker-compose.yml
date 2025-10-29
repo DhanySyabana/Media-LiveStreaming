@@ -34,7 +34,11 @@ services:
         ipv4_address: 12.12.12.8
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_beritasatu:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_beritasatu
@@ -69,7 +73,11 @@ services:
         ipv4_address: 12.12.12.13
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_BERITASATU}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_idx:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_idx
@@ -103,7 +111,11 @@ services:
         ipv4_address: 12.12.12.15
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_idx_video:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_idx_video
@@ -138,7 +150,11 @@ services:
         ipv4_address: 12.12.12.37
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX_VIDEO}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_idx_audio:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_idx_audio
@@ -173,7 +189,11 @@ services:
         ipv4_address: 12.12.12.38
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_IDX_AUDIO}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
 
   engine_server_converter_trans:
     image: media_livestreaming_engine:latest
@@ -208,7 +228,11 @@ services:
         ipv4_address: 12.12.12.18
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_TRANS}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_cnbc:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_cnbc
@@ -242,7 +266,11 @@ services:
         ipv4_address: 12.12.12.19
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_CNBC}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_kompas:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_kompas
@@ -276,7 +304,11 @@ services:
         ipv4_address: 12.12.12.31
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_KOMPAS}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_tvone:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_tvone
@@ -310,7 +342,11 @@ services:
         ipv4_address: 12.12.12.21
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_TVONE}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_rcti:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_rcti
@@ -344,7 +380,11 @@ services:
         ipv4_address: 12.12.12.22
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_RCTI}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_metro:
     image: media_livestreaming_engine:latest
     container_name: engine_server_converter_metro
@@ -378,7 +418,11 @@ services:
         ipv4_address: 12.12.12.24
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_METRO}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_server_converter_transtv:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_transtv
@@ -412,7 +456,11 @@ services:
           ipv4_address: 12.12.12.26
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_TRANSTV}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_cnn:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_cnn
@@ -446,7 +494,11 @@ services:
           ipv4_address: 12.12.12.27
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_CNN}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_nusantara:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_nusantara
@@ -480,7 +532,11 @@ services:
           ipv4_address: 12.12.12.29
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_NUSANTARA}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_mnc:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_mnc
@@ -514,7 +570,11 @@ services:
           ipv4_address: 12.12.12.32
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_MNC}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_inews:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_inews
@@ -548,7 +608,11 @@ services:
           ipv4_address: 12.12.12.34
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_INEWS}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_seatoday:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_seatoday
@@ -583,7 +647,11 @@ services:
           ipv4_address: 12.12.12.35
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_SEATODAY}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_sctv:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_sctv
@@ -619,7 +687,11 @@ services:
           ipv4_address: 12.12.12.39
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_SCTV}
-  
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
   engine_server_converter_garuda:
       image: media_livestreaming_engine:latest
       container_name: engine_server_converter_garuda
@@ -654,7 +726,11 @@ services:
           ipv4_address: 12.12.12.51
       restart: unless-stopped
       command: python ${ENGINE_CONVERTER_GARUDA}
-
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "5m"
+          max-file: "3"
 
   engine_inews_v1:
     image: media_livestreaming_engine:latest
@@ -675,7 +751,11 @@ services:
         ipv4_address: 12.12.12.2
     restart: unless-stopped
     command: python ${ENGINE_INEWS}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_cnn_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_cnn_v1
@@ -695,7 +775,11 @@ services:
         ipv4_address: 12.12.12.3
     restart: unless-stopped
     command: python ${ENGINE_CNN}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_kompas_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_kompas_v1
@@ -715,7 +799,11 @@ services:
         ipv4_address: 12.12.12.30
     restart: unless-stopped
     command: python ${ENGINE_KOMPAS}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_metro_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_metro_v1
@@ -735,7 +823,11 @@ services:
         ipv4_address: 12.12.12.5
     restart: unless-stopped
     command: python ${ENGINE_METRO}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_cnbc_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_cnbc_v1
@@ -755,7 +847,11 @@ services:
         ipv4_address: 12.12.12.6
     restart: unless-stopped
     command: python ${ENGINE_CNBC}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_idx_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_idx_v1
@@ -775,7 +871,11 @@ services:
         ipv4_address: 12.12.12.7
     restart: unless-stopped
     command: python ${ENGINE_IDX}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_tvone_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_tvone_v1
@@ -795,7 +895,11 @@ services:
         ipv4_address: 12.12.12.10
     restart: unless-stopped
     command: python ${ENGINE_TVONE}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_beritasatu_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_beritasatu_v1
@@ -815,7 +919,11 @@ services:
         ipv4_address: 12.12.12.11
     restart: unless-stopped
     command: python ${ENGINE_BERITASATU}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_tvri_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_tvri_v1
@@ -835,7 +943,11 @@ services:
         ipv4_address: 12.12.12.12
     restart: unless-stopped
     command: python ${ENGINE_TVRI}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_rcti_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_rcti_v1
@@ -855,7 +967,11 @@ services:
         ipv4_address: 12.12.12.16
     restart: unless-stopped
     command: python ${ENGINE_RCTI}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_trans7_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_trans7_v1
@@ -875,7 +991,11 @@ services:
         ipv4_address: 12.12.12.17
     restart: unless-stopped
     command: python ${ENGINE_TRANS7}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_transtv_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_transtv_v1
@@ -895,7 +1015,11 @@ services:
         ipv4_address: 12.12.12.25
     restart: unless-stopped
     command: python ${ENGINE_TRANSTV}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_nusantara_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_nusantara_v1
@@ -915,7 +1039,11 @@ services:
         ipv4_address: 12.12.12.28
     restart: unless-stopped
     command: python ${ENGINE_NUSANTARATV}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_mnc_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_mnc_v1
@@ -935,7 +1063,11 @@ services:
         ipv4_address: 12.12.12.33
     restart: unless-stopped
     command: python ${ENGINE_MNC}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_seatoday_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_seatoday_v1
@@ -955,7 +1087,11 @@ services:
         ipv4_address: 12.12.12.36
     restart: unless-stopped
     command: python ${ENGINE_SEATODAY}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_sctv_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_sctv_v1
@@ -975,7 +1111,11 @@ services:
         ipv4_address: 12.12.12.40
     restart: unless-stopped
     command: python ${ENGINE_SCTV}
-  
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_garuda_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_garuda_v1
@@ -995,7 +1135,11 @@ services:
         ipv4_address: 12.12.12.50
     restart: unless-stopped
     command: python ${ENGINE_GARUDA}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_ops_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v1
@@ -1032,7 +1176,11 @@ services:
         ipv4_address: 12.12.12.9
     restart: unless-stopped
     command: python ${ENGINE_OPS}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_ops_v2:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v2
@@ -1069,7 +1217,11 @@ services:
         ipv4_address: 12.12.12.14
     restart: unless-stopped
     command: python ${ENGINE_OPS_V2}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   engine_ops_v3:
     image: media_livestreaming_engine:latest
     container_name: engine_ops_v3
@@ -1107,7 +1259,11 @@ services:
         ipv4_address: 12.12.12.23
     restart: unless-stopped
     command: python ${ENGINE_OPS_V3}
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
   # engine_server_notification_v1:
   #   image: media_livestreaming_engine:latest
   #   container_name: engine_server_notification_v1
@@ -1128,7 +1284,7 @@ services:
   #     - 0.0.0.0:8888:8888
   #   restart: unless-stopped
   #   command: python ${ENGINE_NOTIFICATION}
-
+  
 networks:
   default:
     name: livestream_net
