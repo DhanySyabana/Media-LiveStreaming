@@ -890,6 +890,13 @@ services:
         ipv4_address: 12.12.12.2
     restart: unless-stopped
     command: python ${ENGINE_INEWS}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+
 
   engine_cnn_v1:
     image: media_livestreaming_engine:latest
