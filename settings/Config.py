@@ -1013,7 +1013,7 @@ class Config(object):
     ### Server ###
     
     SOCKET_SERVER_JAWAPOS = dict(
-        HOST = "12.12.12.63",
+        HOST = "12.12.12.68",
         PORT = 7171,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
