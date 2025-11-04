@@ -106,7 +106,7 @@ class BeritaSatu:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 150:
+        if get_total_files >= 300:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -114,19 +114,22 @@ class BeritaSatu:
     
     def GetPlaylist(self) -> str:
         playlist_uri = None
-        url = f'{self.host_directory}/{self.playlist}'
-        logging.info(F"URL: {url}")
-        response = requests.get(url, headers=self.custom_headers, verify=False)
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    break
-            logging.info("Get Playlist Success")
-        else:
-            logging.error(F"Error Get Playlist: {response.status_code}")
+        playlist_uri = f'{self.host_directory}/{self.playlist}'
+        logging.info(F"URL: {playlist_uri}")
+        # https://nusantaratv.siar.us/nusantaratv/live/playlist.m3u8
+        # response = requests.get(url, headers=self.custom_headers, verify=False)
+        # if response.status_code == 200:
+        #     m3u8_master = m3u8.loads(response.text)
+        #     playlists = m3u8_master.data["playlists"]
+        #     print(m3u8_master.data)
+        #     exit()
+        #     for playlist in playlists:
+        #         if playlist["stream_info"]["resolution"] == self.resolution:
+        #             playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+        #             break
+        logging.info("Get Playlist Success")
+        # else:
+        #     logging.error(F"Error Get Playlist: {response.status_code}")
         
         return playlist_uri
     

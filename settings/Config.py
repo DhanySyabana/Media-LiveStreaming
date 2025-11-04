@@ -782,6 +782,29 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        NUSANTARATVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            # URLV1 = "https://v5.siar.us/nusantaratv/live/",
+            URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
+            RESOLUTION = "320x240",
+            PLAYLIST = "playlist.m3u8",
+            HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
+            UPLOAD_LOCATION = "storage/nusantaratv",
+            HEADERS = {
+                'origin': 'https://nusantaratv.com',
+                'referer': 'https://nusantaratv.com/',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
+        ),
     )
 
     TELEGRAM = {
@@ -1070,6 +1093,12 @@ class Config(object):
     SOCKET_SERVER_PONTV = dict(
         HOST = "12.12.12.64",
         PORT = 9191,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKET_SERVER_NUSANTARA = dict(
+        HOST = "12.12.12.44",
+        PORT = 9451,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
