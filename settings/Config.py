@@ -918,6 +918,17 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
+        #ENGINE_KEYS[27]
+        JAWAPOSSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://jawapostv.siar.us/jawapostv/live/",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = None,
+            UPLOAD_LOCATION = "storage/jawapos",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
     )
     
         
@@ -1000,6 +1011,14 @@ class Config(object):
     )
     
     ### Server ###
+    
+    SOCKET_SERVER_JAWAPOS = dict(
+        HOST = "12.12.12.63",
+        PORT = 7171,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    
     SOCKET_SERVER = dict(
         HOST = "12.12.12.8",
         PORT = 6969,
