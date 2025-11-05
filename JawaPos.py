@@ -31,7 +31,7 @@ class JawaPos:
         self.upload_location = upload_location
         self.custom_headers = headers
         self.start_process = True
-        self.video_duration = 4
+        self.video_duration = 10
         self.last_sequence = None
         self.segment_status = None
         self.converter_host = converter_host
@@ -46,8 +46,8 @@ class JawaPos:
     def GetSegment(self, playlist_uri: list) -> list:
         file_segments = []
         print(f"{playlist_uri}")
-        response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
-        # response = HTTPRequest("get", F"{playlist_uri}", self.custom_headers).Hit()
+        # response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
+        response = HTTPRequest("get", F"{playlist_uri}", self.custom_headers).Hit()
         
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
@@ -106,7 +106,7 @@ class JawaPos:
         logging.info(F"Last TS: {last_ts}")
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 275:
+        if get_total_files >= 60:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)    
         
@@ -137,19 +137,28 @@ class JawaPos:
         """Langsung ambil variant playlist (bukan master)."""
         url = f"{self.host_directory}{self.playlist}"
         logging.info(f"URL: {url}")
-
-        response = requests.get(url, headers=self.custom_headers, verify=False)
+        response = HTTPRequest("get", F"{url}", self.custom_headers).Hit()
+        # response = requests.get(url, headers=self.custom_headers, verify=False)
         if response.status_code == 200:
-            m3u8_data = m3u8.loads(response.text).data
-            if "segments" in m3u8_data and len(m3u8_data["segments"]) > 0:
-                logging.info("Get Playlist Success (variant playlist)")
-                return url
-            else:
-                logging.error("Playlist tidak berisi segmen.")
-                return None
+            m3u8_master = m3u8.loads(response.text)
+            playlists = m3u8_master.data["playlists"]
+            for playlist in playlists:
+                if playlist["stream_info"]["resolution"] == self.resolution:
+                    playlist_uri = F"{self.host_directory.replace('/index.m3u8','')}{playlist['uri']}"
+                    break
+            # print(m3u8_data)
+            # exit()
+            # if "segments" in m3u8_data and len(m3u8_data["segments"]) > 0:
+            #     logging.info("Get Playlist Success (variant playlist)")
+            #     return url
+            # else:
+            #     logging.error("Playlist tidak berisi segmen.")
+            #     return None
         else:
             logging.error(f"Error Get Playlist: {response.status_code}")
             return None
+        
+        return playlist_uri
 
 
     
