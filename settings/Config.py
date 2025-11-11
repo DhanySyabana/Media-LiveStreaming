@@ -625,7 +625,7 @@ class Config(object):
         GARUDASTREAMING = dict(
             ENVIRONMENT = "dev",
             # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
+            URL = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
             RESOLUTION = "1024x576",
             PLAYLIST = "01.m3u8",
             HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
