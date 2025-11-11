@@ -628,7 +628,7 @@ class Config(object):
             URL = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
             RESOLUTION = "1024x576",
             PLAYLIST = "01.m3u8",
-            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
+            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
             UPLOAD_LOCATION = "storage/garuda",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',

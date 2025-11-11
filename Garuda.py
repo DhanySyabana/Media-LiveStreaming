@@ -117,14 +117,13 @@ class IDXIndonesiaV1:
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
-            playlist_uri = playlist_uri.split("index.m3u8")[0]
+            playlist_uri = playlist_uri.rsplit('/', 1)[0] + '/'
             segments = m3u8_data["segments"]
             for segment in segments:
                 print(F"Segment URI: {playlist_uri}{segment['uri']}")
-                # exit()
                 file_segments.append({
                     "url": F"{playlist_uri}{segment['uri']}",
-                    "sequence": int(segment["uri"].split(".ts")[0])
+                    "sequence": int(segment["uri"].split('_')[-1].replace('.ts',''))
                 })
             file_segments = file_segments[-5:]
         else:
@@ -286,7 +285,7 @@ if __name__ == "__main__":
         url=ENGINE["URL"],
         # host_directory=ENGINE["HOST_DIRECTORY"],
         playlist_directory=ENGINE["HOST_DIRECTORY"],
-        path_url=ENGINE["PATH_URL"],
+        path_url=ENGINE["HOST_DIRECTORY"],
         resolution=ENGINE["RESOLUTION"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
