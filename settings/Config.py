@@ -492,7 +492,6 @@ class Config(object):
         # ),
         # NUSANTARATVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
         #     # URLV1 = "https://v5.siar.us/nusantaratv/live/",
         #     URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
         #     RESOLUTION = "320x240",
@@ -1111,7 +1110,7 @@ class Config(object):
     )
 
     SOCKET_SERVER_NUSANTARA = dict(
-        HOST = "12.12.12.29",
+        HOST = "12.12.12.67",
         PORT = 7777,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
