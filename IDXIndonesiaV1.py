@@ -93,41 +93,48 @@ class IDX:
                 self.segment_status = response.status_code
                 logging.error(F"Error Get Segments: {response.status_code}")
 
-        except Exception as e:
+        except ValueError as e:
             file_segments = []
-            log_contents = log_buffer.getvalue()
+            logging.error(F"Error Get Stream Segment: {e}")
+        except streamlink.exceptions.PluginError as e:
+            file_segments = []
+            logging.error(F"Error Get Stream Segment: {e}")
+
+        # except Exception as e:
+        #     file_segments = []
+        #     log_contents = log_buffer.getvalue()
              
 
-            if "UNPLAYABLE" in log_contents:
-                send_telegram_alert(
-                    token=Config.TELEGRAM["TOKEN"],
-                    chat_id=Config.TELEGRAM["CHAT_ID"],
-                    topic_id=Config.TELEGRAM["TOPIC_ID"],
-                    scraper_name= self.scraper_name,
-                    fallback_message=" Sudah Tidak Live"
-                )
-                sys.exit(2)
+        #     if "UNPLAYABLE" in log_contents:
+        #         send_telegram_alert(
+        #             token=Config.TELEGRAM["TOKEN"],
+        #             chat_id=Config.TELEGRAM["CHAT_ID"],
+        #             topic_id=Config.TELEGRAM["TOPIC_ID"],
+        #             scraper_name= self.scraper_name,
+        #             fallback_message=" Sudah Tidak Live"
+        #         )
+        #         sys.exit(2)
 
-            elif "LOGIN_REQUIRED" in log_contents or "protected" in log_contents:
-                try:
-                    with open("cookie.json", "r") as f:
-                        cookie_data = json.load(f)
-                        self.cookies = cookie_data["cookie"]
-                except Exception:
-                    send_telegram_alert(
-                        token=Config.TELEGRAM["TOKEN"],
-                        chat_id=Config.TELEGRAM["CHAT_ID"],
-                        topic_id=Config.TELEGRAM["TOPIC_ID"],
-                        scraper_name=self.scraper_name,
-                        fallback_message=" Semua Cookie Expired"
-                    )
-                    sys.exit(2)
+        #     elif "LOGIN_REQUIRED" in log_contents or "protected" in log_contents:
+        #         try:
+        #             with open("cookie.json", "r") as f:
+        #                 cookie_data = json.load(f)
+        #                 self.cookies = cookie_data["cookie"]
+        #         except Exception:
+        #             send_telegram_alert(
+        #                 token=Config.TELEGRAM["TOKEN"],
+        #                 chat_id=Config.TELEGRAM["CHAT_ID"],
+        #                 topic_id=Config.TELEGRAM["TOPIC_ID"],
+        #                 scraper_name=self.scraper_name,
+        #                 fallback_message=" Semua Cookie Expired"
+        #             )
+        #             sys.exit(2)
 
 
-                # 🔁 Retry sekali lagi
-                return self.GetStreamSegment(fallback=True)
-            else:
-                logging.error(F"[STREAMLINK] Unknown Error: {e}")
+        #         # 🔁 Retry sekali lagi
+        #         return self.GetStreamSegment(fallback=True)
+        #     else:
+        #         logging.error(F"[STREAMLINK] Unknown Error: {e}")
 
         return file_segments
     

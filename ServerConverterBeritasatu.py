@@ -82,8 +82,8 @@ class ServerConverter:
                             for segment in segments:
                                 
                                 try:
-                                    # response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
-                                    response_http = requests.get(url= segment["url"], headers=data["headers"], verify=False)
+                                    response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                    #response_http = requests.get(url= segment["url"], headers=data["headers"], verify=False)
                                     logging.info(F"Status Request Segment: {response_http.status_code}")
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"

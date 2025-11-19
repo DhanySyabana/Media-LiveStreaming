@@ -103,7 +103,8 @@ class INewsV1:
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
                     # playlist_uri = F"{playlist['uri']}"
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    # playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    playlist_uri = F"{self.host_directory}{playlist['uri']}"
                     self.query = playlist['uri'].split('/')[0]
                     # auth = self.query.partition('?auth_key=')[2]
                     headers={
