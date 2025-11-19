@@ -1267,6 +1267,46 @@ services:
         options:
           max-size: "5m"
           max-file: "3"
+
+  engine_server_converter_pontv:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_pontv
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_PONTV}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7
+      - ${HOST_TRANSTV}:/app/storage/transtv
+      - ${HOST_RTV}:/app/storage/rtv
+      - ${HOST_MNC}:/app/storage/mnc   
+      - ${HOST_SEATODAY}:/app/storage/seatoday  
+      - ${HOST_PONTV}:/app/storage/pontv  
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.65
+    restart: unless-stopped
+    command: python ${ENGINE_CONVERTER_PONTV}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
         
 
   engine_inews_v1:
@@ -1976,6 +2016,31 @@ services:
         ipv4_address: 12.12.12.66
     restart: unless-stopped
     command: python ${ENGINE_NUSANTARATV}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+        
+  engine_pontv_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_pontv_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_PONTV}
+    volumes:
+      - ./:/app
+      - ${HOST_PONTV}:/app/storage/pontv
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.66
+    restart: unless-stopped
+    command: python ${ENGINE_PONTV}
     logging:
       driver: "json-file"
       options:

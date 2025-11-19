@@ -929,6 +929,17 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
+        #ENGINE_KEYS[28]
+        PONTVSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream/",
+            PLAYLIST = "playlist.m3u8",
+            RESOLUTION = None,
+            UPLOAD_LOCATION = "storage/pontv",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            }
+        ),
     )
     
         
@@ -1258,6 +1269,13 @@ class Config(object):
         BUFFER_SIZE = 1024
     )
 
+    SOCKET_SERVER_PONTV = dict(
+        HOST = "12.12.12.65",
+        PORT = 9191,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+
     ### end Server ###
 
     ### Local ###
@@ -1363,6 +1381,13 @@ class Config(object):
     # SOCKET_SERVER_BERITASATU = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7001,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+
+    # SOCKET_SERVER_PONTV = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 9191,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )
