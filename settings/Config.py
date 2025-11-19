@@ -251,26 +251,38 @@ class Config(object):
         #     }
         # ),
         #ENGINE_KEYS[7]
+        # BERITASATUSTREAMING = dict(
+        #     ENVIRONMENT = "dev",
+        #     URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+        #     RESOLUTION = "1024x576",
+        #     PLAYLIST = "index2.m3u8",
+        #     HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+        #     UPLOAD_LOCATION = "storage/beritasatu",
+        #     HEADERS = {
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
+        #     }
+        # ),
+
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
-            RESOLUTION = "1024x576",
-            PLAYLIST = "index2.m3u8",
-            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
+            HOST_DIRECTORY = "https://beritasatu.secureswiftcontent.com/han/beritasatu/bsatu10008r/srtoutput",
             UPLOAD_LOCATION = "storage/beritasatu",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
-            }
+            HEADERS = {"User-Agent": "Mozilla/5.0"},
+            # audio & video dipisah lewat PLAYLIST
+            PLAYLIST_AUDIO = "haudio-eng.m3u8",
+            PLAYLIST_VIDEO = "hvideo-640x360.m3u8",
+            RESOLUTION = None,
         ),
+
         # BERITASATUSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
@@ -1031,6 +1043,18 @@ class Config(object):
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
     )
+    SOCKET_SERVER_BERITASATU_VIDEO = dict(
+        HOST = "12.12.12.99",
+        PORT = 5001,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
+    SOCKET_SERVER_BERITASATU_AUDIO = dict(
+        HOST = "12.12.12.100",
+        PORT = 5002,
+        MAX_CONNECTION = 4,
+        BUFFER_SIZE = 1024
+    )
 
     SOCKET_SERVER_IDX = dict(
         HOST = "12.12.12.15",
@@ -1332,6 +1356,25 @@ class Config(object):
     # SOCKET_SERVER = dict(
     #     HOST = "127.0.0.1",
     #     PORT = 7004,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+
+    # SOCKET_SERVER_BERITASATU = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 6868,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+    # SOCKET_SERVER_BERITASATU_VIDEO = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 5001,
+    #     MAX_CONNECTION = 4,
+    #     BUFFER_SIZE = 1024
+    # )
+    # SOCKET_SERVER_BERITASATU_AUDIO = dict(
+    #     HOST = "127.0.0.1",
+    #     PORT = 5002,
     #     MAX_CONNECTION = 4,
     #     BUFFER_SIZE = 1024
     # )

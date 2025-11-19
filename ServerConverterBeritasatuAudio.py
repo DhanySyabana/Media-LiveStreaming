@@ -1,11 +1,10 @@
 import socket
 import struct
 import logging
-import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorBeritsasatu import VideoProsessor
+from libs.VideoProsessorIDXAudio import VideoProsessor
 
 class ServerConverter:
 
@@ -80,11 +79,9 @@ class ServerConverter:
                             segments = data["segments"]
 
                             for segment in segments:
-                                
+                                # url_ ='https://streaming.indihometv.com/atm/HLS-10s/idx/'+ segment["url"]
                                 try:
-                                    # response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
-                                    response_http = requests.get(url= segment["url"], headers=data["headers"], verify=False)
-                                    logging.info(F"Status Request Segment: {response_http.status_code}")
+                                    response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"
                                         
@@ -92,18 +89,16 @@ class ServerConverter:
                                             file_name=file_name,
                                             content=response_http.content,
                                             mode="wb",
-                                            folder="ts"
+                                            folder="audio"
                                         )
                                         response["sequence"] = write_file["sequence"]
                                         response["message"] = write_file["message"]
-                                        logging.info(F"Success Download Segment: {file_name}")
+                                        logging.info(F"Success Download Segment Audio: {file_name}")
                                     else:
                                         logging.error(F"Error Download Segment: {response_http.status_code}")
-                                        continue
                                     logging.info(F"Succes Download Segment")
                                 except AttributeError:
                                     logging.error(F"Error Download Segment: {segment['url']}")
-                                    continue
                                     
                         else:
                             logging.error(F"Error Event: {data['event']}")
@@ -117,7 +112,7 @@ class ServerConverter:
             s.close()
 
 if __name__ == "__main__":
-    CONFIG_SERVER = Config().SOCKET_SERVER_BERITASATU
+    CONFIG_SERVER = Config().SOCKET_SERVER_BERITASATU_AUDIO
     server_converter = ServerConverter(
         host=CONFIG_SERVER["HOST"],
         port=CONFIG_SERVER["PORT"],
