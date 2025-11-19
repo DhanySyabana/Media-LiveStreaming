@@ -1270,7 +1270,7 @@ class Config(object):
     )
 
     SOCKET_SERVER_PONTV = dict(
-        HOST = "12.12.12.65",
+        HOST = "12.12.12.73",
         PORT = 9191,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
