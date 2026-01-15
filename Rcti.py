@@ -101,10 +101,15 @@ class INewsV1:
             m3u8_master = m3u8.loads(response.text)
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
+                print(playlist['stream_info']['resolution'])
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    # playlist_uri = F"{playlist['uri']}"
-                    # playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    playlist_uri = F"{self.host_directory}{playlist['uri']}"
+                    
+                    ## host_directory https://rcdn.rctiplus.id
+                    # playlist_uri = F"{self.host_directory}{playlist['uri']}"
+                    
+                    ## host_directory https://rcti-linier.rctiplus.id
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    
                     self.query = playlist['uri'].split('/')[0]
                     # auth = self.query.partition('?auth_key=')[2]
                     headers={
@@ -132,13 +137,12 @@ class INewsV1:
     
     def GetSegments(self, playlist_uri:str) -> list:
         file_segments = []
-
+        logging.info(F"Get Segments: {playlist_uri}")
         response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
         # self.host_directory = playlist_uri.partition('/rcti-sdi')[0]
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
-
             segments = m3u8_data["segments"]
             for segment in segments:
                 # auth = segment['uri'].partition('?auth_key=')[2]
@@ -160,7 +164,13 @@ class INewsV1:
                     }
                 self.custom_headers = headers
                 file_segments.append({
+                    
+                    ## host_directory https://rcdn.rctiplus.id
+                    # "url": F"{self.host_directory}{self.query}/{segment['uri']}",
+                    
+                    ## host_directory https://rcti-linier.rctiplus.id
                     "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+                    
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
 
