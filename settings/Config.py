@@ -921,9 +921,9 @@ class Config(object):
         #ENGINE_KEYS[27]
         JAWAPOSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://jawapostv.siar.us/jawapostv/live/",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVJKT/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
-            RESOLUTION = None,
+            RESOLUTION = "1280x720",
             UPLOAD_LOCATION = "storage/jawapos",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
