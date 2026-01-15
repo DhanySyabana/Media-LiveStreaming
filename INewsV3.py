@@ -102,10 +102,13 @@ class INewsV1:
             playlists = m3u8_master.data["playlists"]
             for playlist in playlists:
                 if playlist["stream_info"]["resolution"] == self.resolution:
-                    # playlist_uri = F"{playlist['uri']}"
-                    playlist_uri = F"{self.host_directory}{playlist['uri']}"
-                    # self.query = playlist['uri'].split('/')[0]
-                    # auth = self.query.partition('?auth_key=')[2]
+                    ## host_directory https://rcdn.rctiplus.id
+                    # playlist_uri = F"{self.host_directory}{playlist['uri']}"
+                    
+                    ## host_directory https://rcti-linier.rctiplus.id
+                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
+                    
+                    
                     headers={
                         'origin': 'https://www.rctiplus.com',
                         'referer': 'https://www.rctiplus.com/',
@@ -134,7 +137,6 @@ class INewsV1:
         print(playlist_uri)
         response = HTTPRequest("get", playlist_uri, self.custom_headers).Hit()
         self.host_directory = playlist_uri.partition('/inews-sdi')[0]
-        print(self.host_directory)
         if response.status_code == 200:
             m3u8_master = m3u8.loads(response.text)
             m3u8_data = m3u8_master.data
@@ -160,7 +162,12 @@ class INewsV1:
                     }
                 self.custom_headers = headers
                 file_segments.append({
+                    ## host_directory https://rcdn.rctiplus.id
+                    # "url": F"{self.host_directory}/{segment['uri']}",
+                    
+                    ## host_directory https://rcti-linier.rctiplus.id
                     "url": F"{self.host_directory}/{segment['uri']}",
+                    
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
 
