@@ -530,7 +530,7 @@ class Config(object):
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://op-group1-swiftservehd-1.dens.tv/h/h37", 
-            RESOLUTION = "480x360",
+            RESOLUTION = "1280x720",
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
