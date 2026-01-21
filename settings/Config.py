@@ -231,7 +231,7 @@ class Config(object):
         # ),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/live/O6dTFyyhHLI?si=h1DRWvlV5R8ELBoT",
+            URL = "https://www.youtube.com/watch?v=ftuihGt1zuw",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
