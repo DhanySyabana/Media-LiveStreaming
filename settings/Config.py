@@ -177,9 +177,8 @@ class Config(object):
         # ),
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
+            URL = "https://www.youtube.com/watch?v=ftuihGt1zuw",
             QUALITY = "360p",
-            ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
             UPLOAD_LOCATION = "storage/idx",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -260,7 +259,7 @@ class Config(object):
         # ),
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
+            URL = "https://www.youtube.com/watch?v=ctwN6UFJFcE",
             QUALITY = "360p",
             ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
             UPLOAD_LOCATION = "storage/beritasatu",
@@ -513,7 +512,7 @@ class Config(object):
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URL = "https://op-group1-swiftservehd-1.dens.tv/h/h37", 
-            RESOLUTION = "1024x576",
+            RESOLUTION = "1280x720",
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
@@ -557,7 +556,7 @@ class Config(object):
         # ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=B9dEq-lU4yU",
+            URL = "https://www.youtube.com/watch?v=FvpOleJDU-M",
             QUALITY = "360p",
             ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
             UPLOAD_LOCATION = "storage/mnc",
