@@ -342,8 +342,8 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            #HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
-            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
+            HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
+            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
             RESOLUTION = "426x240",
             UPLOAD_LOCATION = "storage/rcti",
