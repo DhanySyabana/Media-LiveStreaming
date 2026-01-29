@@ -105,7 +105,7 @@ class INewsV1:
                 if playlist["stream_info"]["resolution"] == self.resolution:
                     
                     ## host_directory https://rcdn.rctiplus.id
-                    playlist_uri = F"{self.host_directory}{playlist['uri']}"
+                    # playlist_uri = F"{self.host_directory}{playlist['uri']}"
                     
                     ## host_directory https://rcti-linier.rctiplus.id
                     playlist_uri = F"{self.host_directory}/{playlist['uri']}"
@@ -170,6 +170,9 @@ class INewsV1:
                     
                     ## host_directory https://rcti-linier.rctiplus.id
                     "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+
+                    ## host_directory https://1s1.rctiplus.id
+                    # "url": F"{self.host_directory}/{segment['uri']}",
                     
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
