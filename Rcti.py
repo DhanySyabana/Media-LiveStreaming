@@ -170,6 +170,9 @@ class INewsV1:
                     
                     ## host_directory https://rcti-linier.rctiplus.id
                     "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+
+                     ## host_directory https://1s1.rctiplus.id
+                    # "url": F"{self.host_directory}/{segment['uri']}",
                     
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
