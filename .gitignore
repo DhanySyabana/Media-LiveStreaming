@@ -10,4 +10,8 @@ static
 *.pyc
 myenv
 venv
-youtube_cookie_header.txt
+youtube_cookie_header.txt*.mp4
+*.part
+*.mp4
+*.part
+*.mp4

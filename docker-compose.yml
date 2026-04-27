@@ -1310,6 +1310,9 @@ services:
         
 
   engine_inews_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_inews_v1
     build: 
@@ -1485,6 +1488,9 @@ services:
         max-file: "3"    
 
   engine_beritasatu_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_beritasatu_v1
     build: 
@@ -1510,6 +1516,9 @@ services:
         max-file: "3"    
 
   engine_tvri_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvri_v1
     build: 
@@ -1535,6 +1544,9 @@ services:
         max-file: "3"    
 
   engine_rcti_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_rcti_v1
     build: 
@@ -1708,6 +1720,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvribali_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvribali_v1
     build: 
@@ -1732,6 +1747,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvrijatim_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvrijatim_v1
     build: 
@@ -1756,6 +1774,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvrikalbar_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvrikalbar_v1
     build: 
@@ -1780,6 +1801,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvrilampung_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvrilampung_v1
     build: 
@@ -1804,6 +1828,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvrisulsel_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvrisulsel_v1
     build: 
@@ -1924,6 +1951,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvriyogya_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvriyogya_v1
     build: 
@@ -1948,6 +1978,9 @@ services:
         max-size: "5m"
         max-file: "3"
   engine_tvrisumut_v1:
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     image: media_livestreaming_engine:latest
     container_name: engine_tvrisumut_v1
     build: 

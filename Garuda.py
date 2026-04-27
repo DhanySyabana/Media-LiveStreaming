@@ -1,296 +1,371 @@
-import time
 import m3u8
-import socket
-import struct
+import time
 import logging
 import datetime
-from urllib import parse
-from libs.Loggers import Loggers
-from libs.Selenium import Selenium
+import cloudscraper
+from libs.Loggers1 import Loggers
 from settings.Config import Config
-from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorGaruda import VideoProsessor
+from libs.ErrorHandler import get_error_message, get_exception_message
+from libs.PusherNotification import trigger_error_notification
+from libs.Countdown import countdown_sleep
 
-class IDXIndonesiaV1:
+class GarudaTV:
 
-    def __init__(self, 
-                 environment:str = None,
-                 url:str = None,
-                 resolution:str = None,
-                 upload_location:str = None,
-                 headers:dict = None,
-                 playlist_directory:str = None,
-                 path_url:str = None,
-                 converter_host:str = None,
-                 converter_port:int = None,
-                 buffer_size:int = None
-                 ) -> None:
-        self.environment:str = environment
-        self.url:str = url
-        self.resolution:str = resolution
-        self.upload_location:str = upload_location
-        self.headers:dict = headers
-        self.playlist_directory:str = playlist_directory
-        self.path_url:str = path_url
+    def __init__(
+        self,
+        environment: str,
+        host_directory: str = None,
+        upload_location: str = None,
+        headers: dict = None,
+        playlist: str = None,
+        resolution: str = None
+    ) -> None:
+        self.environment = environment
+        self.host_directory = host_directory
+        self.upload_location = upload_location
+        self.custom_headers = headers
+        self.playlist = playlist
+        self.resolution = resolution
+
+        self.scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
+
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
+
         self.start_process = True
-        self.video_duration = 7
-        self.segment_status = None
+        self.sleep_duration = 10
         self.last_sequence = None
-        self.converter_host = converter_host
-        self.converter_port = converter_port
-        self.buffer_size = buffer_size
+        self.segment_status = None
+        self.max_retry = 5
+        self.retry_count = 0
+        self.max_attempts = 3
+        self.countdown_counter = 0
+        self.max_countdown_before_notif = 3 
+        self.count_file_ts = 100
+        self.has_download_error = False
+        self.consecutive_errors = 0
+        self.max_consecutive_errors = 3
+
         Loggers()
         super().__init__()
 
-    def GetPlaylistURI(self, url:str) -> str:
-        playlist_uri = None
-        logging.info(F"URL: {url}")
+    def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
-        response = HTTPRequest("get", url, self.headers).Hit()
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = self.path_url +playlist['uri']
-                    break
-            logging.info("Get Playlist Success")
+        if send_immediate and self.countdown_counter == 0:
+            trigger_error_notification(channel_name='Garuda TV', log_text=error_message)
+        
+        countdown_sleep(300)
+        
+        self.countdown_counter += 1
+        
+        if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
+            trigger_error_notification(channel_name='Garuda TV', log_text=error_message)
+            logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
-            logging.error(F"Error Get Playlist: {response.status_code}")
-        
-        return playlist_uri
-
-    def GetPlaylistEncrypted(self, selenium:None) -> str:
-        path_uri = None
-        driver = selenium.DriverSelenium()
-        driver.get(self.url)
-
-        while self.start_process:
-            try:
-                for request in driver.requests:
-                    if request.response:
-                        if self.playlist_directory in request.url:
-                            path_uri = request.url
-                            break
-                    if path_uri is not None:
-                        break
-            except KeyError:
-                logging.error("Error: KeyError")
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            except KeyboardInterrupt:
-                self.start_process = False
-                selenium.CloseDriver()
-                break
-            if path_uri is not None:
-                break
-        
-        logging.info(F"Path Playlist: {path_uri}")
-        return path_uri
+            remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
+            logging.warning(f"Countdown cycle {self.countdown_counter}, next notification in {remaining_cycles} more cycles ({remaining_cycles * 5} minutes)")
 
     def GetPlaylist(self) -> str:
-        logging.info("Setup Selenium")
-        selenium = Selenium(self.url, {
-            "headless": True,
-        })
-
-        selenium.SeleniumCapabilities()
-        logging.info("Setup Selenium Capabilities")
-
-        selenium.SeleniumOptions()
-        logging.info("Setup Selenium Options")
-
-        logging.info("Find Playlist")
-        playlist = self.GetPlaylistEncrypted(selenium)
-
-        selenium.CloseDriver()
-        logging.info("Close Selenium Driver")
         
-        return playlist
-    
-    def GetSegments(self, playlist_uri:str) -> list:
+        url = f"{self.host_directory}/{self.playlist}"
+        logging.info(f"URL: {url}")
+        
+        last_error = None
+        last_error_detail = None
+        last_exc = False
+
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self.scraper.get(url, headers=self.custom_headers, timeout=10)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                self.segment_status = None
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Exception), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+ 
+                logging.error(
+                    f"Exception Get Playlist after {self.max_attempts} attempts: {type(e).__name__}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    },
+                    exc_info=True
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            if response.status_code != 200:
+                self.segment_status = response.status_code
+                last_error = get_error_message(response.status_code)
+                last_error_detail = response.reason
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Status {response.status_code}), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(
+                    f"Error Get Playlist after {self.max_attempts} attempts: {response.status_code}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    }
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            try:
+                m3u8_master = m3u8.loads(response.text)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Parse error), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"Failed to parse playlist m3u8 after {self.max_attempts} attempts: {last_error}", exc_info=True)
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            playlists = m3u8_master.data.get("playlists", [])
+            if not playlists:
+                last_error = "No playlists found in master playlist"
+                last_error_detail = "master playlist contains no variant playlists"
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (No playlists), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"No playlists after {self.max_attempts} attempts; {last_error}")
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            playlist_uri = None
+            if hasattr(self, 'resolution') and self.resolution:
+                for playlist in playlists:
+                    stream_info = playlist.get("stream_info", {})
+                    if stream_info.get("resolution") == self.resolution:
+                        playlist_uri = f"{self.host_directory}/{playlist['uri']}"
+                        logging.info(f"Playlist obtained for resolution {self.resolution}")
+                        break
+
+                if not playlist_uri:
+                    logging.warning(f"Playlist not found for resolution {self.resolution}, using first available")
+
+            if not playlist_uri:
+                playlist_uri = f"{self.host_directory}/{playlists[0]['uri']}"
+                logging.info("Get Playlist Success")
+
+            self.countdown_counter = 0
+            return playlist_uri
+
+    def GetSegment(self, playlist_uri: str) -> list:
         file_segments = []
-        logging.info(F"{playlist_uri}")
-        response = HTTPRequest("get", playlist_uri, self.headers).Hit()
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            m3u8_data = m3u8_master.data
-            playlist_uri = playlist_uri.rsplit('/', 1)[0] + '/'
-            segments = m3u8_data["segments"]
-            for segment in segments:
-                print(F"Segment URI: {playlist_uri}{segment['uri']}")
-                file_segments.append({
-                    "url": F"{playlist_uri}{segment['uri']}",
-                    "sequence": int(segment["uri"].split('_')[-1].replace('.ts',''))
-                })
-            file_segments = file_segments[-5:]
-        else:
-            file_segments = []
-            self.segment_status = response.status_code
-            logging.error(F"Error Get Segments: {response.status_code}")
-        
-        return file_segments
-    
-    def DownloadSegment(self, segments:list) -> None:
-        logging.info("Request to Server Converter - Download Segment")
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self.converter_host, self.converter_port))
-
-            to_server = {
-                "event": "download",
-                "environment": self.environment,
-                "storage_path": self.upload_location,
-                "method": "get",
-                "segments": segments,
-                "headers": self.headers
-            }
-            to_server = str(to_server).encode("utf-8")
-            data_format = struct.Struct('I')
-            data_length = len(to_server)
-            s.sendall(data_format.pack(data_length))
-
-            offset = 0
-            while offset < data_length:
-                sent_bytes = s.send(to_server[offset:])
-                offset += sent_bytes
-
-            response = s.recv(self.buffer_size)
-            response = eval(response)
-            if response:
-                logging.info(F"Message from Server Converter: {response['message']}")
-                self.last_sequence = response["sequence"]
-                logging.info(F"Last Sequence: {self.last_sequence}")
+        try:
+            response = self.scraper.get(url =playlist_uri, headers=self.custom_headers, timeout=10)
             
-            s.close()
-            logging.info("Close Connection - Download Segment")
-        return None
-    
+        except Exception as e:
+            error_message = get_exception_message(e)
+            logging.error(
+                f"Exception Get Segments: {type(e).__name__}",
+                extra={
+                    'log_text': error_message,
+                    'detail': str(e)
+                }
+            )
+            self._handle_error_with_notification(error_message, send_immediate=True)
+            self.segment_status = None
+            return []
+
+        if response.status_code != 200:
+            self.segment_status = response.status_code
+            error_message = get_error_message(response.status_code)
+            logging.error(
+                f"Error Get Segments: {response.status_code}",
+                extra={
+                    'log_text': error_message,  
+                    'detail': response.reason
+                }
+            )
+            self._handle_error_with_notification(error_message, send_immediate=True)
+            return []
+
+        try:
+            m3u8_master = m3u8.loads(response.text)
+        except Exception as e:
+            logging.error(f"Failed to parse segments m3u8: {e}", exc_info=True)
+            return []
+
+        segments = m3u8_master.data.get("segments", [])
+        for segment in segments:
+            file_segments.append({
+                "url": f"{self.host_directory}/{segment['uri']}",
+                "sequence": segment['uri'].replace('.ts', '')
+            })
+
+        return file_segments[-5:]
+
+    def DownloadSegment(self, segments: list) -> None:
+        logging.info("Download Segment")
+        self.has_download_error = False
+        for segment in segments:
+            try:
+                response = self.scraper.get(segment["url"], headers=self.custom_headers, timeout=10)
+                if response.status_code == 200:
+                    file_name = f"{segment['sequence']}.ts"
+                    write_file = self.video_prosessor.WriteFile(
+                        file_name=file_name,
+                        content=response.content,
+                        mode="wb",
+                        folder="ts"
+                    )
+                    seq = None
+                    try:
+                        seq = write_file.get("sequence") if write_file else None
+                    except Exception:
+                        seq = None
+
+                    if seq:
+                        self.last_sequence = seq
+                        logging.info(f"Success Download Segment: {file_name}")
+                        self.consecutive_errors = 0
+                    else:
+                        logging.error(f"WriteFile did not return sequence for {file_name}: {write_file}")
+                        self.has_download_error = True
+                        self.consecutive_errors += 1
+                else:
+                    self.segment_status = response.status_code
+                    error_message = get_error_message(response.status_code)
+                    logging.error(
+                        f"Error Download Segment: {response.status_code}",
+                        extra={
+                            'log_text': error_message,
+                            'detail': response.reason
+                        }
+                    )
+                    self._handle_error_with_notification(error_message, send_immediate=True)
+                    self.has_download_error = True
+                    self.consecutive_errors += 1
+
+            except Exception as e:
+                error_message = get_exception_message(e)
+                logging.error(
+                    f"Exception Downloading Segment: {type(e).__name__}",
+                    extra={
+                        'log_text': error_message,
+                        'detail': str(e)
+                    },
+                    exc_info=True
+                )
+                self._handle_error_with_notification(error_message, send_immediate=True)
+                self.has_download_error = True
+                self.consecutive_errors += 1
+
     def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.last_sequence}.ts"
+        if self.last_sequence is None:
+            return {"status": False, "data_ts": []}
+
+        last_ts = f"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
-        
-        if get_total_files >= 88:
+
+        if get_total_files >= self.count_file_ts:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
-            return dict(status=True, data_ts=list_files)
+            return {"status": True, "data_ts": list_files}
+
+        return {"status": False, "data_ts": []}
+
+    def HandleSegments(self, playlist_uri: str) -> str:
+        segments = self.GetSegment(playlist_uri)
+
+        if not segments and self.segment_status in [403, 404, 410, 503]:
+            logging.warning("Attempting to refresh playlist due to error")
+            playlist_uri = self.GetPlaylist()
+
+        if not segments:
+            time.sleep(self.sleep_duration)
+            return playlist_uri
+
+        time.sleep(self.sleep_duration)
+        self.DownloadSegment(segments)
+
+        check_ts = self.CheckTSFiles()
         
-        return dict(status=False, data_ts=[])
+        # Jika ada error download dan ada file TS, lakukan convert langsung
+        if self.has_download_error and self.last_sequence is not None:
+            # Check apakah ada file TS minimal
+            ts_count = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=f"{self.last_sequence}.ts")
+            if ts_count > 0:
+                logging.warning(f"Download error detected with {ts_count} TS files. Converting to MP4 immediately.")
+                now_filename = f"GARUDASTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                response = self.video_prosessor.ConcatTS(
+                    filename=now_filename,
+                    mode="w",
+                    optimize_video=False
+                )
+                logging.info(f"Concat result: {response.get('message')}")
+
+                list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=f"{self.last_sequence}.ts")
+                self.video_prosessor.CleanUPTSFolder(
+                    list_ts=list_files,
+                    metadata=now_filename
+                )
+                self.has_download_error = False
+        # Check normal condition (5 file atau lebih)
+        elif check_ts["status"]:
+            now_filename = f"GARUDASTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+            response = self.video_prosessor.ConcatTS(
+                filename=now_filename,
+                mode="w",
+                optimize_video=False
+            )
+            logging.info(f"Concat result: {response.get('message')}")
+
+            self.video_prosessor.CleanUPTSFolder(
+                list_ts=check_ts["data_ts"],
+                metadata=now_filename
+            )
+
+        return playlist_uri
 
     def StartEngine(self) -> None:
         logging.info("Start Engine")
-
-        logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
-
-        logging.info("Get Playslist Encrypted")
-        playlist_encrypted = self.GetPlaylist()
-
-        logging.info("Get Playlist")
-        playlist_uri = self.GetPlaylistURI(playlist_encrypted)
+        playlist_uri = self.GetPlaylist()
 
         try:
             while self.start_process:
-                if playlist_uri is not None:
-                    logging.info("Get Segment URI")
-                    segments = self.GetSegments(playlist_uri)
+                try:
+                    if not playlist_uri:
+                        playlist_uri = self.GetPlaylist()
+                        time.sleep(self.sleep_duration)
+                        continue
 
-                    while len(segments) == 0:
-                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404:
-                            logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                            playlist_encrypted = self.GetPlaylist()
-
-                            playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-
-                        logging.info("Retry Get Segment URI")
-                        segments = self.GetSegments(playlist_uri)
-                        time.sleep(self.video_duration)
-
-                    time.sleep(self.video_duration)
-                    
-                    logging.info("Download segment")
-                    
-                    try:
-                        self.DownloadSegment(segments)
-                    except ConnectionResetError or ConnectionRefusedError:
-                        while True:
-                            try:
-                                self.DownloadSegment(segments)
-                                break
-                            except ConnectionResetError or ConnectionRefusedError:
-                                logging.error("Retry Download Segment")
-                                time.sleep(self.video_duration)
-                                continue
-                    
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
-
-                    if status_ts:
-                        now_filename = F"GARUDASTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                        logging.info("Request to Server Converter - Concat TS")
-                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                            s.connect((self.converter_host, self.converter_port))
-
-                            to_server = {
-                                "event": "concat",
-                                "environment": self.environment,
-                                "storage_path": self.upload_location,
-                                "mode": "w",
-                                "filename": now_filename,
-                                "optimize_video" : True,
-                            }
-                            to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
-
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
-
-                            response = s.recv(self.buffer_size)
-                            response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
-                            
-                            s.close()
-                            logging.info("Close Connection - Concat TS")
-
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
-                else:
-                    logging.info("Retry Get Playlist URI - Get Playslist Encrypted")
-                    playlist_encrypted = self.GetPlaylist()
-
-                    playlist_uri = self.GetPlaylistURI(playlist_encrypted)
-                    time.sleep(self.video_duration)
-
+                    playlist_uri = self.HandleSegments(playlist_uri)
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    error_message = get_exception_message(e)
+                    logging.error(f"Unhandled exception in engine loop: {e}", exc_info=True)
+                    self._handle_error_with_notification(error_message, send_immediate=True)
+                    time.sleep(self.sleep_duration)
+                    continue
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
-
             self.video_prosessor.CleanUPTSFolder()
-            logging.info("Cleanup TS")
-            return None
-
 
 if __name__ == "__main__":
     ENGINE_NAME = "GARUDASTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    idxindonesia = IDXIndonesiaV1(
+    garuda_tv = GarudaTV(
         environment=ENGINE["ENVIRONMENT"],
-        url=ENGINE["URL"],
-        # host_directory=ENGINE["HOST_DIRECTORY"],
-        playlist_directory=ENGINE["HOST_DIRECTORY"],
-        path_url=ENGINE["HOST_DIRECTORY"],
-        resolution=ENGINE["RESOLUTION"],
+        host_directory=ENGINE["HOST_DIRECTORY"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_GARUDA["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_GARUDA["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_GARUDA["BUFFER_SIZE"],
+        playlist=ENGINE["PLAYLIST"],
+        resolution=ENGINE["RESOLUTION"]
     )
-    idxindonesia.StartEngine()
+    garuda_tv.StartEngine()

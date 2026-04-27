@@ -37,6 +37,9 @@ RUN apt-get install -y ffmpeg
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install cloudscraper
+RUN pip install pusher
+# RUN pip install -U --pre "yt-dlp[default,deno]"
 
 COPY . .
 

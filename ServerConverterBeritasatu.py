@@ -5,7 +5,7 @@ import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorBeritsasatu import VideoProsessor
+from libs.VideoProsessorBeritasatu import VideoProsessor
 
 class ServerConverter:
 

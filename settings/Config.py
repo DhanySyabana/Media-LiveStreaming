@@ -32,7 +32,7 @@ class Config(object):
             URLV1 = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
             # HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #old
-            HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
+            HOST_DIRECTORYV1 = "https://icdn.rctiplus.id/anevia1", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/inews",
@@ -188,7 +188,7 @@ class Config(object):
         #ENGINE_KEYS[5]
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
+            URL = "https://www.youtube.com/watch?v=ftuihGt1zuw",
             QUALITY = "360p",
             ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
             UPLOAD_LOCATION = "storage/idx",
@@ -357,9 +357,10 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
+            # HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 Januari 2026
+            RESOLUTION = "426x240",
             HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
-            RESOLUTION = "426x240",
             UPLOAD_LOCATION = "storage/rcti",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
@@ -460,7 +461,7 @@ class Config(object):
             #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
             # https://pullstream.transtv.co.id/livettv/
             #PLAYLIST = "livestreamttv.m3u8",
-            PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
+            PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/transtv",
             HEADERS = {
@@ -575,7 +576,7 @@ class Config(object):
         #ENGINE_KEYS[13]
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=B9dEq-lU4yU",
+            URL = "https://www.youtube.com/watch?v=BpT2mGUdTN0",
             QUALITY = "360p",
             ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
             UPLOAD_LOCATION = "storage/mnc",
@@ -624,10 +625,9 @@ class Config(object):
         #ENGINE_KEYS[16]
         GARUDASTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URL = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
-            RESOLUTION = "1024x576",
-            PLAYLIST = "01.m3u8",
+            URL = "https://hgmtv.com:19360/garudatvlivestreaming/",
+            RESOLUTION = "1280x720",
+            PLAYLIST = "garudatvlivestreaming.m3u8",
             HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
             UPLOAD_LOCATION = "storage/garuda",
             HEADERS = {
@@ -921,9 +921,9 @@ class Config(object):
         #ENGINE_KEYS[27]
         JAWAPOSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVJKT/_definst_/myStream/",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVSBY/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
-            RESOLUTION = "1280x720",
+            RESOLUTION = '1280x720',
             UPLOAD_LOCATION = "storage/jawapos",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -990,20 +990,20 @@ class Config(object):
         TELEGRAM_MESSAGE_THREAD_ID = 3042,
         SEND_TIME = 60 * 60,
         STORAGE_PATH = {
-            ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
+            #ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
+            #ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[15]: ENGINE[ENGINE_KEYS[15]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[16]: ENGINE[ENGINE_KEYS[16]]["UPLOAD_LOCATION"],
@@ -1027,20 +1027,20 @@ class Config(object):
         TELE_CHAT_ID = "-897317690",
         SEND_TIME = 60 * 40,
         STORAGE_PATH = {
-            ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
             #ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
             ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
+            # ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[15]: ENGINE[ENGINE_KEYS[15]]["UPLOAD_LOCATION"],
             # ENGINE_KEYS[16]: ENGINE[ENGINE_KEYS[16]]["UPLOAD_LOCATION"],
@@ -1410,10 +1410,10 @@ class Config(object):
     )
 
     DB = dict(
-        HOST = "172.22.0.2",
+        HOST = "localhost",
         PORT = 3306,
-        NAME = "log_livestream",
+        NAME = "produksi_tv",
         USER = "root",
-        PASS = "1Teung@Kabayan123",
-        TABLE_NAME = "logs"
+        PASS = "Bismillahkabayan123!",
+        TABLE_NAME = "streaming_logs"
     )
