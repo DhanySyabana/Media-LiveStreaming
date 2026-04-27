@@ -169,10 +169,10 @@ class INewsV1:
                     # "url": F"{self.host_directory}{self.query}/{segment['uri']}",
                     
                     ## host_directory https://rcti-linier.rctiplus.id
-                    # "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
+                    "url": F"{self.host_directory}/{self.query}/{segment['uri']}",
 
                     ## host_directory https://1s1.rctiplus.id
-                    "url": F"{self.host_directory}/{segment['uri']}",
+                    # "url": F"{self.host_directory}/{segment['uri']}",
                     
                     "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
                 })
@@ -244,7 +244,7 @@ class INewsV1:
         last_ts = F"{self.last_sequence}.ts"
         get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
         
-        if get_total_files >= 300:
+        if get_total_files >= 150:
             list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
             return dict(status=True, data_ts=list_files)
         

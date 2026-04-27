@@ -85,7 +85,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
             # URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
-            URL = "https://www.youtube.com/watch?v=-CwtcKDaaLA",
+            URL = "https://www.youtube.com/@metrotvnews/live",
             ID_CHANNEL = "UCzl0OrB3-ehunyotIQvK77A",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/metro",
@@ -342,10 +342,10 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
-            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
+            # HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
+            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
-            RESOLUTION = "426x240",
+            RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/rcti",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
@@ -444,7 +444,7 @@ class Config(object):
             #HOST_DIRECTORY ="https://pullstream.transtv.co.id/livettv",
             # https://pullstream.transtv.co.id/livettv/
             #PLAYLIST = "livestreamttv.m3u8",
-            PLAYLIST = "chunklist_w835097260_b744100_sleng.m3u8",
+            PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
             UPLOAD_LOCATION = "storage/transtv",
             HEADERS = {
@@ -558,9 +558,9 @@ class Config(object):
         # ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=UV6zr5GBU30",
+            URL = "https://www.youtube.com/@OfficialSINDOnews/live",
             QUALITY = "360p",
-            ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
+            ID_CHANNEL = "UCkn9qujnxTVHdW9uP1S7zKw",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -614,25 +614,24 @@ class Config(object):
             }
         ),
         GARUDASTREAMING = dict(
-                ENVIRONMENT = "dev",
-                # URLV1 = "https://www.beritasatu.com/livestream", OLD
-                URLV1 = "https://hgmtv.com:19360/garudatvlivestreaming/garudatvlivestreaming.m3u8",
-                RESOLUTION = "1024x576",
-                PLAYLIST = "01.m3u8",
-                HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming",
-                UPLOAD_LOCATION = "storage/garuda",
-                HEADERS = {
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                    'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'cross-site',
-                    'accept': '*/*',
-                    'accept-encoding': 'gzip, deflate, br',
-                    'accept-language': 'en-US,en;q=0.9'
-                }
+            ENVIRONMENT = "dev",
+            URL = "https://hgmtv.com:19360/garudatvlivestreaming/",
+            RESOLUTION = "1280x720",
+            PLAYLIST = "garudatvlivestreaming.m3u8",
+            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
+            UPLOAD_LOCATION = "storage/garuda",
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
             ),
         )
         
@@ -975,11 +974,11 @@ class Config(object):
     )
 
     DB = dict(
-        HOST = "172.22.0.2",
+        HOST = "192.168.128.4",
         PORT = 3306,
-        NAME = "log_livestream",
-        USER = "root",
-        PASS = "1Teung@Kabayan123",
-        TABLE_NAME = "logs"
+        NAME = "produksi_tv",
+        USER = "user_remote_1",
+        PASS = "Bismillahkabayan123!",
+        TABLE_NAME = "streaming_logs"
     )
 
