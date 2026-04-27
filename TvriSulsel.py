@@ -1,16 +1,18 @@
 import m3u8
 import time
+import socket
+import struct
 import logging
 import datetime
 import cloudscraper
 from libs.Loggers1 import Loggers
 from settings.Config import Config
-from libs.VideoProsessorCNN import VideoProsessor
+from libs.VideoProsessorTvriSulsel import VideoProsessor
 from libs.ErrorHandler import get_error_message, get_exception_message
 from libs.PusherNotification import trigger_error_notification
 from libs.Countdown import countdown_sleep
 
-class cnnIndonesia:
+class TvriSulsel:
 
     def __init__(
         self,
@@ -18,13 +20,21 @@ class cnnIndonesia:
         host_directory: str = None,
         upload_location: str = None,
         headers: dict = None,
+        buffer_size: int = None,
         playlist: str = None,
-        resolution: str = None
+        resolution: str = None,
+        host_directory_ts: str = None
     ) -> None:
         self.environment = environment
         self.host_directory = host_directory
+        self.host_directory_ts = host_directory_ts
+        self.url_segment = None
         self.upload_location = upload_location
         self.custom_headers = headers
+        self.start_process = True
+        self.video_duration = 7
+        self.last_sequence = None
+        self.buffer_size = buffer_size
         self.playlist = playlist
         self.resolution = resolution
 
@@ -32,16 +42,14 @@ class cnnIndonesia:
 
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
 
-        self.start_process = True
         self.sleep_duration = 10
-        self.last_sequence = None
         self.segment_status = None
         self.max_retry = 5
         self.retry_count = 0
         self.max_attempts = 3
         self.countdown_counter = 0
-        self.max_countdown_before_notif = 3 
-        self.count_file_ts = 150
+        self.max_countdown_before_notif = 3
+        self.count_file_ts = 60
         self.has_download_error = False
         self.consecutive_errors = 0
         self.max_consecutive_errors = 3
@@ -52,120 +60,23 @@ class cnnIndonesia:
     def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
         if send_immediate and self.countdown_counter == 0:
-            trigger_error_notification(channel_name='CNNIndonesia', log_text=error_message)
+            trigger_error_notification(channel_name='TVRI Sulsel', log_text=error_message)
         
         countdown_sleep(300)
         
         self.countdown_counter += 1
         
         if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
-            trigger_error_notification(channel_name='CNNIndonesia', log_text=error_message)
+            trigger_error_notification(channel_name='TVRI Sulsel', log_text=error_message)
             logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
             remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
             logging.warning(f"Countdown cycle {self.countdown_counter}, next notification in {remaining_cycles} more cycles ({remaining_cycles * 5} minutes)")
 
-    def GetPlaylist(self) -> str:
-        
-        url = f"{self.host_directory}/{self.playlist}"
-        logging.info(f"URL: {url}")
-
-        
-        last_error = None
-        last_error_detail = None
-        last_exc = False
-
-        for attempt in range(1, self.max_attempts + 1):
-            try:
-                response = self.scraper.get(url, headers=self.custom_headers, timeout=10)
-            except Exception as e:
-                last_error = get_exception_message(e)
-                last_error_detail = str(e)
-                last_exc = True
-                self.segment_status = None
-                if attempt < self.max_attempts:
-                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Exception), retrying in 10 seconds...")
-                    time.sleep(10)
-                    continue
- 
-                logging.error(
-                    f"Exception Get Playlist after {self.max_attempts} attempts: {type(e).__name__}",
-                    extra={
-                        'log_text': last_error,
-                        'detail': last_error_detail
-                    },
-                    exc_info=True
-                )
-                self._handle_error_with_notification(last_error, send_immediate=True)
-                return None
-
-            if response.status_code != 200:
-                self.segment_status = response.status_code
-                last_error = get_error_message(response.status_code)
-                last_error_detail = response.reason
-                if attempt < self.max_attempts:
-                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Status {response.status_code}), retrying in 10 seconds...")
-                    time.sleep(10)
-                    continue
-                logging.error(
-                    f"Error Get Playlist after {self.max_attempts} attempts: {response.status_code}",
-                    extra={
-                        'log_text': last_error,
-                        'detail': last_error_detail
-                    }
-                )
-                self._handle_error_with_notification(last_error, send_immediate=True)
-                return None
-
-            try:
-                m3u8_master = m3u8.loads(response.text)
-            except Exception as e:
-                last_error = get_exception_message(e)
-                last_error_detail = str(e)
-                last_exc = True
-                if attempt < self.max_attempts:
-                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Parse error), retrying in 10 seconds...")
-                    time.sleep(10)
-                    continue
-                logging.error(f"Failed to parse playlist m3u8 after {self.max_attempts} attempts: {last_error}", exc_info=True)
-                self._handle_error_with_notification(last_error, send_immediate=True)
-                return None
-
-            playlists = m3u8_master.data.get("playlists", [])
-            if not playlists:
-                last_error = "No playlists found in master playlist"
-                last_error_detail = "master playlist contains no variant playlists"
-                if attempt < self.max_attempts:
-                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (No playlists), retrying in 10 seconds...")
-                    time.sleep(10)
-                    continue
-                logging.error(f"No playlists after {self.max_attempts} attempts; {last_error}")
-                self._handle_error_with_notification(last_error, send_immediate=True)
-                return None
-
-            playlist_uri = None
-            if hasattr(self, 'resolution') and self.resolution:
-                for playlist in playlists:
-                    stream_info = playlist.get("stream_info", {})
-                    if stream_info.get("resolution") == self.resolution:
-                        playlist_uri = f"{self.host_directory}/{playlist['uri']}"
-                        logging.info(f"Playlist obtained for resolution {self.resolution}")
-                        break
-
-                if not playlist_uri:
-                    logging.warning(f"Playlist not found for resolution {self.resolution}, using first available")
-
-            if not playlist_uri:
-                playlist_uri = f"{self.host_directory}/{playlists[0]['uri']}"
-                logging.info("Get Playlist Success")
-
-            self.countdown_counter = 0
-            return playlist_uri
-
-    def GetSegment(self, playlist_uri: str) -> list:
+    def GetSegment(self) -> list:
         file_segments = []
         try:
-            response = self.scraper.get(playlist_uri, headers=self.custom_headers, timeout=10)
+            response = self.scraper.get(self.url_segment, headers=self.custom_headers, timeout=10)
         except Exception as e:
             error_message = get_exception_message(e)
             logging.error(
@@ -201,10 +112,9 @@ class cnnIndonesia:
         segments = m3u8_master.data.get("segments", [])
         for segment in segments:
             file_segments.append({
-                "url": f"{self.host_directory}/{segment['uri']}",
-                "sequence": segment['uri'].replace('.ts', '')
+                "url": f"{self.host_directory_ts}/{segment['uri'].replace('../','')}",
+                "sequence": int(segment["uri"].split("seq=")[1].split(".ts")[0])
             })
-
         return file_segments[-5:]
 
     def DownloadSegment(self, segments: list) -> None:
@@ -261,7 +171,7 @@ class cnnIndonesia:
                 self._handle_error_with_notification(error_message, send_immediate=True)
                 self.has_download_error = True
                 self.consecutive_errors += 1
-
+    
     def CheckTSFiles(self) -> dict:
         if self.last_sequence is None:
             return {"status": False, "data_ts": []}
@@ -274,9 +184,107 @@ class cnnIndonesia:
             return {"status": True, "data_ts": list_files}
 
         return {"status": False, "data_ts": []}
+    
+    def GetPlaylist(self) -> str:
+        playlist_uri = None
+        url = f"{self.host_directory}"
+        logging.info(f"URL: {url}")
 
+        last_error = None
+        last_error_detail = None
+        last_exc = False
+
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self.scraper.get(url, headers=self.custom_headers, timeout=10)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                self.segment_status = None
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Exception), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+
+                logging.error(
+                    f"Exception Get Playlist after {self.max_attempts} attempts: {type(e).__name__}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    },
+                    exc_info=True
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            if response.status_code != 200:
+                self.segment_status = response.status_code
+                last_error = get_error_message(response.status_code)
+                last_error_detail = response.reason
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Status {response.status_code}), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(
+                    f"Error Get Playlist after {self.max_attempts} attempts: {response.status_code}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    }
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            try:
+                m3u8_master = m3u8.loads(response.text)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Parse error), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"Failed to parse playlist m3u8 after {self.max_attempts} attempts: {last_error}", exc_info=True)
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            playlists = m3u8_master.data.get("playlists", [])
+            if not playlists:
+                last_error = "No playlists found in master playlist"
+                last_error_detail = "master playlist contains no variant playlists"
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (No playlists), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"No playlists after {self.max_attempts} attempts; {last_error}")
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
+
+            base_url = self.host_directory.rsplit('/', 1)[0]
+
+            if hasattr(self, 'resolution') and self.resolution:
+                for playlist in playlists:
+                    stream_info = playlist.get("stream_info", {})
+                    if stream_info.get("resolution") == self.resolution:
+                        playlist_uri = f"{base_url}/{playlist['uri'].lstrip('/')}"
+                        logging.info(f"Playlist obtained for resolution {self.resolution}")
+                        break
+
+            if not playlist_uri:
+                logging.warning(f"Playlist not found for resolution {self.resolution}, using first available")
+
+            if not playlist_uri:
+                playlist_uri = f"{base_url}/{playlists[0]['uri'].lstrip('/')}"
+                logging.info("Get Playlist Success")
+
+            self.countdown_counter = 0
+            return playlist_uri
+    
     def HandleSegments(self, playlist_uri: str) -> str:
-        segments = self.GetSegment(playlist_uri)
+        self.url_segment = playlist_uri
+        segments = self.GetSegment()
 
         if not segments and self.segment_status in [403, 404, 410, 503]:
             logging.warning("Attempting to refresh playlist due to error")
@@ -287,17 +295,31 @@ class cnnIndonesia:
             return playlist_uri
 
         time.sleep(self.sleep_duration)
-        self.DownloadSegment(segments)
 
-        check_ts = self.CheckTSFiles()
+        logging.info("Download segment")
+        try:
+            self.DownloadSegment(segments)
+        except ConnectionResetError or ConnectionRefusedError:
+            while True:
+                try:
+                    self.DownloadSegment(segments)
+                    break
+                except ConnectionResetError or ConnectionRefusedError:
+                    logging.error("Retry Download Segment")
+                    time.sleep(self.video_duration)
+                    continue
         
+        check_ts = self.CheckTSFiles()
+        status_ts = check_ts["status"]
+        data_ts = check_ts["data_ts"]
+
         # Jika ada error download dan ada file TS, lakukan convert langsung
         if self.has_download_error and self.last_sequence is not None:
             # Check apakah ada file TS minimal
             ts_count = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=f"{self.last_sequence}.ts")
             if ts_count > 0:
                 logging.warning(f"Download error detected with {ts_count} TS files. Converting to MP4 immediately.")
-                now_filename = f"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                now_filename = f"TVRISULSELSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
                 response = self.video_prosessor.ConcatTS(
                     filename=now_filename,
                     mode="w",
@@ -312,8 +334,8 @@ class cnnIndonesia:
                 )
                 self.has_download_error = False
         # Check normal condition (5 file atau lebih)
-        elif check_ts["status"]:
-            now_filename = f"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+        elif status_ts:
+            now_filename = f"TVRISULSELSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
             response = self.video_prosessor.ConcatTS(
                 filename=now_filename,
                 mode="w",
@@ -322,7 +344,7 @@ class cnnIndonesia:
             logging.info(f"Concat result: {response.get('message')}")
 
             self.video_prosessor.CleanUPTSFolder(
-                list_ts=check_ts["data_ts"],
+                list_ts=data_ts,
                 metadata=now_filename
             )
 
@@ -330,7 +352,11 @@ class cnnIndonesia:
 
     def StartEngine(self) -> None:
         logging.info("Start Engine")
+
+        logging.info("Cleanup TS")
         self.video_prosessor.CleanUPTSFolder()
+
+        logging.info("Get Playlist URI")
         playlist_uri = self.GetPlaylist()
 
         try:
@@ -353,18 +379,23 @@ class cnnIndonesia:
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
+
             self.video_prosessor.CleanUPTSFolder()
+            logging.info("Cleanup TS")
+            return None
+
 
 if __name__ == "__main__":
-    ENGINE_NAME = "CNNINDONESIASTREAMING"
+    ENGINE_NAME = "TVRISULSELSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    cnnindonesia = cnnIndonesia(
+    tvri_sulsel = TvriSulsel(
         environment=ENGINE["ENVIRONMENT"],
         host_directory=ENGINE["HOST_DIRECTORY"],
+        host_directory_ts=ENGINE["HOST_DIRECTORY_TS"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         playlist=ENGINE["PLAYLIST"],
-        resolution=ENGINE["RESOLUTION"]
+        resolution=ENGINE["RESOLUTION"],
     )
-    cnnindonesia.StartEngine()
+    tvri_sulsel.StartEngine()

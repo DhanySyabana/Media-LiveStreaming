@@ -34,9 +34,16 @@ class VideoProsessor:
                 os.makedirs(path)
                 # os.umask(oldmask)
             
-            with open(F"{path}/{file_name}", mode) as file:
+            temp_file = F"{path}/{file_name}.part"
+            with open(temp_file, mode) as file:
                 file.write(content)
                 file.close()
+            # atomic replace to avoid readers seeing incomplete files
+            try:
+                os.replace(temp_file, F"{path}/{file_name}")
+            except Exception:
+                # fallback to rename if replace is unavailable
+                os.rename(temp_file, F"{path}/{file_name}")
             logging.info(F"Success Write File: {file_name}")
             return {
                 "status": True,
@@ -156,6 +163,4 @@ class VideoProsessor:
         except Exception as e:
             logging.error(F"Error List Files: {e}")
             return []
-
-
-    
+ 

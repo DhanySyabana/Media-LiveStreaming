@@ -465,7 +465,7 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 12.12.12.22
+        ipv4_address: 12.12.12.36
     restart: unless-stopped
     command: python ${ENGINE_CONVERTER_RCTI}
     logging:
@@ -910,7 +910,51 @@ services:
         max-size: "5m"
         max-file: "3"
 
-    
+  engine_server_converter_dhoho:
+    image: media_livestreaming_engine:latest
+    container_name: engine_server_converter_dhoho
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_CONVERTER_DHOHO}
+    volumes:
+      - ./:/app
+      - ${HOST_INEWS}:/app/storage/inews
+      - ${HOST_CNN}:/app/storage/cnn
+      - ${HOST_KOMPAS}:/app/storage/kompas
+      - ${HOST_METRO}:/app/storage/metro
+      - ${HOST_CNBC}:/app/storage/cnbc
+      - ${HOST_IDX}:/app/storage/idx
+      - ${HOST_TVONE}:/app/storage/tvone
+      - ${HOST_BERITASATU}:/app/storage/beritasatu
+      - ${HOST_TVRI}:/app/storage/tvri 
+      - ${HOST_RCTI}:/app/storage/rcti
+      - ${HOST_TRANS7}:/app/storage/trans7   
+      - ${HOST_TRANSTV}:/app/storage/transtv 
+      - ${HOST_RTV}:/app/storage/rtv   
+      - ${HOST_MNC}:/app/storage/mnc 
+      - ${HOST_SEATODAY}:/app/storage/seatoday
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
+      - ${HOST_TVRIJATIM}:/app/storage/tvrijatim
+      - ${HOST_TVRILAMPUNG}:/app/storage/tvrilampung
+      - ${HOST_TVRISULSEL}:/app/storage/tvrisulsel
+      - ${HOST_BANTENTV}:/app/storage/bantentv
+      - ${HOST_DHOHO}:/app/storage/dhoho
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.57
+    restart: unless-stopped
+    command: python  ${ENGINE_CONVERTER_DHOHO}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
   engine_inews_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_inews_v1
@@ -957,12 +1001,7 @@ services:
         ipv4_address: 12.12.12.3
     restart: unless-stopped
     command: python ${ENGINE_CNN}
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "3"
-
+        
   engine_kompas_v1:
     image: media_livestreaming_engine:latest
     container_name: engine_kompas_v1
@@ -1029,14 +1068,9 @@ services:
       - TZ=Asia/Jakarta
     networks:
       default:
-        ipv4_address: 12.12.12.6
+        ipv4_address: 12.12.12.4
     restart: unless-stopped
     command: python ${ENGINE_CNBC}
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "3"
 
   engine_idx_v1:
     image: media_livestreaming_engine:latest
@@ -1338,26 +1372,180 @@ services:
         max-size: "5m"
         max-file: "3"
   
+  engine_tvribali_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvribali_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRIBALI}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.6
+    restart: unless-stopped
+    command: python ${ENGINE_TVRIBALI}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
 
-  # engine_tvribali_v1:
-  #   image: media_livestreaming_engine:latest
-  #   container_name: engine_tvribali_v1
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - ENGINE=${ENGINE_TVRIBALI}
-  #   volumes:
-  #     - ./:/app
-  #     - ${HOST_TVRIBALI}:/app/storage/tvribali
-  #   environment:
-  #     - PYTHONUNBUFFERED=1
-  #     - TZ=Asia/Jakarta
-  #   networks:
-  #     default:
-  #       ipv4_address: 12.12.12.41
-  #   restart: unless-stopped
-  #   command: python ${ENGINE_TVRIBALI}
+  engine_tvrijatim_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrijatim_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRIJATIM}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRIJATIM}:/app/storage/tvrijatim
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.9
+    restart: unless-stopped
+    command: python ${ENGINE_TVRIJATIM}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+  
+  engine_tvrikalbar_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrikalbar_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRIKALBAR}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRIKALBAR}:/app/storage/tvrikalbar
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.20
+    restart: unless-stopped
+    command: python ${ENGINE_TVRIKALBAR}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  engine_tvrilampung_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrilampung_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRILAMPUNG}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRILAMPUNG}:/app/storage/tvrilampung
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.60
+    restart: unless-stopped
+    command: python ${ENGINE_TVRILAMPUNG}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  engine_tvrisulsel_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrisulsel_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRISULSEL}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRISULSEL}:/app/storage/tvrisulsel
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.28
+    restart: unless-stopped
+    command: python ${ENGINE_TVRISULSEL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+  
+  engine_tvrisumut_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvrisumut_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRISUMUT}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRISUMUT}:/app/storage/tvrisumut
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.29
+    restart: unless-stopped
+    command: python ${ENGINE_TVRISUMUT}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  engine_tvriyogya_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_tvriyogya_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_TVRIYOGYA}
+    volumes:
+      - ./:/app
+      - ${HOST_TVRIYOGYA}:/app/storage/tvriyogya
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.45
+    restart: unless-stopped
+    command: python ${ENGINE_TVRIYOGYA}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
 
   engine_garuda_v1:
     image: media_livestreaming_engine:latest
@@ -1378,6 +1566,56 @@ services:
         ipv4_address: 12.12.12.50
     restart: unless-stopped
     command: python ${ENGINE_GARUDA}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  engine_bantentv_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_bantentv_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_BANTENTV}
+    volumes:
+      - ./:/app
+      - ${HOST_BANTENTV}:/app/storage/bantentv
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.53
+    restart: unless-stopped
+    command: python ${ENGINE_BANTENTV}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+  
+  engine_dhoho_v1:
+    image: media_livestreaming_engine:latest
+    container_name: engine_dhoho_v1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENGINE=${ENGINE_DHOHO}
+    volumes:
+      - ./:/app
+      - ${HOST_DHOHO}:/app/storage/dhoho
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Jakarta
+    networks:
+      default:
+        ipv4_address: 12.12.12.54
+    restart: unless-stopped
+    command: python ${ENGINE_DHOHO}
     logging:
       driver: "json-file"
       options:
@@ -1445,6 +1683,7 @@ services:
       - ${HOST_TVONE}:/app/storage/tvone
       - ${HOST_BERITASATU}:/app/storage/beritasatu
       - ${HOST_TVRI}:/app/storage/tvri
+      - ${HOST_TVRIBALI}:/app/storage/tvribali
       - ${HOST_RCTI}:/app/storage/rcti 
       - ${HOST_TRANS7}:/app/storage/trans7
       - ${HOST_TRANSTV}:/app/storage/transtv

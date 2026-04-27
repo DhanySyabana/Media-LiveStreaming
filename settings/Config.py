@@ -5,7 +5,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
-            #  HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
+            # HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 January 2026
             # HOST_DIRECTORYV1 = "https://inewscdn.rctiplus.id", #OLD
             # HOST_DIRECTORYV1 = "https://icdn.rctiplus.id", #NEW
             HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #OLD
@@ -75,36 +75,36 @@ class Config(object):
         #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
-        KOMPASSTREAMING = dict(
-            ENVIRONMENT = "dev",
-            URL = "https://op-group1-swiftservehd-1.dens.tv/s/s104", 
-            # RESOLUTION = "640x360",
-            RESOLUTION = "640x480",
-            PLAYLIST = "index.m3u8",
-            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/s/s104",
-            UPLOAD_LOCATION = "storage/kompas",
-            HEADERS = {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
-            }
-        ),
         # KOMPASSTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     URL ='https://www.youtube.com/watch?v=J9J1jJ1J1J1',
-        #     QUALITY = "360p",
+        #     URL = "https://op-group1-swiftservehd-1.dens.tv/s/s104", 
+        #     # RESOLUTION = "640x360",
+        #     RESOLUTION = "640x480",
+        #     PLAYLIST = "index.m3u8",
+        #     HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/s/s104",
         #     UPLOAD_LOCATION = "storage/kompas",
         #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        #         'Origin': 'https://www.dens.tv',
+        #         'Referer': 'https://www.dens.tv/',
+        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+        #         'sec-ch-ua-mobile': '?0',
+        #         'sec-ch-ua-platform': '"Windows"',
+        #         'sec-fetch-dest': 'empty',
+        #         'sec-fetch-mode': 'cors',
+        #         'sec-fetch-site': 'cross-site',
+        #         'accept': '*/*',
+        #         'accept-encoding': 'gzip, deflate, br',
+        #         'accept-language': 'en-US,en;q=0.9'
         #     }
         # ),
+        KOMPASSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URL ='https://op-group1-swiftservehd-1.dens.tv/s/s104/02.m3u8',
+            QUALITY = "360p",
+            UPLOAD_LOCATION = "storage/kompas",
+            DURATION = "600"
+        ),
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h12",
@@ -126,72 +126,29 @@ class Config(object):
             }
         ),
         
-        
-        
-        # METROTVSTREAMING = dict(
+        # CNNINDONESIASTREAMING = dict(
         #     ENVIRONMENT = "dev",
-        #     HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
+        #     HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
         #     PLAYLIST = "playlist.m3u8",
         #     RESOLUTION = "640x360",
-        #     UPLOAD_LOCATION = "storage/metro",
+        #     UPLOAD_LOCATION = "storage/cnn",
         #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+        #         'referer': 'https://www.cnnindonesia.com/',
+        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
         #     }
         # ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     # URL = get_channel_data('METROTVSTREAMING')[0].get('url', ''),
-        #     # QUALITY = get_channel_data('METROTVSTREAMING')[0].get('resolusi', ''),
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     # COOKIES = get_channel_data('METROTVSTREAMING')[0].get('cookies', ''),
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        #     }
-        # ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-        #     URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
-        #     QUALITY = "360p",
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        #     }
-        # ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/777/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/777/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
-        CNNSTREAMING = dict(
+
+        CNNINDONESIASTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
-            PLAYLIST = "playlist.m3u8",
-            RESOLUTION = "640x360",
+            URL = "https://www.youtube.com/watch?v=qbxprL02jWk",
+            QUALITY = "360p",
             UPLOAD_LOCATION = "storage/cnn",
             HEADERS = {
-                'referer': 'https://www.cnnindonesia.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        CNBCSTREAMING = dict(
+        
+        CNBCINDONESIASTREAMING = dict(
             ENVIRONMENT = "dev",
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
@@ -285,25 +242,32 @@ class Config(object):
 
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://beritasatu.secureswiftcontent.com/han/beritasatu/bsatu10008r/srtoutput",
+            URL = "https://op-group1-swiftservehd-1.dens.tv/h/h209", 
+            # RESOLUTION = "640x360",
+            RESOLUTION = "480x360",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
             UPLOAD_LOCATION = "storage/beritasatu",
-            HEADERS = {"User-Agent": "Mozilla/5.0"},
-            # audio & video dipisah lewat PLAYLIST
-            PLAYLIST_AUDIO = "haudio-eng.m3u8",
-            PLAYLIST_VIDEO = "hvideo-640x360.m3u8",
-            RESOLUTION = None,
+            HEADERS = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9'
+            }
         ),
 
-
-        
-        
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
             URLV1 = "https://www.dens.tv/tv-local/watch/17/tvri",
             RESOLUTION = "480x360",
-            PLAYLIST = "02.m3u8",
-            HOST_DIRECTORY = "https://op-group1-swiftservesd-1.dens.tv/s/s11/index.m3u8",
-            HOST_DIRECTORY_TS = "https://op-group1-swiftservesd-1.dens.tv/s/s11/",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservesd-1.dens.tv/s/s11",
             UPLOAD_LOCATION = "storage/tvri",
             HEADERS ={
                 'origin': 'https://www.dens.tv',
@@ -326,10 +290,10 @@ class Config(object):
             ENVIRONMENT = "dev",
             URLV1 = "https://www.rctiplus.com/tv/rcti",
             RESOLUTIONV1 = "640x360",
-            HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 Januari 2026
+            # HOST_DIRECTORYV1 = "https://1s1.rctiplus.id", #NEW 26 Januari 2026
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id",
             # HOST_DIRECTORYV1 = "https://rcticdn.rctiplus.id", # OLD
-            # HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEW
+            HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #NEWine
             RESOLUTION = "426x240",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
             UPLOAD_LOCATION = "storage/rcti",
@@ -421,7 +385,7 @@ class Config(object):
         ),
         JAWAPOSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVJKT/_definst_/myStream/",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVSBY/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = '1280x720',
             UPLOAD_LOCATION = "storage/jawapos",
@@ -432,7 +396,7 @@ class Config(object):
 
         PONTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream/",
+            HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = None,
             UPLOAD_LOCATION = "storage/pontv",
@@ -487,7 +451,7 @@ class Config(object):
         # ),
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=mPfD52n-zdE",
+            URL = "https://www.youtube.com/watch?v=BpT2mGUdTN0",
             QUALITY = "360p",
             UPLOAD_LOCATION = "storage/mnc",
             HEADERS = {
@@ -543,19 +507,13 @@ class Config(object):
         # ),
         GARUDASTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.vidio.com/live/18162-garuda-tv",
-            RESOLUTION = "640x360",
-            PLAYLIST = "B1News_320x240.m3u8",
-            #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
-            #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
-            # HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
-            HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/stream/18162/file/live/18162/master.m3u8",
-            PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
+            URL = "https://hgmtv.com:19360/garudatvlivestreaming/",
+            RESOLUTION = "1024x576",
+            PLAYLIST = "garudatvlivestreaming.m3u8",
+            HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
             UPLOAD_LOCATION = "storage/garuda",
             HEADERS = {
-                'origin': 'https://www.vidio.com',
-                'referer': 'https://www.vidio.com/live/18162-garuda-tv',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
@@ -687,6 +645,54 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
+        TVRISUMUTSTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sumut/hls/Sumut.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sumut",
+            UPLOAD_LOCATION = "storage/tvrisumut",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
+        TVRIYOGYASTREAMING = dict(
+            ENVIRONMENT = "dev",
+            URLV1 = "http://klik.tvri.go.id/",
+            RESOLUTION = "640x360",
+            # RESOLUTION = "480x240", #OLD
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
+            HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta",
+            UPLOAD_LOCATION = "storage/tvriyogya",
+            HEADERS = {
+                'origin': 'http://klik.tvri.go.id',
+                'referer': 'http://klik.tvri.go.id/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'accept': '*/*',
+                'accept-encoding': 'gzip, deflate, br',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8'
+            }
+        ),
         # JAKTVSTREAMING = dict(
         #     ENVIRONMENT = "dev",
         #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
@@ -738,9 +744,6 @@ class Config(object):
         ),
         BANTENTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
-            
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
@@ -762,9 +765,6 @@ class Config(object):
         ),  
         DHOHOSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://www.beritasatu.com/livestream", OLD
-            URLV1 = "https://dhohotv.siar.us/dhohotv/live",
-            
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://dhohotv.siar.us/dhohotv/live",
@@ -786,16 +786,13 @@ class Config(object):
         ),
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URLV1 = "https://v5.siar.us/nusantaratv/live/",
-            URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
-            RESOLUTION = "320x240",
-            PLAYLIST = "playlist.m3u8",
-            HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
+            URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h47",
+            RESOLUTION = "480x360",
+            PLAYLIST = "index.m3u8",
+            HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
             UPLOAD_LOCATION = "storage/nusantaratv",
             HEADERS = {
-                'origin': 'https://nusantaratv.com',
-                'referer': 'https://nusantaratv.com/',
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
@@ -970,7 +967,7 @@ class Config(object):
     )
 
     SOCKET_SERVER_RCTI = dict(
-        HOST = "12.12.12.22",
+        HOST = "12.12.12.36",
         PORT = 6161,
         MAX_CONNECTION = 4,
         BUFFER_SIZE = 1024
@@ -1291,10 +1288,10 @@ class Config(object):
     )
 
     DB = dict(
-        HOST = "172.22.0.2",
+        HOST = "192.168.129.2",
         PORT = 3306,
-        NAME = "log_livestream",
-        USER = "root",
-        PASS = "1Teung@Kabayan123",
-        TABLE_NAME = "logs"
+        NAME = "produksi_tv",
+        USER = "user_remote_2",
+        PASS = "Bismillahkabayan123!",
+        TABLE_NAME = "streaming_logs"
     )

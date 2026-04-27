@@ -1,240 +1,175 @@
-import m3u8
-import time
-import socket
-import struct
+import subprocess
+import os
+import signal
 import logging
+import time
 import datetime
-import requests
-from libs.Loggers import Loggers
+
+from libs.Loggers1 import Loggers
 from settings.Config import Config
-from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorKompas import VideoProsessor
+from libs.ErrorHandler import get_error_message, get_exception_message
+from libs.PusherNotification import trigger_error_notification
+from libs.Countdown import countdown_sleep
 
-
-class BeritaSatu:
+class KompasTv:
 
     def __init__(
             self,
-            environment:str,
-            host_directory:str = None,
-            upload_location:str = None,
-            headers: dict = None,
-            converter_host: str = None,
-            converter_port: int = None,
-            buffer_size: int = None,
-            playlist: str = None,
-            resolution: str = None
+            environment: str,
+            url: str = None,
+            upload_location: str = None,
+            duration: str = None
         ) -> None:
         self.environment = environment
-        self.host_directory = host_directory
-        self.url_segment = None
-        self.upload_location = upload_location
-        self.custom_headers = headers
-        self.start_process = True
-        self.video_duration = 6
-        self.last_sequence = None
-        self.segment_status = None
-        self.converter_host = converter_host
-        self.converter_port = converter_port
-        self.buffer_size = buffer_size
-        self.playlist = playlist
-        self.resolution = resolution
-        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
+        self.url: str = url
+        self.start_process: bool = True
+        self.upload_location: str = upload_location
+        self.segment_duration = duration
+
+        self.video_prosessor = None  # Jika ada VideoProsessor untuk KompasTv
         Loggers()
+        self.countdown_counter = 0
+        self.max_countdown_before_notif = 3
         super().__init__()
 
-    def GetSegment(self, playlist_uri: list) -> list:
-        file_segments = []
-        print(f"{playlist_uri}")
-        response = requests.get(playlist_uri, headers=self.custom_headers, verify=False)
-        # response = HTTPRequest("get", F"{playlist_uri}", self.custom_headers).Hit()
-        
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            m3u8_data = m3u8_master.data
+    def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
-            segments = m3u8_data["segments"]
-            for segment in segments:
-                file_segments.append({
-                    "url": F"{self.host_directory}/{segment['uri']}",
-                    "sequence": str(segment["uri"]).replace('.ts','')
-                })
-            file_segments = file_segments[-5:]
+        if send_immediate and self.countdown_counter == 0:
+            trigger_error_notification(channel_name='KompasTv', log_text=error_message)
+        
+        countdown_sleep(300)
+        
+        self.countdown_counter += 1
+        
+        if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
+            trigger_error_notification(channel_name='KompasTv', log_text=error_message)
+            logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
-            file_segments = []
-            self.segment_status = response.status_code
-            logging.error(F"Error Get Segments: {response.status_code}")
-            
-        return file_segments
+            remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
+            logging.warning(f"Countdown cycle {self.countdown_counter}, next notification in {remaining_cycles} more cycles ({remaining_cycles * 5} minutes)")
 
-    def DownloadSegment(self, segments: list) -> None:
-        logging.info("Request to Server Converter - Download Segment")
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self.converter_host, self.converter_port))
+    def ensure_directory_exists(self, output_dir):
+        os.makedirs(output_dir, exist_ok=True)
 
-            to_server = {
-                "event": "download",
-                "environment": self.environment,
-                "storage_path": self.upload_location,
-                "method": "get",
-                "segments": segments,
-                "headers": self.custom_headers
-            }
-            to_server = str(to_server).encode("utf-8")
-            data_format = struct.Struct('I')
-            data_length = len(to_server)
-            s.sendall(data_format.pack(data_length))
-            offset = 0
-            while offset < data_length:
-                sent_bytes = s.send(to_server[offset:])
-                offset += sent_bytes
+    def build_ffmpeg_command(self, stream_url, output_dir, segment_duration):
+        return [
+            "ffmpeg",
+            "-y",
+            "-i", stream_url,
+            "-c", "copy",
+            "-f", "segment",
+            "-segment_time", segment_duration,
+            "-reset_timestamps", "1",
+            "-strftime", "1",
+            os.path.join(output_dir, "KOMPASSTREAMING_%m-%d-%H-%M-%S.mp4")  # UBAH NAMA FILE DISINI
+        ]
 
-            response = s.recv(self.buffer_size)
-            response = eval(response)
-            
-            if response:
-                logging.info(F"Message from Server Converter: {response['message']}")
-                self.last_sequence = response["sequence"]
-                logging.info(F"Last Sequence: {self.last_sequence}")
+    def kill_process(self, process):
+        """Hentikan proses dengan aman"""
+        if process and process.poll() is None:  
+            logging.info("Terminating FFmpeg process...")
+            process.terminate()
+            time.sleep(2) 
+            if process.poll() is None:
+                logging.warning("Process still running, force killing...")
+                process.kill()
 
-            s.close()
-            logging.info("Close Connection - Download Segment")
-        return None
-    
-    def CheckTSFiles(self) -> dict:
-        last_ts = F"{self.last_sequence}.ts"
-        logging.info(F"Last TS: {last_ts}")
-        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
-        
-        if get_total_files >= 100:
-            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
-            return dict(status=True, data_ts=list_files)    
-        
-        return dict(status=False, data_ts=[])
-    
-    def GetPlaylist(self) -> str:
-        playlist_uri = None
-        url = f'{self.host_directory}/{self.playlist}'
-        logging.info(F"URL: {url}")
-        response = requests.get(url, headers=self.custom_headers, verify=False)
-        if response.status_code == 200:
-            m3u8_master = m3u8.loads(response.text)
-            playlists = m3u8_master.data["playlists"]
-            for playlist in playlists:
-                if playlist["stream_info"]["resolution"] == self.resolution:
-                    playlist_uri = F"{self.host_directory}/{playlist['uri']}"
-                    break
-            logging.info("Get Playlist Success")
-        else:
-            logging.error(F"Error Get Playlist: {response.status_code}")
-        
-        return playlist_uri
-    
     def StartEngine(self) -> None:
         logging.info("Start Engine")
 
-        logging.info("Cleanup TS")
-        self.video_prosessor.CleanUPTSFolder()
+        if not self.url:
+            logging.error("URL is empty", extra={"log_text": "URL is empty", "detail": "Missing channel URL"})
+            return None
 
-        logging.info("Get Playlist URI")
-        playlist_uri = self.GetPlaylist()
+        if not self.upload_location:
+            logging.error("upload_location is empty", extra={"log_text": "upload_location is empty", "detail": "Missing upload location"})
+            return None
+
+        self.ensure_directory_exists(self.upload_location)
+
+        process = None 
         try:
             while self.start_process:
-                if playlist_uri is not None:
-                    logging.info("Get Segment URI")
-                    segments = self.GetSegment(playlist_uri)
+                
+                cmd = self.build_ffmpeg_command(self.url, self.upload_location, self.segment_duration)
+                logging.info("Starting FFmpeg recording...")
 
-                    while len(segments) == 0:
-                        if self.segment_status == 403 or self.segment_status == 410 or self.segment_status == 404 or self.segment_status == 503:
-                            logging.info("Retry Get Segment URI")
-                            playlist_uri = self.GetPlaylist()
-                            time.sleep(self.video_duration)
+                process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    universal_newlines=True
+                )
 
-                        logging.info("Retry Get Segment URI")
-                        segments = self.GetSegment()
-                        time.sleep(self.video_duration)
+                low_speed_count = 0  
+                url_error_count = 0 
 
-                    time.sleep(self.video_duration)
+                while True:
+                    output = process.stderr.readline()
+                    if output == '' and process.poll() is not None:
+                        break
+                    if output:
+                        logging.info(output.strip())
 
-                    logging.info("Download segment")
+                        # Deteksi URL Error
+                        if "Failed to resolve hostname" in output or "Error opening input" in output:
+                            url_error_count += 1
+                            logging.error(f"URL error detected {url_error_count} times.")
 
-                    try:
-                        self.DownloadSegment(segments)
-                    except ConnectionResetError or ConnectionRefusedError:
-                        while True:
-                            try:
-                                self.DownloadSegment(segments)
+                            if url_error_count >= 3:
+                                logging.error("Stream URL is down. Stopping FFmpeg and retrying...")
+                                self._handle_error_with_notification("Stream URL is down", send_immediate=True)
+                                self.kill_process(process)
                                 break
-                            except ConnectionResetError or ConnectionRefusedError:
-                                logging.error("Retry Download Segment")
-                                time.sleep(self.video_duration)
-                                continue
-                    
-                    check_ts = self.CheckTSFiles()
-                    status_ts = check_ts["status"]
-                    data_ts = check_ts["data_ts"]
+                        else:
+                            url_error_count = 0  #
 
-                    if status_ts:
-                        now_filename = F"KOMPASSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                        # Deteksi speed rendah
+                        if "speed=" in output:
+                            try:
+                                speed_str = output.split("speed=")[-1].strip().split("x")[0]
+                                speed_value = float(speed_str)
 
-                        logging.info("Request to Server Converter - Concat TS")
-                        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                            s.connect((self.converter_host, self.converter_port))
+                                if speed_value < 0.5:
+                                    low_speed_count += 1
+                                    logging.warning(f"Low speed detected {low_speed_count} times: {speed_value}x")
 
-                            to_server = {
-                                "event": "concat",
-                                "environment": self.environment,
-                                "storage_path": self.upload_location,
-                                "mode": "w",
-                                "filename": now_filename,
-                            }
+                                    if low_speed_count >= 5:
+                                        logging.error("Speed too low for too long, stopping FFmpeg...")
+                                        self._handle_error_with_notification("Speed too low for too long", send_immediate=True)
+                                        self.kill_process(process)
+                                        break
+                                else:
+                                    low_speed_count = 0  
 
-                            to_server = str(to_server).encode("utf-8")
-                            data_format = struct.Struct('I')
-                            data_length = len(to_server)
-                            s.sendall(data_format.pack(data_length))
+                            except ValueError:
+                                logging.warning("Failed to parse speed value from FFmpeg output.")
 
-                            offset = 0
-                            while offset < data_length:
-                                sent_bytes = s.send(to_server[offset:])
-                                offset += sent_bytes
+                self.kill_process(process) 
+                logging.info("Stream unavailable. Retrying in 10 seconds...")
+                time.sleep(10) 
 
-                            response = s.recv(self.buffer_size)
-                            response = eval(response)
-                            logging.info(F"Message from Server Converter: {response['message']}")
+        except Exception as e:
+            error_message = get_exception_message(e)
+            logging.error(f"ERROR in recording: {e}", extra={"log_text": error_message, "detail": str(e)}, exc_info=True)
+            self._handle_error_with_notification(error_message, send_immediate=True)
+            logging.info("Retry in 3 seconds...")
+            time.sleep(3)
 
-                            s.close()
-                            logging.info("Close Connection - Concat TS")
-
-                        logging.info("Cleanup TS")
-                        self.video_prosessor.CleanUPTSFolder(list_ts=data_ts, metadata=now_filename)
-
-                else:
-                    logging.info("Retry Get Playlist URI")
-                    playlist_uri = self.GetPlaylist()
-                    time.sleep(self.video_duration)
         except KeyboardInterrupt:
             self.start_process = False
             logging.info("Stop Engine")
-
-            self.video_prosessor.CleanUPTSFolder()
-            logging.info("Cleanup TS")
             return None
-
 
 if __name__ == "__main__":
     ENGINE_NAME = "KOMPASSTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
-    BeritaSatu = BeritaSatu(
+
+    kompastv = KompasTv(
         environment=ENGINE["ENVIRONMENT"],
-        host_directory=ENGINE["HOST_DIRECTORY"],
+        url=ENGINE["URL"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
-        headers=ENGINE["HEADERS"],
-        converter_host=CONFIG.SOCKET_SERVER_KOMPAS["HOST"],
-        converter_port=CONFIG.SOCKET_SERVER_KOMPAS["PORT"],
-        buffer_size=CONFIG.SOCKET_SERVER_KOMPAS["BUFFER_SIZE"],
-        playlist=ENGINE["PLAYLIST"],
-        resolution=ENGINE["RESOLUTION"],
+        duration=ENGINE["DURATION"]
     )
-    BeritaSatu.StartEngine()
+    kompastv.StartEngine()

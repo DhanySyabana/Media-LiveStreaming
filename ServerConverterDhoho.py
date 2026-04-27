@@ -1,10 +1,11 @@
 import socket
 import struct
 import logging
+import requests
 from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
-from libs.VideoProsessorINews import VideoProsessor
+from libs.VideoProsessorDhoho import VideoProsessor
 
 class ServerConverter:
 
@@ -81,7 +82,8 @@ class ServerConverter:
                             for segment in segments:
                                 
                                 try:
-                                    response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                    # response_http = HTTPRequest(data["method"], segment["url"], data["headers"]).Hit()
+                                    response_http = requests.get(segment["url"], verify=False, headers=data["headers"])
                                     if response_http.status_code == 200:
                                         file_name = F"{segment['sequence']}.ts"
                                         
@@ -112,7 +114,7 @@ class ServerConverter:
             s.close()
 
 if __name__ == "__main__":
-    CONFIG_SERVER = Config().SOCKET_SERVER_INEWS
+    CONFIG_SERVER = Config().SOCKET_SERVER_DHOHOTV
     server_converter = ServerConverter(
         host=CONFIG_SERVER["HOST"],
         port=CONFIG_SERVER["PORT"],

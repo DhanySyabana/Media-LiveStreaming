@@ -45,14 +45,14 @@ class Idxindonesia:
     def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
         if send_immediate and self.countdown_counter == 0:
-            trigger_error_notification(channel_name='IDX Indonesia', log_text=error_message)
+            trigger_error_notification(channel_name='CNN Indonesia', log_text=error_message)
         
         countdown_sleep(300)
         
         self.countdown_counter += 1
         
         if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
-            trigger_error_notification(channel_name='IDX Indonesia', log_text=error_message)
+            trigger_error_notification(channel_name='CNN Indonesia', log_text=error_message)
             logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
             remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
@@ -141,7 +141,7 @@ class Idxindonesia:
 
         try:
             while self.start_process:
-                now_filename = f"IDXSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                now_filename = f"CNNSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
                 out_path = os.path.join(self.upload_location, f"{now_filename}.mp4")
                 logging.info(f"Save File : {out_path}")
 
@@ -176,7 +176,7 @@ class Idxindonesia:
 
 
 if __name__ == "__main__":
-    ENGINE_NAME = "IDXSTREAMING"
+    ENGINE_NAME = "CNNINDONESIASTREAMING"
     CONFIG = Config()
     ENGINE = CONFIG.ENGINE[ENGINE_NAME]
 

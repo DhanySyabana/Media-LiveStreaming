@@ -15,17 +15,10 @@ class VideoProsessor:
 
     def OptimizeVideo(self, path, filename, extension = ".mp4"):
         try:
-            # convert_name = "_converted"
-            # os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
-            # os.remove(F"{path}/{filename}{extension}")
-            # os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
             convert_name = "_converted"
-            os.system(f"ffmpeg -hwaccel cuda -i {path}/{filename}{extension} "
-                    f"-c:v h264_nvenc -preset fast -pix_fmt yuv420p "
-                    f"-c:a aac -b:a 98k -ar 44100 -movflags faststart -f mp4 "
-                    f"{path}/{filename.split('.')[0]}{convert_name}{extension}")
-            os.remove(f"{path}/{filename}{extension}")
-            os.rename(f"{path}/{filename}{convert_name}{extension}", f"{path}/{filename}{extension}")
+            os.system(F"ffmpeg -i {path}/{filename}{extension} -c:v libx264 -c:a aac -strict experimental -b:a 98k -ar 44100 -movflags faststart -f mp4 {path}/{filename.split('.')[0]}{convert_name}{extension}")
+            os.remove(F"{path}/{filename}{extension}")
+            os.rename(F"{path}/{filename}{convert_name}{extension}", F"{path}/{filename}{extension}")
         except Exception as e:
             logging.error(F"Error Optimize Video: {e}")
 
@@ -41,9 +34,16 @@ class VideoProsessor:
                 os.makedirs(path)
                 # os.umask(oldmask)
             
-            with open(F"{path}/{file_name}", mode) as file:
+            temp_file = F"{path}/{file_name}.part"
+            with open(temp_file, mode) as file:
                 file.write(content)
                 file.close()
+            # atomic replace to avoid readers seeing incomplete files
+            try:
+                os.replace(temp_file, F"{path}/{file_name}")
+            except Exception:
+                # fallback to rename if replace is unavailable
+                os.rename(temp_file, F"{path}/{file_name}")
             logging.info(F"Success Write File: {file_name}")
             return {
                 "status": True,
@@ -162,7 +162,4 @@ class VideoProsessor:
             return files
         except Exception as e:
             logging.error(F"Error List Files: {e}")
-            return []
-
-
-    
+            return [] 

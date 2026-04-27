@@ -1,190 +1,370 @@
-import os, re, time, socket, struct, logging, datetime as dt, requests, m3u8, sys
+import m3u8
+import time
+import logging
+import datetime
+import cloudscraper
+from libs.Loggers1 import Loggers
 from settings.Config import Config
-import urllib3
-from libs.VideoProsessorBeritasatuAudio import VideoProsessor as AudioProc
-from libs.VideoProsessorBeritasatuVideo import VideoProsessor as VideoProc
+from libs.VideoProsessorBeritasatu import VideoProsessor
+from libs.ErrorHandler import get_error_message, get_exception_message
+from libs.PusherNotification import trigger_error_notification
+from libs.Countdown import countdown_sleep
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+class BeritaSatu:
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+    def __init__(
+        self,
+        environment: str,
+        host_directory: str = None,
+        upload_location: str = None,
+        headers: dict = None,
+        playlist: str = None,
+        resolution: str = None
+    ) -> None:
+        self.environment = environment
+        self.host_directory = host_directory
+        self.upload_location = upload_location
+        self.custom_headers = headers
+        self.playlist = playlist
+        self.resolution = resolution
 
-# === Ambil daftar segmen m3u8 ===
-def get_segments(host, playlist, headers):
-    url = f"{host}/{playlist}"
-    r = requests.get(url, headers=headers, verify=False)
-    if r.status_code != 200:
-        logging.error(f"[STREAM] Gagal ambil playlist {url} - status {r.status_code}")
-        return []
-    m = m3u8.loads(r.text)
-    return [
-        {"url": f"{host}/{s.uri}", "sequence": re.sub(r"\D", "", s.uri)}
-        for s in m.segments
-    ][-5:]
+        self.scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
 
-# === Kirim perintah download / concat ke server converter ===
-def send_to_converter(sock_conf, payload):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        data = str(payload).encode("utf-8")
-        s.connect((sock_conf["HOST"], sock_conf["PORT"]))
-        s.sendall(struct.pack("I", len(data)))
-        s.sendall(data)
-        resp = s.recv(sock_conf["BUFFER_SIZE"])
-    return eval(resp)
+        self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
 
-# === Hitung jumlah file TS di folder tertentu ===
-def count_files(proc, folder, last_seq):
-    return proc.GetTotalFiles(folder=folder, last_ts=f"{last_seq}.ts")
+        self.start_process = True
+        self.sleep_duration = 10
+        self.last_sequence = None
+        self.segment_status = None
+        self.max_retry = 5
+        self.retry_count = 0
+        self.max_attempts = 3
+        self.countdown_counter = 0
+        self.max_countdown_before_notif = 3 
+        self.count_file_ts = 150
+        self.has_download_error = False
+        self.consecutive_errors = 0
+        self.max_consecutive_errors = 3
 
-# === Gabungkan audio & video jadi 1 file mp4 ===
-def mux_av(upload_location, filename):
-    ts_folder = os.path.join(upload_location, "ts")
-    final_folder = upload_location   # simpan final di folder utama
-    final = os.path.join(final_folder, f"{filename}.mp4")
+        Loggers()
+        super().__init__()
 
-    video = os.path.join(ts_folder, f"{filename}.mp4")
-    audio = os.path.join(ts_folder, f"{filename}.mp3")
+    def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
-    # Mux dengan ffmpeg tanpa menampilkan log di terminal
-    if os.name == "nt":  # Windows
-        ffmpeg_cmd = f'ffmpeg -y -i "{video}" -i "{audio}" -c copy "{final}" > NUL 2>&1'
-    else:               # Linux/Mac
-        ffmpeg_cmd = f'ffmpeg -y -i "{video}" -i "{audio}" -c copy "{final}" > /dev/null 2>&1'
+        if send_immediate and self.countdown_counter == 0:
+            trigger_error_notification(channel_name='BeritaSatu', log_text=error_message)
+        
+        countdown_sleep(300)
+        
+        self.countdown_counter += 1
+        
+        if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
+            trigger_error_notification(channel_name='BeritaSatu', log_text=error_message)
+            logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
+        else:
+            remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
+            logging.warning(f"Countdown cycle {self.countdown_counter}, next notification in {remaining_cycles} more cycles ({remaining_cycles * 5} minutes)")
 
-    os.system(ffmpeg_cmd)
-    logging.info(f"[DONE] File final: {final}")
+    def GetPlaylist(self) -> str:
+        
+        url = f"{self.host_directory}/{self.playlist}"
+        logging.info(f"URL: {url}")
 
+        
+        last_error = None
+        last_error_detail = None
+        last_exc = False
 
-    # Bersihkan mp3 & mp4 sementara
-    for f in [video, audio]:
-        if os.path.exists(f):
-            os.remove(f)
-            logging.info(f"[CLEAN] Hapus MP3 & MP4: {f}")
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self.scraper.get(url, headers=self.custom_headers, timeout=10)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                self.segment_status = None
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Exception), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+ 
+                logging.error(
+                    f"Exception Get Playlist after {self.max_attempts} attempts: {type(e).__name__}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    },
+                    exc_info=True
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
 
-    # Bersihkan semua TS & TXT juga
-    for root, dirs, files in os.walk(ts_folder):
-        for file in files:
-            if file.endswith(".ts") or file.endswith(".txt"):
-                try:
-                    os.remove(os.path.join(root, file))
-                    logging.info(f"[CLEAN] Hapus sementara: {file}")
-                except Exception as e:
-                    logging.warning(f"[WARN] Gagal hapus {file}: {e}")
+            if response.status_code != 200:
+                self.segment_status = response.status_code
+                last_error = get_error_message(response.status_code)
+                last_error_detail = response.reason
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Status {response.status_code}), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(
+                    f"Error Get Playlist after {self.max_attempts} attempts: {response.status_code}",
+                    extra={
+                        'log_text': last_error,
+                        'detail': last_error_detail
+                    }
+                )
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
 
-    return final
+            try:
+                m3u8_master = m3u8.loads(response.text)
+            except Exception as e:
+                last_error = get_exception_message(e)
+                last_error_detail = str(e)
+                last_exc = True
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Parse error), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"Failed to parse playlist m3u8 after {self.max_attempts} attempts: {last_error}", exc_info=True)
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
 
+            playlists = m3u8_master.data.get("playlists", [])
+            if not playlists:
+                last_error = "No playlists found in master playlist"
+                last_error_detail = "master playlist contains no variant playlists"
+                if attempt < self.max_attempts:
+                    logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (No playlists), retrying in 10 seconds...")
+                    time.sleep(10)
+                    continue
+                logging.error(f"No playlists after {self.max_attempts} attempts; {last_error}")
+                self._handle_error_with_notification(last_error, send_immediate=True)
+                return None
 
-# === Bersihkan sisa TS/TXT di semua folder ===
-def clean_ts(upload_location):
-    for folder_name in ["ts", "audio", "video"]:
-        folder = os.path.join(upload_location, folder_name)
-        if os.path.exists(folder):
-            for f in os.listdir(folder):
-                if f.endswith(".ts") or f.endswith(".txt"):
+            playlist_uri = None
+            if hasattr(self, 'resolution') and self.resolution:
+                for playlist in playlists:
+                    stream_info = playlist.get("stream_info", {})
+                    if stream_info.get("resolution") == self.resolution:
+                        playlist_uri = f"{self.host_directory}/{playlist['uri']}"
+                        logging.info(f"Playlist obtained for resolution {self.resolution}")
+                        break
+
+                if not playlist_uri:
+                    logging.warning(f"Playlist not found for resolution {self.resolution}, using first available")
+
+            if not playlist_uri:
+                playlist_uri = f"{self.host_directory}/{playlists[0]['uri']}"
+                logging.info("Get Playlist Success")
+
+            self.countdown_counter = 0
+            return playlist_uri
+
+    def GetSegment(self, playlist_uri: str) -> list:
+        file_segments = []
+        try:
+            response = self.scraper.get(playlist_uri, headers=self.custom_headers, timeout=10)
+        except Exception as e:
+            error_message = get_exception_message(e)
+            logging.error(
+                f"Exception Get Segments: {type(e).__name__}",
+                extra={
+                    'log_text': error_message,
+                    'detail': str(e)
+                }
+            )
+            self._handle_error_with_notification(error_message, send_immediate=True)
+            self.segment_status = None
+            return []
+
+        if response.status_code != 200:
+            self.segment_status = response.status_code
+            error_message = get_error_message(response.status_code)
+            logging.error(
+                f"Error Get Segments: {response.status_code}",
+                extra={
+                    'log_text': error_message,
+                    'detail': response.reason
+                }
+            )
+            self._handle_error_with_notification(error_message, send_immediate=True)
+            return []
+
+        try:
+            m3u8_master = m3u8.loads(response.text)
+        except Exception as e:
+            logging.error(f"Failed to parse segments m3u8: {e}", exc_info=True)
+            return []
+
+        segments = m3u8_master.data.get("segments", [])
+        for segment in segments:
+            file_segments.append({
+                "url": f"{self.host_directory}/{segment['uri']}",
+                "sequence": segment['uri'].replace('.ts', '')
+            })
+
+        return file_segments[-5:]
+
+    def DownloadSegment(self, segments: list) -> None:
+        logging.info("Download Segment")
+        self.has_download_error = False
+        for segment in segments:
+            try:
+                response = self.scraper.get(segment["url"], headers=self.custom_headers, timeout=10)
+                if response.status_code == 200:
+                    file_name = f"{segment['sequence']}.ts"
+                    write_file = self.video_prosessor.WriteFile(
+                        file_name=file_name,
+                        content=response.content,
+                        mode="wb",
+                        folder="ts"
+                    )
+                    seq = None
                     try:
-                        os.remove(os.path.join(folder, f))
-                    except Exception as e:
-                        logging.warning(f"[CLEAN] Gagal hapus {f}: {e}")
+                        seq = write_file.get("sequence") if write_file else None
+                    except Exception:
+                        seq = None
 
-# ========================== MAIN ==========================
+                    if seq:
+                        self.last_sequence = seq
+                        logging.info(f"Success Download Segment: {file_name}")
+                        self.consecutive_errors = 0
+                    else:
+                        logging.error(f"WriteFile did not return sequence for {file_name}: {write_file}")
+                        self.has_download_error = True
+                        self.consecutive_errors += 1
+                else:
+                    self.segment_status = response.status_code
+                    error_message = get_error_message(response.status_code)
+                    logging.error(
+                        f"Error Download Segment: {response.status_code}",
+                        extra={
+                            'log_text': error_message,
+                            'detail': response.reason
+                        }
+                    )
+                    self._handle_error_with_notification(error_message, send_immediate=True)
+                    self.has_download_error = True
+                    self.consecutive_errors += 1
+            except Exception as e:
+                error_message = get_exception_message(e)
+                logging.error(
+                    f"Exception Downloading Segment: {type(e).__name__}",
+                    extra={
+                        'log_text': error_message,
+                        'detail': str(e)
+                    },
+                    exc_info=True
+                )
+                self._handle_error_with_notification(error_message, send_immediate=True)
+                self.has_download_error = True
+                self.consecutive_errors += 1
+
+    def CheckTSFiles(self) -> dict:
+        if self.last_sequence is None:
+            return {"status": False, "data_ts": []}
+
+        last_ts = f"{self.last_sequence}.ts"
+        get_total_files = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=last_ts)
+
+        if get_total_files >= self.count_file_ts:
+            list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=last_ts)
+            return {"status": True, "data_ts": list_files}
+
+        return {"status": False, "data_ts": []}
+
+    def HandleSegments(self, playlist_uri: str) -> str:
+        segments = self.GetSegment(playlist_uri)
+
+        if not segments and self.segment_status in [403, 404, 410, 503]:
+            logging.warning("Attempting to refresh playlist due to error")
+            playlist_uri = self.GetPlaylist()
+
+        if not segments:
+            time.sleep(self.sleep_duration)
+            return playlist_uri
+
+        time.sleep(self.sleep_duration)
+        self.DownloadSegment(segments)
+
+        check_ts = self.CheckTSFiles()
+        
+        # Jika ada error download dan ada file TS, lakukan convert langsung
+        if self.has_download_error and self.last_sequence is not None:
+            # Check apakah ada file TS minimal
+            ts_count = self.video_prosessor.GetTotalFiles(folder="ts", last_ts=f"{self.last_sequence}.ts")
+            if ts_count > 0:
+                logging.warning(f"Download error detected with {ts_count} TS files. Converting to MP4 immediately.")
+                now_filename = f"BERITASATUSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+                response = self.video_prosessor.ConcatTS(
+                    filename=now_filename,
+                    mode="w",
+                    optimize_video=False
+                )
+                logging.info(f"Concat result: {response.get('message')}")
+
+                list_files = self.video_prosessor.ListFiles(folder="ts", last_ts=f"{self.last_sequence}.ts")
+                self.video_prosessor.CleanUPTSFolder(
+                    list_ts=list_files,
+                    metadata=now_filename
+                )
+                self.has_download_error = False
+        # Check normal condition (5 file atau lebih)
+        elif check_ts["status"]:
+            now_filename = f"BERITASATUSTREAMING_{datetime.datetime.now().strftime('%m-%d-%H-%M-%S')}"
+            response = self.video_prosessor.ConcatTS(
+                filename=now_filename,
+                mode="w",
+                optimize_video=False
+            )
+            logging.info(f"Concat result: {response.get('message')}")
+
+            self.video_prosessor.CleanUPTSFolder(
+                list_ts=check_ts["data_ts"],
+                metadata=now_filename
+            )
+
+        return playlist_uri
+
+    def StartEngine(self) -> None:
+        logging.info("Start Engine")
+        self.video_prosessor.CleanUPTSFolder()
+        playlist_uri = self.GetPlaylist()
+
+        try:
+            while self.start_process:
+                try:
+                    if not playlist_uri:
+                        playlist_uri = self.GetPlaylist()
+                        time.sleep(self.sleep_duration)
+                        continue
+
+                    playlist_uri = self.HandleSegments(playlist_uri)
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    error_message = get_exception_message(e)
+                    logging.error(f"Unhandled exception in engine loop: {e}", exc_info=True)
+                    self._handle_error_with_notification(error_message, send_immediate=True)
+                    time.sleep(self.sleep_duration)
+                    continue
+        except KeyboardInterrupt:
+            self.start_process = False
+            logging.info("Stop Engine")
+            self.video_prosessor.CleanUPTSFolder()
 
 if __name__ == "__main__":
+    ENGINE_NAME = "BERITASATUSTREAMING"
     CONFIG = Config()
-    ENG = CONFIG.ENGINE["BERITASATUSTREAMING"]
-
-    AUD = {
-        "ENVIRONMENT": ENG["ENVIRONMENT"],
-        "HOST_DIRECTORY": ENG["HOST_DIRECTORY"],
-        "UPLOAD_LOCATION": ENG["UPLOAD_LOCATION"],
-        "HEADERS": ENG["HEADERS"],
-        "PLAYLIST": ENG["PLAYLIST_AUDIO"],
-        "RESOLUTION": ENG["RESOLUTION"]
-    }
-
-    VID = {
-        "ENVIRONMENT": ENG["ENVIRONMENT"],
-        "HOST_DIRECTORY": ENG["HOST_DIRECTORY"],
-        "UPLOAD_LOCATION": ENG["UPLOAD_LOCATION"],
-        "HEADERS": ENG["HEADERS"],
-        "PLAYLIST": ENG["PLAYLIST_VIDEO"],
-        "RESOLUTION": ENG["RESOLUTION"]
-    }
-
-    audio_proc = AudioProc(environment=AUD["ENVIRONMENT"], storage_path=AUD["UPLOAD_LOCATION"])
-    video_proc = VideoProc(environment=VID["ENVIRONMENT"], storage_path=VID["UPLOAD_LOCATION"])
-
-    last_audio = last_video = None
-    N = 100  # jumlah segmen minimal sebelum concat
-
-    try:
-        while True:
-            seg_aud = get_segments(AUD["HOST_DIRECTORY"], AUD["PLAYLIST"], AUD["HEADERS"])
-            seg_vid = get_segments(VID["HOST_DIRECTORY"], VID["PLAYLIST"], VID["HEADERS"])
-
-            if seg_aud:
-                resp = send_to_converter(CONFIG.SOCKET_SERVER_BERITASATU_AUDIO, {
-                    "event": "download",
-                    "environment": AUD["ENVIRONMENT"],
-                    "storage_path": AUD["UPLOAD_LOCATION"],
-                    "method": "get",
-                    "segments": seg_aud,
-                    "headers": AUD["HEADERS"]
-                })
-                if resp and resp.get("sequence"):
-                    last_audio = resp["sequence"]
-
-            if seg_vid:
-                resp = send_to_converter(CONFIG.SOCKET_SERVER_BERITASATU_VIDEO, {
-                    "event": "download",
-                    "environment": VID["ENVIRONMENT"],
-                    "storage_path": VID["UPLOAD_LOCATION"],
-                    "method": "get",
-                    "segments": seg_vid,
-                    "headers": VID["HEADERS"]
-                })
-                if resp and resp.get("sequence"):
-                    last_video = resp["sequence"]
-
-            # === cek jumlah ts ===
-            if last_audio and last_video:
-                ca = count_files(audio_proc, "audio", last_audio)
-                cv = count_files(video_proc, "video", last_video)
-                logging.info(f"[COUNT] Audio TS: {ca}, Video TS: {cv}")
-
-                # === jika cukup segmen, concat dan mux ===
-                if ca >= N and cv >= N:
-                    now_filename = f"BERITASATUSTREAMING_{dt.datetime.now().strftime('%m-%d-%H-%M-%S')}"
-                    logging.info(f"[PROCESS] Mulai concat dengan nama file: {now_filename}")
-
-                    send_to_converter(CONFIG.SOCKET_SERVER_BERITASATU_VIDEO, {
-                        "event": "concat",
-                        "environment": VID["ENVIRONMENT"],
-                        "storage_path": VID["UPLOAD_LOCATION"],
-                        "mode": "w",
-                        "filename": now_filename
-                    })
-
-                    send_to_converter(CONFIG.SOCKET_SERVER_BERITASATU_AUDIO, {
-                        "event": "concat",
-                        "environment": AUD["ENVIRONMENT"],
-                        "storage_path": AUD["UPLOAD_LOCATION"],
-                        "mode": "w",
-                        "filename": now_filename
-                    })
-
-                    mux_av(VID["UPLOAD_LOCATION"], now_filename)
-
-                    # Bersihkan segmen setelah selesai
-                    clean_ts(VID["UPLOAD_LOCATION"])
-                    clean_ts(AUD["UPLOAD_LOCATION"])
-                    last_audio = last_video = None
-
-            time.sleep(3)
-
-    except KeyboardInterrupt:
-        logging.warning("[STOP] Program dihentikan paksa (Ctrl+C)")
-        clean_ts(VID["UPLOAD_LOCATION"])
-        clean_ts(AUD["UPLOAD_LOCATION"])
-        sys.exit(0)
+    ENGINE = CONFIG.ENGINE[ENGINE_NAME]
+    beritasatu = BeritaSatu(
+        environment=ENGINE["ENVIRONMENT"],
+        host_directory=ENGINE["HOST_DIRECTORY"],
+        upload_location=ENGINE["UPLOAD_LOCATION"],
+        headers=ENGINE["HEADERS"],
+        playlist=ENGINE["PLAYLIST"],
+        resolution=ENGINE["RESOLUTION"]
+    )
+    beritasatu.StartEngine()
