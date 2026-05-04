@@ -1,30 +1,6 @@
 class Config(object):
 
     ENGINE = dict(
-        # INEWSSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://tv.inews.id/live",
-        #     RESOLUTIONV1 = "640x360",
-        #     # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
-        #     HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", # OLD
-        #     RESOLUTION = "426x240",
-        #     HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-        #     UPLOAD_LOCATION = "storage/inews",
-        #     HEADERS = {
-        #         'origin': 'https://embed.rctiplus.com',
-        #         'referer': 'https://embed.rctiplus.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"macOS"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
 
         #ENGINE_KEYS[0]
         INEWSSTREAMING = dict(
@@ -75,23 +51,10 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:metro.smil",
-        #     # HOST_DIRECTORY = "https://edge.medcom.id/live-edge/smil:mgnch.smil",
-        #     PLAYLIST = "playlist.m3u8",
-        #     RESOLUTION = "426x240",
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-        #     }
-        # ),
 
         #ENGINE_KEYS[3]
         METROTVSTREAMING = dict(
             ENVIRONMENT = "dev",
-            # URL = "https://www.youtube.com/watch?v=qA7_9fcCbZ8",
-            # URL = "https://www.youtube.com/watch?v=nfgnpM28xDA",
             URL = "https://www.youtube.com/watch?v=-CwtcKDaaLA",
             ID_CHANNEL = "UCzl0OrB3-ehunyotIQvK77A",
             QUALITY = "360p",
@@ -100,50 +63,6 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://www.indihometv.com/livetv/metrotv",
-        #     RESOLUTIONV1 = "640x360",
-        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/METRO_TV/playlist.m3u8",
-        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/133/metrotv1080",
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     HEADERS = {
-        #         'origin': 'https://www.indihometv.com',
-        #         'referer': 'https://www.indihometv.com/',
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-        #     }
-        # ),
-        # METROTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/777/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/777/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/metro",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
 
         #ENGINE_KEYS[4]
         CNBCSTREAMING = dict(
@@ -158,37 +77,11 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
-        # IDXSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://www.indihometv.com/livetv/idx",
-        #     RESOLUTIONV1 = "640x360",
-        #     # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/idx/playlist.m3u8", #old
-        #     # PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/HLS-10s/idx/playlist.m3u8", #old
-        #     # PLAYLIST_DIRECTORYV1 = "https://cdn10jtedge.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
-        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/idx/playlist.m3u8",
-            
-            
-        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/idx",
-        #     UPLOAD_LOCATION = "storage/idx",
-        #     HEADERS = {
-        #         'origin': 'https://www.indihometv.com',
-        #         'referer': 'https://www.indihometvf.com/',
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-        #     }
-        # ),
+        
         #ENGINE_KEYS[5]
         IDXSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URL = "https://www.youtube.com/watch?v=ftuihGt1zuw",
+            URL = "https://www.youtube.com/watch?v=8dNAAe5dcqQ",
             QUALITY = "360p",
             ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
             UPLOAD_LOCATION = "storage/idx",
@@ -196,27 +89,7 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-        # TVONESTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
-        #     URLV1 = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "index.m3u8",
-        #     HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h224",
-        #     UPLOAD_LOCATION = "storage/tvone",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
+       
         #ENGINE_KEYS[6]
         TVONESTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -228,28 +101,6 @@ class Config(object):
             }
         ),
         
-        # TVONESTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/783/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "index.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/783/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/tvone",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
         #ENGINE_KEYS[7]
         BERITASATUSTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -272,38 +123,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
-        # BERITASATUSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.youtube.com/watch?v=QB3oe7Q31F0",
-        #     QUALITY = "360p",
-        #     ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
-        #     UPLOAD_LOCATION = "storage/beritasatu",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        #     }
-        # ),
-        # BERITASATUSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/6165/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/6165/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/beritasatu",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
+        
         #ENGINE_KEYS[8]
         TVRISTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -329,29 +149,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
-        # TVRISTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/6441-tvri", 
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/6441/master.m3u8",
-        #     PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-        #     UPLOAD_LOCATION = "storage/tvri",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/live/6441-tvri',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
+        
         #ENGINE_KEYS[9]
         RCTISTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -377,67 +175,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
-        # RCTISTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://tv.okezone.com/streaming/rcti",
-        #     RESOLUTIONV1 = "426x240",
-        #     # HOST_DIRECTORYV1 = "https://eng.rctiplus.id", # NEW
-        #     HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", # OLD
-        #     RESOLUTION = "426x240",
-        #     HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-        #     UPLOAD_LOCATION = "storage/rcti",
-        #     HEADERS = {
-        #         'origin': 'https://embed.rctiplus.com',
-        #         'referer': 'https://embed.rctiplus.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"macOS"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
-        #  TRANS7STREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://sevenhub.id/live",
-        #     RESOLUTION = "848x477",
-        #     PLAYLIST = "x8qckyq.m3u8",
-        #     #HOST_DIRECTORY = "https://etslive-app.vidio.com/live/7687/master.m3u8",
-        #     #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
-        #     HOST_DIRECTORY = "https://www.dailymotion.com/cdn/live/video/x8qckyq.m3u8",
-        #     PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-        #     UPLOAD_LOCATION = "storage/trans7",
-        #     HEADERS = {
-        #         'origin': 'https://geo.dailymotion.com',
-        #         'referer': 'https://geo.dailymotion.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
-        # TRANS7STREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     HOST_DIRECTORY = "https://video.detik.com/trans7/smil:trans7.smil",
-        #     PLAYLIST = "playlist.m3u8",
-        #     RESOLUTION = "640x360",
-        #     UPLOAD_LOCATION = "storage/trans7",
-        #     HEADERS = {
-        #         'origin': 'https://20.detik.com',
-        #         'referer': 'https://20.detik.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-        #     }
-        # ),
+       
         #ENGINE_KEYS[10]
         TRANS7STREAMING = dict(
             ENVIRONMENT = "dev",
@@ -470,63 +208,7 @@ class Config(object):
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
             }
         ),
-        # RTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.vidio.com/live/1561/tokens",
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "B1News_320x240.m3u8",
-        #     HOST_DIRECTORY = "https://etslive-app.vidio.com/live/1561/master.m3u8",
-        #     UPLOAD_LOCATION = "storage/rtv",
-        #     HEADERS = {
-        #         'origin': 'https://www.vidio.com',
-        #         'referer': 'https://www.vidio.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
-        # NUSANTARATVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     # URLV1 = "https://v5.siar.us/nusantaratv/live/",
-        #     URLV1 = "https://nusantaratv.siar.us/nusantaratv/live/",
-        #     RESOLUTION = "320x240",
-        #     PLAYLIST = "playlist.m3u8",
-        #     # PLAYLIST = "playlist.m3u8",
-        #     # HOST_DIRECTORY = "https://v5.siar.us/nusantaratv/live",
-        #     HOST_DIRECTORY = "https://nusantaratv.siar.us/nusantaratv/live",
-        #     UPLOAD_LOCATION = "storage/nusantaratv",
-        #     HEADERS = {
-        #         'origin': 'https://nusantaratv.com',
-        #         'referer': 'https://nusantaratv.com/',
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
-        # NUSANTARATVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URL = "https://www.youtube.com/watch?v=1TeWDeIVRJc",
-        #     ID_CHANNEL = "UCAMpZJJNQPZ6q7ZYKJV1igQ",
-        #     QUALITY = "360p",
-        #     UPLOAD_LOCATION = "storage/nusantaratv",
-        #     HEADERS = {
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-        #     }
-        # ),
+       
         #ENGINE_KEYS[12]
         NUSANTARATVSTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -549,30 +231,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9'
             }
         ),
-        # MNCSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     URLV1 = "https://www.indihometv.com/livetv/mncnews",
-        #     RESOLUTIONV1 = "640x360",
-        #     #PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/joss/134/mncnews/playlist.m3u8",
-        #     #PLAYLIST_DIRECTORYV1 = "ttps://streaming.indihometv.com/atm/HLS-10s/mncnews/playlist.m3u8", 
-        #     PLAYLIST_DIRECTORYV1 = "https://streaming.indihometv.com/atm/hlsv3/mncnews/playlist.m3u8", 
-        #     HOST_DIRECTORYV1 = "https://cdnkbl2.indihometv.com/joss/134/mncnews",
-        #     UPLOAD_LOCATION = "storage/mnc",
-        #     HEADERS = {
-        #         'origin': 'https://www.indihometv.com',
-        #         'referer': 'https://www.indihometv.com/',
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114    ',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9,id;q=0.8'
-        #     }
-        # ),
+        
         #ENGINE_KEYS[13]
         MNCSTREAMING = dict(
             ENVIRONMENT = "dev",
@@ -818,30 +477,7 @@ class Config(object):
                 'accept-language': 'en-US,en;q=0.9,id;q=0.8'
             }
         ),
-        # JAKTVSTREAMING = dict(
-        #     ENVIRONMENT = "dev",
-        #     # URLV1 = "https://www.beritasatu.com/livestream", OLD
-        #     URLV1 = "https://op-group1-swiftservesd-1.dens.tv/s/s123/S4",
-        #     # https://op-group1-swiftservesd-1.dens.tv/s/s123/S4/mnf.m3u8
-        #     RESOLUTION = "640x360",
-        #     PLAYLIST = "mnf.m3u8",
-        #     HOST_DIRECTORY = "https://op-group1-swiftservesd-1.dens.tv/s/s123/S4",
-        #     UPLOAD_LOCATION = "storage/jaktv",
-        #     HEADERS = {
-        #         'origin': 'https://www.dens.tv',
-        #         'referer': 'https://www.dens.tv/',
-        #         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
-        #         'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
-        #         'sec-ch-ua-mobile': '?0',
-        #         'sec-ch-ua-platform': '"Windows"',
-        #         'sec-fetch-dest': 'empty',
-        #         'sec-fetch-mode': 'cors',
-        #         'sec-fetch-site': 'cross-site',
-        #         'accept': '*/*',
-        #         'accept-encoding': 'gzip, deflate, br',
-        #         'accept-language': 'en-US,en;q=0.9'
-        #     }
-        # ),
+  
         #ENGINE_KEYS[24]
         JAKTVSTREAMING = dict(
             ENVIRONMENT = "dev",

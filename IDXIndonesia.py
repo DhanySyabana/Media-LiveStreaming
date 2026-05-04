@@ -6,7 +6,7 @@ import subprocess
 import shutil
 import sys
 
-from libs.Loggers1 import Loggers
+from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessorIDX import VideoProsessor
 from libs.ErrorHandler import get_error_message, get_exception_message
@@ -34,7 +34,7 @@ class IdxIndonesia:
 
         # mau 20 detik
         self.video_duration = 601
-
+        self.cookies_max_age_second = 3600 * 6  # 6 jam  
         self.last_sequence = None
         self.cookies = cookies  # ini path cookies file (cookies.txt)
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
@@ -43,6 +43,30 @@ class IdxIndonesia:
         self.max_countdown_before_notif = 3
         super().__init__()
 
+    def _is_cookie_stale(self) -> bool:
+        if not os.path.exists(self.cookies):
+            return True
+        age = time.time() - os.path.getmtime(self.cookies)
+        return age > self.cookies_max_age_second
+    
+    def _refresh_cookies_from_browser(self) -> bool:
+        """Export ulang cookie dari browser lokal."""
+        try:
+            yt_binary = shutil.which("yt-dlp") or sys.executable
+            cmd = [
+                yt_binary,
+                "--cookies-from-browser", "chrome",
+                "--cookies", self.cookies,
+                "--skip-download",
+                self.url
+            ]
+            subprocess.run(cmd, check=True, timeout=30)
+            logging.info("Cookie berhasil di-refresh dari browser")
+            return True
+        except Exception as e:
+            logging.error(f"Gagal refresh cookie: {e}")
+            return False
+        
     def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
         if send_immediate and self.countdown_counter == 0:
@@ -123,7 +147,9 @@ class IdxIndonesia:
 
     def StartEngine(self) -> None:
         logging.info("Start Engine")
-
+        if self._is_cookie_stale():
+            logging.warning("Cookie stale, refreshing...")
+            self._refresh_cookies_from_browser()
         if not self.url:
             logging.error("URL is empty", extra={"log_text": "URL is empty", "detail": "Missing channel URL"})
             return None
@@ -183,7 +209,7 @@ if __name__ == "__main__":
 
     idx = IdxIndonesia(
         environment=ENGINE["ENVIRONMENT"],
-        url=get_channel_data(ENGINE_NAME)[0]['url'],
+        url=ENGINE['URL'],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         cookies="cookies.txt"

@@ -3,7 +3,7 @@ import time
 import logging
 import datetime
 import cloudscraper
-from libs.Loggers1 import Loggers
+from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessorBantenTv import VideoProsessor
 from libs.ErrorHandler import get_error_message, get_exception_message
