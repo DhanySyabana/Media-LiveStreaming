@@ -1,7 +1,6 @@
 import socket
 import struct
 import logging
-from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorRcti import VideoProsessor
@@ -9,7 +8,7 @@ from libs.VideoProsessorRcti import VideoProsessor
 class ServerConverter:
 
     def __init__(self, host:str, port:int, max_connection:int, buffer_size:int) -> None:
-        Loggers()
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.host = host
         self.port = port
         self.buffer_size = buffer_size

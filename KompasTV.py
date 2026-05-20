@@ -6,13 +6,8 @@ import subprocess
 import shutil
 import sys
 
-from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessorKompas import VideoProsessor
-from libs.ErrorHandler import get_error_message, get_exception_message
-from libs.PusherNotification import trigger_error_notification
-from libs.Countdown import countdown_sleep
-from settings.Connector import get_channel_data
 
 class KompasTv:
 
@@ -38,7 +33,7 @@ class KompasTv:
         self.last_sequence = None
         self.cookies = cookies  # ini path cookies file (cookies.txt)
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
-        Loggers()
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.countdown_counter = 0
         self.max_countdown_before_notif = 3
         super().__init__()
@@ -46,14 +41,14 @@ class KompasTv:
     def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
         if send_immediate and self.countdown_counter == 0:
-            trigger_error_notification(channel_name='KompasTv', log_text=error_message)
+            logging.error(f'[KompasTv] {{error_message}}')
         
-        countdown_sleep(300)
+        time.sleep(300)
         
         self.countdown_counter += 1
         
         if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
-            trigger_error_notification(channel_name='KompasTv', log_text=error_message)
+            logging.error(f'[KompasTv] {{error_message}}')
             logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
             remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
@@ -164,7 +159,7 @@ class KompasTv:
                     kompas += 1
 
                 except subprocess.CalledProcessError as e:
-                    error_message = get_exception_message(e)
+                    error_message = f"{type(e).__name__}: {e}"
                     logging.error(f"[{kompas}] ERROR record: {e}", extra={"log_text": error_message, "detail": str(e)}, exc_info=True)
                     self._handle_error_with_notification(error_message, send_immediate=True)
                     logging.info("Retry in 3 seconds...")
@@ -183,7 +178,7 @@ if __name__ == "__main__":
 
     kompas = KompasTv(
         environment=ENGINE["ENVIRONMENT"],
-        url=get_channel_data(ENGINE_NAME)[0]['url'],
+        url=ENGINE["URL"],
         upload_location=ENGINE["UPLOAD_LOCATION"],
         headers=ENGINE["HEADERS"],
         cookies="cookies.txt"

@@ -12,7 +12,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from urllib import parse
-from libs.Loggers import Loggers
 from libs.Selenium import Selenium
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
@@ -49,7 +48,7 @@ class INewsV1:
         self.converter_host = converter_host
         self.converter_port = converter_port
         self.buffer_size = buffer_size
-        Loggers()
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         super().__init__()
 
     def GetPathSDI(self, selenium:None) -> str:

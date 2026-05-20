@@ -5,7 +5,6 @@ import struct
 import logging
 import datetime
 import requests
-from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.HTTPRequest import HTTPRequest
 from libs.VideoProsessorDhoho import VideoProsessor
@@ -39,7 +38,7 @@ class BeritaSatu:
         self.playlist = playlist
         self.resolution = resolution
         self.video_prosessor = VideoProsessor(environment=self.environment, storage_path=self.upload_location)
-        Loggers()
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         super().__init__()
 
     def GetSegment(self) -> list:

@@ -5,13 +5,13 @@ class Config(object):
         #ENGINE_KEYS[0]
         INEWSSTREAMING = dict(
             ENVIRONMENT = "dev",
-            URLV1 = "https://www.rctiplus.com/tv/inews",
+            URL = "https://www.rctiplus.com/tv/inews",
             RESOLUTIONV1 = "640x360",
             # HOST_DIRECTORYV1 = "https://inews-linier.rctiplus.id", #old
             HOST_DIRECTORYV1 = "https://icdn.rctiplus.id/anevia1", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-            UPLOAD_LOCATION = "storage/inews",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\inews",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
                 'referer': 'https://www.rctiplus.com/',
@@ -34,7 +34,7 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "storage/cnn",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\cnn",
             HEADERS = {
                 'referer': 'https://www.cnnindonesia.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
@@ -46,7 +46,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=DOOrIxw5xOw",
             QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/kompas",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\kompas",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -58,7 +58,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=-CwtcKDaaLA",
             ID_CHANNEL = "UCzl0OrB3-ehunyotIQvK77A",
             QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/metro",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\metro",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -70,7 +70,7 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "storage/cnbc",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\cnbc",
             HEADERS = {
                 'referer': 'https://www.cnbcindonesia.com/',
                 'origin': 'https://www.cnbcindonesia.com',
@@ -84,7 +84,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=8dNAAe5dcqQ",
             QUALITY = "360p",
             ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
-            UPLOAD_LOCATION = "storage/idx",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\idx",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -95,7 +95,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
             QUALITY = "360p",
-            UPLOAD_LOCATION = "storage/tvone",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvone",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -109,7 +109,7 @@ class Config(object):
             # RESOLUTION = "1024x576",
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
-            UPLOAD_LOCATION = "storage/beritasatu",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\beritasatu",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -133,7 +133,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
-            UPLOAD_LOCATION = "storage/tvri",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvri",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -159,7 +159,7 @@ class Config(object):
             RESOLUTION = "426x240",
             HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
-            UPLOAD_LOCATION = "storage/rcti",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\rcti",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
                 'referer': 'https://www.rctiplus.com/',
@@ -185,7 +185,7 @@ class Config(object):
             #PLAYLIST = "livestreamttv.m3u8",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "storage/trans7",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\trans7",
             HEADERS = {
                 'origin': 'https://20.detik.com',
                 'referer': 'https://20.detik.com/',
@@ -201,7 +201,7 @@ class Config(object):
             #PLAYLIST = "livestreamttv.m3u8",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = "storage/transtv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\transtv",
             HEADERS = {
                 'origin': 'https://20.detik.com',
                 'referer': 'https://20.detik.com/',
@@ -217,7 +217,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = "storage/nusantaratv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\nusantaratv",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -238,7 +238,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=BpT2mGUdTN0",
             QUALITY = "360p",
             ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
-            UPLOAD_LOCATION = "storage/mnc",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\mnc",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -254,7 +254,7 @@ class Config(object):
             # HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
             HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/stream/7687/file/live/7687/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = "storage/seatoday",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\seatoday",
             HEADERS = {
                 'origin': 'https://www.vidio.com',
                 'referer': 'https://www.vidio.com/live/7687-sea-today',
@@ -275,7 +275,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
             # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
-            UPLOAD_LOCATION = "storage/sctv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\sctv",
             # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -288,7 +288,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "garudatvlivestreaming.m3u8",
             HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
-            UPLOAD_LOCATION = "storage/garuda",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\garuda",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -311,7 +311,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Bali/hls/Bali.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Bali",
-            UPLOAD_LOCATION = "storage/tvribali",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvribali",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -336,7 +336,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jatim/hls/Jatim.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jatim",
-            UPLOAD_LOCATION = "storage/tvrijatim",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrijatim",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -361,7 +361,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Kalbar/hls/Kalbar.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Kalbar",
-            UPLOAD_LOCATION = "storage/tvrikalbar",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrikalbar",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -386,7 +386,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Lampung/hls/Lampung.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Lampung",
-            UPLOAD_LOCATION = "storage/tvrilampung",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrilampung",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -411,7 +411,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sulsel",
-            UPLOAD_LOCATION = "storage/tvrisulsel",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrisulsel",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -436,7 +436,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sumut/hls/Sumut.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sumut",
-            UPLOAD_LOCATION = "storage/tvrisumut",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrisumut",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -461,7 +461,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta",
-            UPLOAD_LOCATION = "storage/tvriyogya",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvriyogya",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -488,7 +488,7 @@ class Config(object):
             #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
             HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/5415/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = "storage/jaktv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\jaktv",
             HEADERS = {
                 'origin': 'https://www.vidio.com',
                 'referer': 'https://www.vidio.com/',
@@ -513,7 +513,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
-            UPLOAD_LOCATION = "storage/bantentv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\bantentv",
             HEADERS = {
                 'origin': 'https://wms.klikhost.com:2000',
                 'referer': 'https://wms.klikhost.com:2000/',
@@ -538,7 +538,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://dhohotv.siar.us/dhohotv/live",
-            UPLOAD_LOCATION = "storage/dhoho",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\dhoho",
             HEADERS = {
                 'origin': 'https://cdn.siar.us',
                 'referer': 'https://cdn.siar.us/',
@@ -560,7 +560,7 @@ class Config(object):
             HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVSBY/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = '1280x720',
-            UPLOAD_LOCATION = "storage/jawapos",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\jawapos",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -571,485 +571,9 @@ class Config(object):
             HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = None,
-            UPLOAD_LOCATION = "storage/pontv",
+            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\pontv",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
         ),
-    )
-    
-        
-        
-
-    ENGINE_KEYS = list(ENGINE.keys())
-
-    OPS = dict(
-        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
-        TELE_CHAT_ID = "-1001921508509",
-        SEND_TIME = 60 * 30,
-        STORAGE_PATH = {
-            ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[15]: ENGINE[ENGINE_KEYS[15]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[16]: ENGINE[ENGINE_KEYS[16]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[17]: ENGINE[ENGINE_KEYS[17]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[18]: ENGINE[ENGINE_KEYS[18]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[19]: ENGINE[ENGINE_KEYS[19]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[20]: ENGINE[ENGINE_KEYS[20]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[21]: ENGINE[ENGINE_KEYS[21]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[22]: ENGINE[ENGINE_KEYS[22]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[23]: ENGINE[ENGINE_KEYS[23]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[24]: ENGINE[ENGINE_KEYS[24]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[25]: ENGINE[ENGINE_KEYS[25]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[26]: ENGINE[ENGINE_KEYS[26]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[27]: ENGINE[ENGINE_KEYS[27]]["UPLOAD_LOCATION"],
-        }
-    )
-
-    ### Notif channel mati ###
-    OPSV2 = dict(
-        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
-        TELE_CHAT_ID = "-1002147735635",
-        TELEGRAM_MESSAGE_THREAD_ID = 3042,
-        SEND_TIME = 60 * 60,
-        STORAGE_PATH = {
-            # ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            #ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            #ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[15]: ENGINE[ENGINE_KEYS[15]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[16]: ENGINE[ENGINE_KEYS[16]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[17]: ENGINE[ENGINE_KEYS[17]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[18]: ENGINE[ENGINE_KEYS[18]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[19]: ENGINE[ENGINE_KEYS[19]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[20]: ENGINE[ENGINE_KEYS[20]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[21]: ENGINE[ENGINE_KEYS[21]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[22]: ENGINE[ENGINE_KEYS[22]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[23]: ENGINE[ENGINE_KEYS[23]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[24]: ENGINE[ENGINE_KEYS[24]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[25]: ENGINE[ENGINE_KEYS[25]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[26]: ENGINE[ENGINE_KEYS[26]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[27]: ENGINE[ENGINE_KEYS[27]]["UPLOAD_LOCATION"],
-        }
-    )
-    
-    ### restart docker ###
-    OPSV3 = dict(
-        TELE_TOKEN = "8213920361:AAEMpyChKoMGb_FHw5QNVI9xdySfjP-yrtk",
-        TELE_CHAT_ID = "-897317690",
-        SEND_TIME = 60 * 40,
-        STORAGE_PATH = {
-            # ENGINE_KEYS[0]: ENGINE[ENGINE_KEYS[0]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[1]: ENGINE[ENGINE_KEYS[1]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[2]: ENGINE[ENGINE_KEYS[2]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[3]: ENGINE[ENGINE_KEYS[3]]["UPLOAD_LOCATION"],
-            #ENGINE_KEYS[4]: ENGINE[ENGINE_KEYS[4]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[5]: ENGINE[ENGINE_KEYS[5]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[6]: ENGINE[ENGINE_KEYS[6]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[7]: ENGINE[ENGINE_KEYS[7]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[8]: ENGINE[ENGINE_KEYS[8]]["UPLOAD_LOCATION"],
-            ENGINE_KEYS[9]: ENGINE[ENGINE_KEYS[9]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[10]: ENGINE[ENGINE_KEYS[10]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[11]: ENGINE[ENGINE_KEYS[11]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[12]: ENGINE[ENGINE_KEYS[12]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[13]: ENGINE[ENGINE_KEYS[13]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[14]: ENGINE[ENGINE_KEYS[14]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[15]: ENGINE[ENGINE_KEYS[15]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[16]: ENGINE[ENGINE_KEYS[16]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[17]: ENGINE[ENGINE_KEYS[17]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[18]: ENGINE[ENGINE_KEYS[18]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[19]: ENGINE[ENGINE_KEYS[19]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[20]: ENGINE[ENGINE_KEYS[20]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[21]: ENGINE[ENGINE_KEYS[21]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[22]: ENGINE[ENGINE_KEYS[22]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[23]: ENGINE[ENGINE_KEYS[23]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[24]: ENGINE[ENGINE_KEYS[24]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[25]: ENGINE[ENGINE_KEYS[25]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[26]: ENGINE[ENGINE_KEYS[26]]["UPLOAD_LOCATION"],
-            # ENGINE_KEYS[27]: ENGINE[ENGINE_KEYS[27]]["UPLOAD_LOCATION"],
-    }
-    )
-    
-    ### Server ###
-    
-    SOCKET_SERVER_JAWAPOS = dict(
-        HOST = "12.12.12.68",
-        PORT = 7171,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER = dict(
-        HOST = "12.12.12.8",
-        PORT = 6969,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_BERITASATU = dict(
-        HOST = "12.12.12.13",
-        PORT = 6868,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_IDX = dict(
-        HOST = "12.12.12.15",
-        PORT = 6767,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_IDX_VIDEO = dict(
-        HOST = "12.12.12.37",
-        PORT = 7373,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_IDX_AUDIO = dict(
-        HOST = "12.12.12.38",
-        PORT = 7272,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_TRANS = dict(
-        HOST = "12.12.12.18",
-        PORT = 6565,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_CNBC = dict(
-        HOST = "12.12.12.19",
-        PORT = 6464,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_KOMPAS = dict(
-        HOST = "12.12.12.31",
-        PORT = 5353,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_TVONE = dict(
-        HOST = "12.12.12.21",
-        PORT = 6262,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_RCTI = dict(
-        HOST = "12.12.12.22",
-        PORT = 6161,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_METRO = dict(
-        HOST = "12.12.12.24",
-        PORT = 6060,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_TRANSTV = dict(
-        HOST = "12.12.12.26",
-        PORT = 7979,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_CNN = dict(
-        HOST = "12.12.12.27",
-        PORT = 7878,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_NUSANTARA = dict(
-        HOST = "12.12.12.67",
-        PORT = 7777,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_MNC = dict(
-        HOST = "12.12.12.32",
-        PORT = 7676,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_INEWS = dict(
-        HOST = "12.12.12.34",
-        PORT = 7575,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_SEATODAY = dict(
-        HOST = "12.12.12.35",
-        PORT = 7474,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_SCTV = dict(
-        HOST = "12.12.12.59",
-        PORT = 7171,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_GARUDA = dict(
-        HOST = "12.12.12.51",
-        PORT = 5151,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_TVRIBALI = dict(
-        HOST = "12.12.12.42",
-        PORT = 5251,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_TVRIJATIM = dict(
-        HOST = "12.12.12.43",
-        PORT = 5351,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_TVRIKALBAR = dict(
-        HOST = "12.12.12.45",
-        PORT = 5451,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_TVRILAMPUNG = dict(
-        HOST = "12.12.12.47",
-        PORT = 5551,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_TVRISULSEL = dict(
-        HOST = "12.12.12.49",
-        PORT = 5651,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_JAKTV = dict(
-        HOST = "12.12.12.52",
-        PORT = 5751,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    SOCKET_SERVER_BANTENTV = dict(
-        HOST = "12.12.12.55",
-        PORT = 5851,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-    
-    SOCKET_SERVER_DHOHOTV = dict(
-        HOST = "12.12.12.57",
-        PORT = 5951,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_TVRISUMUT = dict(
-        HOST = "12.12.12.64",
-        PORT = 5752,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_TVRIYOGYA = dict(
-        HOST = "12.12.12.63",
-        PORT = 5453,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    SOCKET_SERVER_PONTV = dict(
-        HOST = "12.12.12.73",
-        PORT = 9191,
-        MAX_CONNECTION = 4,
-        BUFFER_SIZE = 1024
-    )
-
-    ### end Server ###
-
-    ### Local ###
-
-    # SOCKET_SERVER_GARUDA = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7014,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_SEATODAY = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7014,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-    
-    # SOCKET_SERVER_INEWS = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7014,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_MNC = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7013,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_NUSANTARA = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7012,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-    
-    # SOCKET_SERVER_CNN = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7012,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_TRANSTV = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7011,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_METRO = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7010,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_RCTI = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7009,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_TVONE = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7008,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_KOMPAS = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7007,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_CNBC = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7006,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_TRANS = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7005,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_IDX = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7002,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_BERITASATU = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7001,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER_PONTV = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 9191,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    # SOCKET_SERVER = dict(
-    #     HOST = "127.0.0.1",
-    #     PORT = 7004,
-    #     MAX_CONNECTION = 4,
-    #     BUFFER_SIZE = 1024
-    # )
-
-    ### end local ###
-
-    SOCKET_NOTIFICATIONS = dict(
-        HOST_SERVER = "0.0.0.0",
-        HOST_CLIENT = "36.88.246.50",
-        PORT = 8888,
-        BUFFER_SIZE = 1024,
-        DELAY_CLIENT = 300
-    )
-
-    DB = dict(
-        HOST = "localhost",
-        PORT = 3306,
-        NAME = "produksi_tv",
-        USER = "root",
-        PASS = "Bismillahkabayan123!",
-        TABLE_NAME = "streaming_logs"
     )

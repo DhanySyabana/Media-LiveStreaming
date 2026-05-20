@@ -5,13 +5,8 @@ import struct
 import logging
 import datetime
 import cloudscraper
-from libs.Loggers import Loggers
 from settings.Config import Config
 from libs.VideoProsessorTvriBali import VideoProsessor
-from libs.ErrorHandler import get_error_message, get_exception_message
-from libs.PusherNotification import trigger_error_notification
-from libs.Countdown import countdown_sleep
-
 class Tvribali:
 
     def __init__(
@@ -54,20 +49,20 @@ class Tvribali:
         self.consecutive_errors = 0
         self.max_consecutive_errors = 3
 
-        Loggers()
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         super().__init__()
 
     def _handle_error_with_notification(self, error_message: str, send_immediate: bool = True) -> None:
 
         if send_immediate and self.countdown_counter == 0:
-            trigger_error_notification(channel_name='TVRI Bali', log_text=error_message)
+            logging.error(f'[TVRI Bali] {{error_message}}')
         
-        countdown_sleep(300)
+        time.sleep(300)
         
         self.countdown_counter += 1
         
         if self.countdown_counter > 0 and self.countdown_counter % self.max_countdown_before_notif == 0:
-            trigger_error_notification(channel_name='TVRI Bali', log_text=error_message)
+            logging.error(f'[TVRI Bali] {{error_message}}')
             logging.warning(f"Notification sent after countdown cycle {self.countdown_counter} ({self.countdown_counter * 5} minutes total)")
         else:
             remaining_cycles = self.max_countdown_before_notif - (self.countdown_counter % self.max_countdown_before_notif)
@@ -78,7 +73,7 @@ class Tvribali:
         try:
             response = self.scraper.get(self.url_segment, headers=self.custom_headers, timeout=10)
         except Exception as e:
-            error_message = get_exception_message(e)
+            error_message = f"{type(e).__name__}: {e}"
             logging.error(
                 f"Exception Get Segments: {type(e).__name__}",
                 extra={
@@ -92,7 +87,7 @@ class Tvribali:
 
         if response.status_code != 200:
             self.segment_status = response.status_code
-            error_message = get_error_message(response.status_code)
+            error_message = f"HTTP Error {response.status_code}"
             logging.error(
                 f"Error Get Segments: {response.status_code}",
                 extra={
@@ -147,7 +142,7 @@ class Tvribali:
                         self.consecutive_errors += 1
                 else:
                     self.segment_status = response.status_code
-                    error_message = get_error_message(response.status_code)
+                    error_message = f"HTTP Error {response.status_code}"
                     logging.error(
                         f"Error Download Segment: {response.status_code}",
                         extra={
@@ -159,7 +154,7 @@ class Tvribali:
                     self.has_download_error = True
                     self.consecutive_errors += 1
             except Exception as e:
-                error_message = get_exception_message(e)
+                error_message = f"{type(e).__name__}: {e}"
                 logging.error(
                     f"Exception Downloading Segment: {type(e).__name__}",
                     extra={
@@ -198,7 +193,7 @@ class Tvribali:
             try:
                 response = self.scraper.get(url, headers=self.custom_headers, timeout=10)
             except Exception as e:
-                last_error = get_exception_message(e)
+                last_error = f"{type(e).__name__}: {e}"
                 last_error_detail = str(e)
                 last_exc = True
                 self.segment_status = None
@@ -220,7 +215,7 @@ class Tvribali:
 
             if response.status_code != 200:
                 self.segment_status = response.status_code
-                last_error = get_error_message(response.status_code)
+                last_error = f"HTTP Error {response.status_code}"
                 last_error_detail = response.reason
                 if attempt < self.max_attempts:
                     logging.warning(f"Attempt {attempt}/{self.max_attempts} failed (Status {response.status_code}), retrying in 10 seconds...")
@@ -239,7 +234,7 @@ class Tvribali:
             try:
                 m3u8_master = m3u8.loads(response.text)
             except Exception as e:
-                last_error = get_exception_message(e)
+                last_error = f"{type(e).__name__}: {e}"
                 last_error_detail = str(e)
                 last_exc = True
                 if attempt < self.max_attempts:
@@ -371,7 +366,7 @@ class Tvribali:
                 except KeyboardInterrupt:
                     raise
                 except Exception as e:
-                    error_message = get_exception_message(e)
+                    error_message = f"{type(e).__name__}: {e}"
                     logging.error(f"Unhandled exception in engine loop: {e}", exc_info=True)
                     self._handle_error_with_notification(error_message, send_immediate=True)
                     time.sleep(self.sleep_duration)
