@@ -11,7 +11,7 @@ class Config(object):
             HOST_DIRECTORYV1 = "https://icdn.rctiplus.id/anevia1", #NEW
             RESOLUTION = "640x360",
             # HOST_DIRECTORY = "https://midcache.rctiplus.com/live",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\inews",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SINEWS",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
                 'referer': 'https://www.rctiplus.com/',
@@ -34,7 +34,7 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\cnn",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SCNN",
             HEADERS = {
                 'referer': 'https://www.cnnindonesia.com/',
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
@@ -46,7 +46,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=DOOrIxw5xOw",
             QUALITY = "360p",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\kompas",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SKOMPAS",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -58,7 +58,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=-CwtcKDaaLA",
             ID_CHANNEL = "UCzl0OrB3-ehunyotIQvK77A",
             QUALITY = "360p",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\metro",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SMETRO",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -70,7 +70,7 @@ class Config(object):
             HOST_DIRECTORY = "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\cnbc",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SCNBC",
             HEADERS = {
                 'referer': 'https://www.cnbcindonesia.com/',
                 'origin': 'https://www.cnbcindonesia.com',
@@ -84,7 +84,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=8dNAAe5dcqQ",
             QUALITY = "360p",
             ID_CHANNEL = "UCQA6NejSxQguRkD3L8eXHzA",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\idx",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SIDX",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -95,7 +95,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             URL = "https://www.youtube.com/watch?v=yNKvkPJl-tg&feature=youtu.be",
             QUALITY = "360p",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvone",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVONE",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -109,7 +109,7 @@ class Config(object):
             # RESOLUTION = "1024x576",
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h209",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\beritasatu",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SBERITASATU",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -133,7 +133,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Nasional/hls/Nasional.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Nasional",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvri",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRI",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -159,7 +159,7 @@ class Config(object):
             RESOLUTION = "426x240",
             HOST_DIRECTORYV1 = "https://rcti-linier.rctiplus.id", #old
             # HOST_DIRECTORYV1 = "https://rcdn.rctiplus.id", #NEW
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\rcti",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SRCTI",
             HEADERS = {
                 'origin': 'https://www.rctiplus.com',
                 'referer': 'https://www.rctiplus.com/',
@@ -185,7 +185,7 @@ class Config(object):
             #PLAYLIST = "livestreamttv.m3u8",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\trans7",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STRANS7",
             HEADERS = {
                 'origin': 'https://20.detik.com',
                 'referer': 'https://20.detik.com/',
@@ -201,7 +201,7 @@ class Config(object):
             #PLAYLIST = "livestreamttv.m3u8",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = "640x360",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\transtv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STRANSTV",
             HEADERS = {
                 'origin': 'https://20.detik.com',
                 'referer': 'https://20.detik.com/',
@@ -217,7 +217,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://op-group1-swiftservehd-1.dens.tv/h/h37",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\nusantaratv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SNUSANTARATV",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -238,7 +238,7 @@ class Config(object):
             URL = "https://www.youtube.com/watch?v=BpT2mGUdTN0",
             QUALITY = "360p",
             ID_CHANNEL = "UCGfXjFgIUUTUUlzdG6BenXA",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\mnc",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SMNC",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -254,7 +254,7 @@ class Config(object):
             # HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/7687/master.m3u8",
             HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/stream/7687/file/live/7687/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\seatoday",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SSEATODAY",
             HEADERS = {
                 'origin': 'https://www.vidio.com',
                 'referer': 'https://www.vidio.com/live/7687-sea-today',
@@ -275,7 +275,7 @@ class Config(object):
             ENVIRONMENT = "dev",
             # URL = get_channel_data('TVONESTREAMING')[0].get('url', ''),
             # QUALITY = get_channel_data('TVONESTREAMING')[0].get('resolusi', ''),
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\sctv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SSCTV",
             # COOKIES = get_channel_data('TVONESTREAMING')[0].get('cookies', ''),
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
@@ -288,7 +288,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "garudatvlivestreaming.m3u8",
             HOST_DIRECTORY = "https://hgmtv.com:19360/garudatvlivestreaming/",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\garuda",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SGARUDA",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'sec-ch-ua': 'Chromium";v="114", "Not.A/Brand";v="8", "Chromium";v="114',
@@ -311,7 +311,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Bali/hls/Bali.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Bali",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvribali",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRIBALI",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -336,7 +336,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jatim/hls/Jatim.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jatim",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrijatim",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRIJATIM",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -361,7 +361,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Kalbar/hls/Kalbar.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Kalbar",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrikalbar",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRIKALBAR",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -386,7 +386,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Lampung/hls/Lampung.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Lampung",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrilampung",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRILAMPUNG",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -411,7 +411,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sulsel/hls/Sulsel.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sulsel",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrisulsel",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRISULSEL",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -436,7 +436,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Sumut/hls/Sumut.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Sumut",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvrisumut",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRISUMUT",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -461,7 +461,7 @@ class Config(object):
             PLAYLIST = "index.m3u8",
             HOST_DIRECTORY = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta/hls/Jogjakarta.m3u8",
             HOST_DIRECTORY_TS = "https://ott-balancer.tvri.go.id/live/eds/Jogjakarta",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\tvriyogya",
+            UPLOAD_LOCATION = r"D:\TVRECORD\STVRIYOGYA",
             HEADERS = {
                 'origin': 'http://klik.tvri.go.id',
                 'referer': 'http://klik.tvri.go.id/',
@@ -488,7 +488,7 @@ class Config(object):
             #HOST_DIRECTORY = "https://etslive-2-vidio-com.akamaized.net/live/7687/master.m3u8",
             HOST_DIRECTORY = "https://etslive-v3-vidio-com-tokenized.akamaized.net/live/5415/master.m3u8",
             PATH_URL =  "https://etslive-v3-vidio-com-tokenized.akamaized.net",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\jaktv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SJAKTV",
             HEADERS = {
                 'origin': 'https://www.vidio.com',
                 'referer': 'https://www.vidio.com/',
@@ -513,7 +513,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://5bf7b725107e5.streamlock.net/bantentv/bantentv",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\bantentv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SBANTENTV",
             HEADERS = {
                 'origin': 'https://wms.klikhost.com:2000',
                 'referer': 'https://wms.klikhost.com:2000/',
@@ -538,7 +538,7 @@ class Config(object):
             RESOLUTION = "1280x720",
             PLAYLIST = "playlist.m3u8",
             HOST_DIRECTORY = "https://dhohotv.siar.us/dhohotv/live",
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\dhoho",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SDHOOHOTV",
             HEADERS = {
                 'origin': 'https://cdn.siar.us',
                 'referer': 'https://cdn.siar.us/',
@@ -560,7 +560,7 @@ class Config(object):
             HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/JAWAPOSTVSBY/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = '1280x720',
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\jawapos",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SJAWAPOS",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
@@ -571,7 +571,7 @@ class Config(object):
             HOST_DIRECTORY = "https://63b2dc7196c38.streamlock.net:1937/PONTV/_definst_/myStream/",
             PLAYLIST = "playlist.m3u8",
             RESOLUTION = None,
-            UPLOAD_LOCATION = r"D:\Medmon\storage\New folder\pontv",
+            UPLOAD_LOCATION = r"D:\TVRECORD\SPONTV",
             HEADERS = {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
             }
